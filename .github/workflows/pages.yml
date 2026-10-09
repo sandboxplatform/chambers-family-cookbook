@@ -21,7 +21,7 @@ jobs:
       - uses: actions/checkout@v4
       - name: Build index.html from src/
         env:
-          GEMINI_BROWSER_KEY: ${{ secrets.GEMINI_BROWSER_KEY }}
+          GEMINI_BROWSER_KEY: ${{ secrets.GEMINI_API_KEY }}
         run: bash build.sh
       - name: Stage site
         run: |

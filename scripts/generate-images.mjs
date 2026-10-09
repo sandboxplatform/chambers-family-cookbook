@@ -72,7 +72,8 @@ const sleep = ms => new Promise(r => setTimeout(r, ms));
 function request(text) {
   if (PROVIDER === "gemini") return fetch(`https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`, {
     method: "POST",
-    headers: { "Content-Type": "application/json", "x-goog-api-key": KEY },
+    // The key is also used by the website, so it may be restricted to the site's address; identify as the site.
+    headers: { "Content-Type": "application/json", "x-goog-api-key": KEY, Referer: "https://sandboxplatform.github.io/chambers-family-cookbook/" },
     body: JSON.stringify({ contents: [{ parts: [{ text }] }], generationConfig: { responseModalities: ["TEXT", "IMAGE"], imageConfig: { aspectRatio: "3:2" } } })
   });
   return fetch("https://api.openai.com/v1/images/generations", {

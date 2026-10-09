@@ -50,7 +50,7 @@ Edit the text file, then run `./build.sh`.
 
 ## Adding a recipe from a photo
 
-"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. The site runs in the browser, so this uses a separate Gemini key that is visible in the page and locked to the site's address: in Google Cloud, restrict it to the website `https://sandboxplatform.github.io/chambers-family-cookbook/*` and to the Generative Language API, and set a low daily request quota. Save it as the repository secret `GEMINI_BROWSER_KEY`; the Pages deploy adds it to the page. Without it, the photo option is hidden. Never use the `GEMINI_API_KEY` used for pictures here.
+"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. It uses the same `GEMINI_API_KEY` secret as the pictures; the Pages deploy puts it in the page, so it is visible to anyone. Lock it down in Google Cloud (Credentials → the key): restrict it to the website `https://sandboxplatform.github.io/chambers-family-cookbook/*` and to the Generative Language API, and set a daily quota. The picture script identifies itself as the site, so it keeps working with those restrictions. Without the secret, the photo option is hidden.
 
 ## Shared features
 

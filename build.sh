@@ -37,7 +37,7 @@ images_json() {
   cat src/body.html
   echo '<script type="text/plain" id="book">'; cat src/book.txt; echo '</script>'
   echo '<script type="application/json" id="images">'; images_json; echo '</script>'
-  # Browser key for reading recipe photos. Only set in the Pages deploy (GEMINI_BROWSER_KEY secret);
+  # Browser key for reading recipe photos. Only set in the Pages deploy (from the GEMINI_API_KEY secret);
   # it must be a key restricted to the site's address, since it's visible in the page.
   printf '<script type="application/json" id="config">{"geminiKey":"%s"}</script>\n' "$(printf '%s' "${GEMINI_BROWSER_KEY:-}" | tr -cd 'A-Za-z0-9_-')"
   echo '<script>'; cat src/app.js; echo '</script>'
