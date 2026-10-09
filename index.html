@@ -2532,14 +2532,22 @@ drawTheme();
 let installEvt = null, installed = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
 const framed = (() => { try { return window.self !== window.top; } catch { return true; } })();
 const canInstall = () => !installed && !framed && /^https?:$/.test(location.protocol);
-addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
+let installWaiters = [];
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; installWaiters.forEach(f => f()); installWaiters = []; });
 const drawInstall = () => { $("#install-btn").hidden = !canInstall(); };
 drawInstall();
 addEventListener("appinstalled", () => { installed = true; installEvt = null; drawInstall(); toast("The cookbook is on your home screen"); });
 if ("serviceWorker" in navigator && !framed && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
 async function install() {
-  if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }
   const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1), android = /Android/.test(ua);
+  // Chrome, Edge and Samsung Internet can install directly, but only once they've offered the prompt,
+  // which can take a few seconds after the page loads; give it a moment before falling back.
+  if (!installEvt && !ios && "BeforeInstallPromptEvent" in window) {
+    const btn = $("#install-btn"); btn.disabled = true;
+    await new Promise(res => { installWaiters.push(res); setTimeout(res, 3000); });
+    btn.disabled = false;
+  }
+  if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }
   const steps = ios ? ["Tap the <b>Share</b> button (the square with an arrow pointing up). In Safari it's at the bottom of the screen; in Chrome it's at the top right.", "Scroll down and tap <b>Add to Home Screen</b>.", "Tap <b>Add</b>. The cookbook appears on your home screen."]
     : android ? ["Tap the <b>⋮</b> menu at the top right of your browser.", "Tap <b>Install app</b> or <b>Add to Home screen</b>.", "Tap <b>Install</b> (or <b>Add</b>). The cookbook appears on your home screen."]
     : ["In Chrome or Edge, click the <b>install icon</b> at the right end of the address bar, or open the <b>⋮</b> menu and choose <b>Install</b> (in Edge: <b>Apps → Install this site as an app</b>).", "On a Mac in Safari, choose <b>File → Add to Dock</b>.", "To get it on your phone, open this page on the phone and tap <b>Get the app</b> there."];
