@@ -1,0 +1,20 @@
+# Cloudflare Worker that reads recipe photos with Gemini for the cookbook site.
+# The Gemini key is a Worker secret (wrangler secret put GEMINI_API_KEY), never in the page.
+name = "cookbook-relay"
+main = "worker.js"
+compatibility_date = "2026-10-01"
+
+[vars]
+ALLOWED_ORIGINS = "https://sandboxplatform.github.io"
+DAILY_LIMIT = "200"
+
+# Per-visitor burst limit: 10 photo reads a minute.
+[[ratelimits]]
+name = "PER_IP"
+namespace_id = "1001"
+simple = { limit = 10, period = 60 }
+
+# Daily read counter (see DAILY_LIMIT).
+[[kv_namespaces]]
+binding = "COUNTS"
+id = "2d22f1e330b6425db4736bdbf6d0f4b7"

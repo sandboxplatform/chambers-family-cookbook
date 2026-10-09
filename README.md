@@ -50,7 +50,10 @@ Edit the text file, then run `./build.sh`.
 
 ## Adding a recipe from a photo
 
-"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. It uses the same `GEMINI_API_KEY` secret as the pictures; the Pages deploy puts it in the page, so it is visible to anyone. Lock it down in Google Cloud (Credentials → the key): restrict it to the website `https://sandboxplatform.github.io/chambers-family-cookbook/*` and to the Generative Language API, and set a daily quota. The picture script identifies itself as the site, so it keeps working with those restrictions. Without the secret, the photo option is hidden.
+"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. Photos go to a small relay (`relay/`, a Cloudflare Worker at https://cookbook-relay.chambers-cookbook.workers.dev) that holds the Gemini key as a Worker secret, so the key never appears in the page. The relay only answers requests from the cookbook site, fixes the model and prompt, and limits reads to 10 a minute per person and 200 a day in total (`DAILY_LIMIT` in `relay/wrangler.toml`).
+
+- Change the key: `npx wrangler@4 secret put GEMINI_API_KEY --name cookbook-relay`
+- Redeploy after editing `relay/`: `cd relay && npx wrangler@4 deploy`
 
 ## Shared features
 

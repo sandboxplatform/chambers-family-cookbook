@@ -447,40 +447,16 @@ function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
   setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
 }
 /* ---------------- read a recipe from a photo ----------------
-   The key is a browser key restricted to this site's address (set at deploy by build.sh), so it is
-   public by design; without one the photo option stays hidden. */
-const CONFIG = (() => { try { return JSON.parse(document.getElementById("config")?.textContent || "{}"); } catch { return {}; } })();
-const SCAN_MODEL = "gemini-2.5-flash";
-$("#f-scan").hidden = !CONFIG.geminiKey;
+   Photos go to the cookbook's relay (relay/ in this repo, a Cloudflare Worker), which holds the
+   Gemini key and only answers this site. */
+const SCAN_URL = "https://cookbook-relay.chambers-cookbook.workers.dev";
+$("#f-scan").hidden = !/^https?:$/.test(location.protocol);
 const blobB64 = b => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1]); fr.onerror = () => rej(fr.error); fr.readAsDataURL(b); });
 async function readRecipePhotos(files) {
-  const images = await Promise.all(files.map(async f => ({ inline_data: { mime_type: "image/jpeg", data: await blobB64(await shrink(f, 1600)) } })));
-  const text = `These photos show one family recipe (a handwritten card, a printed page, or several pages of the same recipe). Transcribe it exactly as written.
-- Keep the original wording, quantities and fractions (write ½, ¼, ⅓ etc. as the characters). Do not add, convert or guess amounts.
-- One ingredient per line, one method step per line, in order. Drop numbering and bullets.
-- If a word can't be read, write [illegible] in its place.
-- "section" is the best fit among: ${CATS.join(", ")}.
-- "notes" holds anything else on the card worth keeping (serving size, oven temperature, who it's from, tips). Empty if none.
-- If the photos don't show a recipe at all, set "isRecipe" to false.`;
-  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${SCAN_MODEL}:generateContent`, {
-    method: "POST",
-    referrerPolicy: "no-referrer-when-downgrade", // send the full page address so the key's website restriction can match it
-    headers: { "Content-Type": "application/json", "x-goog-api-key": CONFIG.geminiKey },
-    body: JSON.stringify({
-      contents: [{ parts: [...images, { text }] }],
-      generationConfig: {
-        temperature: 0,
-        responseMimeType: "application/json",
-        responseSchema: { type: "OBJECT", required: ["isRecipe", "name", "section", "ingredients", "steps", "notes"], properties: {
-          isRecipe: { type: "BOOLEAN" }, name: { type: "STRING" }, section: { type: "STRING", enum: CATS },
-          ingredients: { type: "ARRAY", items: { type: "STRING" } }, steps: { type: "ARRAY", items: { type: "STRING" } }, notes: { type: "STRING" } } }
-      }
-    })
-  });
+  const images = await Promise.all(files.map(async f => blobB64(await shrink(f, 1600))));
+  const res = await fetch(SCAN_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ images, sections: CATS }) });
   if (!res.ok) { const err = new Error("http"); err.status = res.status; throw err; }
-  const part = (await res.json()).candidates?.[0]?.content?.parts?.find(p => p.text);
-  if (!part) throw new Error("empty");
-  return JSON.parse(part.text);
+  return res.json();
 }
 $("#f-scan-file").addEventListener("change", async e => {
   const files = [...e.target.files].slice(0, 4); e.target.value = ""; if (!files.length) return;
@@ -496,8 +472,8 @@ $("#f-scan-file").addEventListener("change", async e => {
   } catch (err) {
     msg.className = "scan-msg err";
     msg.textContent = err.message === "norecipe" ? "Couldn't find a recipe in that photo. Try a closer, well-lit shot, or type it in below."
-      : err.status === 429 ? "Too many photos read today. Try again tomorrow, or type the recipe in below."
-      : err.status === 400 || err.status === 403 ? "Photo reading isn't working on this copy of the site. Type the recipe in below instead."
+      : err.status === 429 ? "Too many photos read just now. Wait a minute and try again, or type the recipe in below."
+      : err.status === 403 ? "Photo reading only works on the cookbook's own site. Type the recipe in below instead."
       : err.name === "TypeError" && !navigator.onLine ? "You're offline. Connect and try again."
       : "Couldn't read that photo. Try again, or type the recipe in below.";
   } finally { box.removeAttribute("aria-busy"); }
