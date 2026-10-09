@@ -63,9 +63,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .bar-in{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
 .nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
-.theme-btn{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer}
-.theme-btn:hover{border-color:var(--ink-3);color:var(--ink)}
-.theme-btn svg{width:18px;height:18px}
+.icon-btn{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer}
+.icon-btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.icon-btn svg{width:18px;height:18px}
 .nav a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:500;font-size:.92rem;padding:7px 11px;border-radius:999px;color:var(--ink-2)}
 .nav a:hover{background:var(--card)}
 .nav a[aria-current="page"]{background:var(--ink);color:var(--paper)}
@@ -74,7 +74,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0
 .search{flex:1 1 220px;max-width:340px;position:relative}
 .search input{width:100%;padding:9px 12px 9px 34px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
 .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3)}
-@media (max-width:860px){.search{flex-basis:calc(100% - 50px);max-width:none}.nav{margin-left:0}.bar-in{gap:8px}}
+@media (max-width:860px){.search{flex:1 1 0;min-width:0;max-width:none}.nav{order:3;flex-basis:100%;margin-left:0}.bar-in{gap:8px}}
 @media (max-width:520px){.nav a{padding:6px 9px;font-size:.86rem}}
 
 /* ---------- buttons, chips ---------- */
@@ -310,7 +310,8 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
       <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
       <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
     </nav>
-    <button type="button" class="theme-btn" id="theme-btn"></button>
+    <button type="button" class="icon-btn" id="install-btn" data-act="install" aria-label="Get the app" title="Get the app" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></button>
+    <button type="button" class="icon-btn" id="theme-btn"></button>
   </div>
 </header>
 
@@ -1915,12 +1916,10 @@ const ICON = {
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
-  dice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
-  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
   camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
@@ -2112,8 +2111,6 @@ function vHome() {
       <div class="hero-actions">
         <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
         <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
-        <button class="btn ghost" data-act="random">${ICON.dice} What should I cook?</button>
-        ${canInstall() ? `<button class="btn ghost" data-act="install">${ICON.phone} Get the app</button>` : ""}
       </div>
     </div>
   </section>
@@ -2285,7 +2282,6 @@ document.addEventListener("click", async e => {
     case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
     case "new-recipe": openSuggest({ kind: "new" }); break;
     case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
-    case "random": { const pool = filtered().length ? filtered() : RECIPES; location.hash = "r-" + pool[Math.floor(Math.random() * pool.length)].id; break; }
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
     case "uncheck": delete S.checks[r.id]; saveLocal(); render(); break;
@@ -2532,7 +2528,9 @@ let installEvt = null, installed = matchMedia("(display-mode: standalone)").matc
 const framed = (() => { try { return window.self !== window.top; } catch { return true; } })();
 const canInstall = () => !installed && !framed && /^https?:$/.test(location.protocol);
 addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
-addEventListener("appinstalled", () => { installed = true; installEvt = null; render(); toast("The cookbook is on your home screen"); });
+const drawInstall = () => { $("#install-btn").hidden = !canInstall(); };
+drawInstall();
+addEventListener("appinstalled", () => { installed = true; installEvt = null; drawInstall(); toast("The cookbook is on your home screen"); });
 if ("serviceWorker" in navigator && !framed && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
 async function install() {
   if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }

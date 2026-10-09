@@ -17,12 +17,10 @@ const ICON = {
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
-  dice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
-  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
   camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
@@ -214,8 +212,6 @@ function vHome() {
       <div class="hero-actions">
         <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
         <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
-        <button class="btn ghost" data-act="random">${ICON.dice} What should I cook?</button>
-        ${canInstall() ? `<button class="btn ghost" data-act="install">${ICON.phone} Get the app</button>` : ""}
       </div>
     </div>
   </section>
@@ -387,7 +383,6 @@ document.addEventListener("click", async e => {
     case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
     case "new-recipe": openSuggest({ kind: "new" }); break;
     case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
-    case "random": { const pool = filtered().length ? filtered() : RECIPES; location.hash = "r-" + pool[Math.floor(Math.random() * pool.length)].id; break; }
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
     case "uncheck": delete S.checks[r.id]; saveLocal(); render(); break;
@@ -634,7 +629,9 @@ let installEvt = null, installed = matchMedia("(display-mode: standalone)").matc
 const framed = (() => { try { return window.self !== window.top; } catch { return true; } })();
 const canInstall = () => !installed && !framed && /^https?:$/.test(location.protocol);
 addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
-addEventListener("appinstalled", () => { installed = true; installEvt = null; render(); toast("The cookbook is on your home screen"); });
+const drawInstall = () => { $("#install-btn").hidden = !canInstall(); };
+drawInstall();
+addEventListener("appinstalled", () => { installed = true; installEvt = null; drawInstall(); toast("The cookbook is on your home screen"); });
 if ("serviceWorker" in navigator && !framed && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
 async function install() {
   if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }
