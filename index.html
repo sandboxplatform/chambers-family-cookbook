@@ -1,0 +1,2428 @@
+<!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover"></head><body>
+<title>The Chambers Family Cookbook</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Courier+Prime:wght@400;700&family=Caveat:wght@500;700&display=swap">
+<style>
+/* Layout: a recipe box. Sticky top bar, index-card grid with file-folder tabs per section,
+   recipe opens as a ruled index card (red margin rule, typed ingredients) with a family side column. */
+:root{
+  --paper:#eef1ee; --card:#ffffff; --card-2:#f7f8f6;
+  --ink:#1c2540; --ink-2:#47506b; --ink-3:#737b91;
+  --line:#d9dee4; --rule:#c7d7ea; --margin:#cf4237; --margin-soft:#f8e3e0;
+  --sea:#2b6d6a; --sea-soft:#dcefeb; --amber:#9a6a12; --amber-soft:#f6ecd5;
+  --focus:#2f5fd0; --shadow:0 1px 2px rgba(28,37,64,.06),0 6px 18px -8px rgba(28,37,64,.18);
+  --c-app:#c08a2b; --c-sal:#5c8a3a; --c-soup:#3f74a8; --c-main:#a94a3a; --c-bread:#a8793f; --c-des:#b4517a; --c-cond:#8a7a1e;
+  --f-display:"Young Serif",Georgia,"Times New Roman",serif;
+  --f-body:"Figtree",system-ui,-apple-system,"Segoe UI",sans-serif;
+  --f-type:"Courier Prime","Courier New",ui-monospace,monospace;
+  --f-hand:"Caveat","Segoe Print","Bradley Hand",cursive;
+  --r:10px;
+}
+@media (prefers-color-scheme: dark){:root:not([data-theme="light"]){
+  --paper:#11151f; --card:#1a2030; --card-2:#151a27;
+  --ink:#e7eaf1; --ink-2:#b4bbcc; --ink-3:#848ca1;
+  --line:#2b3346; --rule:#2a3a57; --margin:#f0766b; --margin-soft:#3a2224;
+  --sea:#6cc3b9; --sea-soft:#183331; --amber:#e3b25a; --amber-soft:#33291a;
+  --focus:#8fb0ff; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6);
+  --c-app:#e0aa4a; --c-sal:#8cbf63; --c-soup:#76a8dc; --c-main:#e07d6b; --c-bread:#d4a66a; --c-des:#e384ab; --c-cond:#c9b84b;
+  color-scheme:dark}}
+:root[data-theme="dark"]{
+  --paper:#11151f; --card:#1a2030; --card-2:#151a27;
+  --ink:#e7eaf1; --ink-2:#b4bbcc; --ink-3:#848ca1;
+  --line:#2b3346; --rule:#2a3a57; --margin:#f0766b; --margin-soft:#3a2224;
+  --sea:#6cc3b9; --sea-soft:#183331; --amber:#e3b25a; --amber-soft:#33291a;
+  --focus:#8fb0ff; --shadow:0 1px 2px rgba(0,0,0,.3),0 8px 22px -10px rgba(0,0,0,.6);
+  --c-app:#e0aa4a; --c-sal:#8cbf63; --c-soup:#76a8dc; --c-main:#e07d6b; --c-bread:#d4a66a; --c-des:#e384ab; --c-cond:#c9b84b;
+  color-scheme:dark}
+
+*{box-sizing:border-box}
+[hidden]{display:none!important}
+html{scroll-behavior:smooth}
+@media (prefers-reduced-motion: reduce){html{scroll-behavior:auto}*{transition:none!important;animation:none!important}}
+body{background:var(--paper);color:var(--ink);font:400 16px/1.55 var(--f-body);-webkit-font-smoothing:antialiased}
+button,input,textarea,select{font:inherit;color:inherit}
+a{color:inherit}
+:focus-visible{outline:2px solid var(--focus);outline-offset:2px;border-radius:6px}
+h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0;letter-spacing:-.005em}
+.wrap{max-width:1180px;margin:0 auto;padding-inline:20px}
+@media (max-width:520px){.wrap{padding-inline:16px}}
+.eyebrow{font:600 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--ink-3)}
+.muted{color:var(--ink-3)}
+.sr{position:absolute;width:1px;height:1px;overflow:hidden;clip:rect(0 0 0 0);white-space:nowrap}
+
+/* ---------- top bar ---------- */
+.bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
+.bar-in{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;text-decoration:none;min-width:0}
+.brand-mark{width:34px;height:26px;border-radius:4px;background:var(--card);border:1px solid var(--line);position:relative;flex:none;box-shadow:var(--shadow);
+  background-image:linear-gradient(var(--margin),var(--margin));background-size:1.5px 100%;background-position:8px 0;background-repeat:no-repeat}
+.brand-mark::after{content:"";position:absolute;inset:7px 4px 4px 12px;background:repeating-linear-gradient(var(--rule) 0 1px,transparent 1px 5px)}
+.brand-name{font-family:var(--f-display);font-size:1.12rem;line-height:1.1;white-space:nowrap}
+.brand-name small{display:block;font:500 .7rem/1.2 var(--f-body);color:var(--ink-3);letter-spacing:.02em}
+.nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.nav a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:500;font-size:.92rem;padding:7px 11px;border-radius:999px;color:var(--ink-2)}
+.nav a:hover{background:var(--card)}
+.nav a[aria-current="page"]{background:var(--ink);color:var(--paper)}
+.count{font:700 .7rem/1 var(--f-body);background:var(--margin);color:#fff;border-radius:999px;padding:3px 6px;min-width:18px;text-align:center}
+.nav a[aria-current="page"] .count{background:var(--paper);color:var(--ink)}
+.search{flex:1 1 220px;max-width:340px;position:relative}
+.search input{width:100%;padding:9px 12px 9px 34px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
+.search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3)}
+@media (max-width:860px){.search{order:3;flex-basis:100%;max-width:none}.nav{margin-left:0}.bar-in{gap:8px}}
+@media (max-width:520px){.brand-name small{display:none}.nav a{padding:6px 9px;font-size:.86rem}}
+
+/* ---------- buttons, chips ---------- */
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:7px;border:1px solid var(--line);background:var(--card);color:var(--ink);padding:9px 14px;border-radius:999px;font-weight:600;font-size:.9rem;cursor:pointer;text-decoration:none;white-space:nowrap}
+.btn:hover{border-color:var(--ink-3)}
+.btn svg{width:16px;height:16px;flex:none}
+.btn.primary{background:var(--margin);border-color:var(--margin);color:#fff}
+.btn.primary:hover{filter:brightness(1.06)}
+.btn.ink{background:var(--ink);border-color:var(--ink);color:var(--paper)}
+.btn.ghost{background:transparent;border-color:transparent}
+.btn.ghost:hover{background:var(--card)}
+.btn.sm{padding:6px 10px;font-size:.82rem}
+.btn[aria-pressed="true"]{background:var(--margin-soft);border-color:var(--margin);color:var(--margin)}
+.btn:disabled{opacity:.5;cursor:not-allowed}
+.chips{display:flex;gap:6px;flex-wrap:wrap}
+.chip{border:1px solid var(--line);background:var(--card);border-radius:999px;padding:6px 12px;font-size:.85rem;font-weight:500;cursor:pointer;color:var(--ink-2)}
+.chip[aria-pressed="true"]{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.pill{display:inline-flex;align-items:center;gap:5px;font:600 .72rem/1 var(--f-body);letter-spacing:.04em;text-transform:uppercase;padding:5px 8px;border-radius:999px}
+.pill.open{background:var(--amber-soft);color:var(--amber)}
+.pill.accepted{background:var(--sea-soft);color:var(--sea)}
+.pill.declined{background:var(--card-2);color:var(--ink-3);border:1px solid var(--line)}
+.pill.note{background:var(--margin-soft);color:var(--margin)}
+
+/* ---------- home ---------- */
+main{padding-block:28px 80px}
+.hero{display:grid;grid-template-columns:minmax(0,1.35fr) minmax(0,1fr);gap:28px;align-items:end;margin-bottom:34px}
+.hero h1{font-size:clamp(2.1rem,4.6vw,3.5rem);line-height:1.02}
+.hero .ded{font-family:var(--f-hand);font-size:1.7rem;color:var(--margin);margin:10px 0 0;line-height:1}
+.hero p.lede{max-width:60ch;color:var(--ink-2);margin:16px 0 0}
+.hero-side{display:grid;gap:12px}
+.stats{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:10px}
+.stat{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px}
+.stat b{display:block;font:400 1.7rem/1 var(--f-display);font-variant-numeric:tabular-nums}
+.stat span{font-size:.8rem;color:var(--ink-3)}
+.hero-actions{display:flex;gap:8px;flex-wrap:wrap}
+@media (max-width:860px){.hero{grid-template-columns:1fr}}
+
+.dividers{display:flex;gap:4px;overflow-x:auto;padding-top:6px;margin-bottom:-1px;position:relative;z-index:1;scrollbar-width:none}
+.dividers::-webkit-scrollbar{display:none}
+.tab{flex:none;border:1px solid var(--line);border-bottom:none;background:var(--card-2);padding:9px 14px 8px;border-radius:10px 10px 0 0;font-weight:600;font-size:.88rem;cursor:pointer;color:var(--ink-2);display:flex;align-items:center;gap:7px}
+.tab i{width:9px;height:9px;border-radius:50%;background:var(--cat,var(--ink-3));flex:none}
+.tab[aria-pressed="true"]{background:var(--card);color:var(--ink);padding-bottom:10px;transform:translateY(1px)}
+.tab small{font-weight:500;color:var(--ink-3);font-variant-numeric:tabular-nums}
+.drawer{background:var(--card);border:1px solid var(--line);border-radius:0 var(--r) var(--r) var(--r);padding:18px;box-shadow:var(--shadow)}
+.tools{display:flex;justify-content:space-between;gap:12px;flex-wrap:wrap;align-items:center;margin-bottom:16px}
+.grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(230px,1fr));gap:14px}
+.rc{position:relative;text-align:left;display:flex;flex-direction:column;gap:8px;min-height:150px;background:var(--card);border:1px solid var(--line);border-radius:6px;padding:14px 14px 12px 26px;cursor:pointer;text-decoration:none;
+  background-image:linear-gradient(var(--margin),var(--margin)),repeating-linear-gradient(transparent 0 27px,var(--rule) 27px 28px);background-size:1.5px 100%,100% 100%;background-position:16px 0,0 30px;background-repeat:no-repeat,no-repeat;transition:transform .15s ease,box-shadow .15s ease}
+.rc:hover{transform:translateY(-2px);box-shadow:var(--shadow)}
+.rc h3{font-size:1.12rem;line-height:1.25}
+.rc .cat{font:600 .68rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--cat)}
+.rc .meta{margin-top:auto;display:flex;gap:10px;flex-wrap:wrap;font:400 .8rem/1.2 var(--f-type);color:var(--ink-3)}
+.rc .badges{position:absolute;top:10px;right:10px;display:flex;gap:4px}
+.dot{display:inline-flex;align-items:center;gap:3px;font:700 .7rem/1 var(--f-body);padding:4px 6px;border-radius:999px;background:var(--card-2);border:1px solid var(--line);color:var(--ink-2)}
+.dot svg{width:12px;height:12px}
+.dot.fav{color:var(--margin);border-color:var(--margin-soft);background:var(--margin-soft)}
+.empty{padding:40px 16px;text-align:center;color:var(--ink-3)}
+.empty h3{color:var(--ink);margin-bottom:6px}
+
+.feed{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:22px;margin-top:34px}
+@media (max-width:860px){.feed{grid-template-columns:1fr}}
+.panel{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px}
+.panel h2{font-size:1.3rem;margin-bottom:12px}
+.panel-head{display:flex;justify-content:space-between;align-items:baseline;gap:10px;margin-bottom:12px}
+.panel-head h2{margin:0}
+
+/* ---------- recipe card ---------- */
+.crumbs{display:flex;gap:8px;align-items:center;font-size:.88rem;color:var(--ink-3);margin-bottom:14px;flex-wrap:wrap}
+.crumbs a{text-decoration:none;color:var(--ink-2)}
+.crumbs a:hover{text-decoration:underline}
+.recipe{display:grid;grid-template-columns:minmax(0,1fr) 340px;gap:24px;align-items:start}
+@media (max-width:980px){.recipe{grid-template-columns:1fr}}
+.card{position:relative;background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}
+.card-top{position:relative;padding:28px 28px 20px 64px;border-bottom:1.5px solid var(--rule)}
+.card::before{content:"";position:absolute;top:0;bottom:0;left:44px;width:1.5px;background:var(--margin);opacity:.85}
+.card-top::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--cat)}
+.card-top .cat{font:600 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--cat)}
+.card-top h1{font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.1;margin:10px 0 0}
+.intro{color:var(--ink-2);max-width:62ch;margin:14px 0 0;font-size:1.02rem}
+.card-body{padding:6px 28px 28px 64px;display:grid;gap:26px}
+@media (max-width:620px){.card::before{left:22px}.card-top{padding:24px 18px 16px 36px}.card-body{padding:4px 18px 22px 36px}}
+.actions{display:flex;gap:8px;flex-wrap:wrap;padding-top:4px}
+.scaler{display:flex;align-items:center;gap:10px;flex-wrap:wrap;padding:10px 12px;border:1px dashed var(--line);border-radius:8px;background:var(--card-2)}
+.scaler .seg{display:inline-flex;border:1px solid var(--line);border-radius:999px;overflow:hidden;background:var(--card)}
+.scaler .seg button{border:0;background:transparent;padding:6px 11px;font:600 .85rem/1 var(--f-type);cursor:pointer;color:var(--ink-2)}
+.scaler .seg button[aria-pressed="true"]{background:var(--ink);color:var(--paper)}
+.serves{font:400 .92rem var(--f-type);color:var(--ink-2)}
+.sec-h{display:flex;justify-content:space-between;align-items:baseline;gap:10px;border-bottom:1px solid var(--line);padding-bottom:6px;margin-bottom:8px}
+.sec-h h2{font-size:1.35rem}
+.sec-h .muted{font-size:.82rem}
+.ing{list-style:none;margin:0;padding:0;display:grid;gap:0}
+.ing .grp{font:600 .74rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);padding:14px 0 6px}
+.line{display:flex;align-items:flex-start;gap:10px;padding:6px 0;border-bottom:1px dotted var(--line);position:relative}
+.line:last-child{border-bottom:0}
+.tick{flex:none;width:20px;height:20px;margin-top:2px;border:1.5px solid var(--ink-3);border-radius:5px;background:transparent;cursor:pointer;display:grid;place-items:center;padding:0}
+.tick svg{width:13px;height:13px;opacity:0;color:#fff}
+.line.done .tick{background:var(--sea);border-color:var(--sea)}
+.line.done .tick svg{opacity:1}
+.line.done .txt{color:var(--ink-3);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--ink-3) 60%,transparent)}
+.ing .txt{font:400 1rem/1.45 var(--f-type);flex:1;min-width:0}
+.ing .txt mark{background:var(--amber-soft);color:inherit;padding:0 2px;border-radius:3px}
+.edit{flex:none;opacity:0;border:0;background:transparent;color:var(--ink-3);cursor:pointer;padding:3px;border-radius:6px;display:grid;place-items:center}
+.edit svg{width:16px;height:16px}
+.line:hover .edit,.edit:focus-visible{opacity:1}
+.edit:hover{color:var(--margin);background:var(--margin-soft)}
+@media (hover:none){.edit{opacity:.55}}
+.steps{display:grid;gap:18px;counter-reset:st}
+.sg h3{font:600 1rem/1.3 var(--f-body);margin-bottom:4px;display:flex;align-items:baseline;gap:10px}
+.sg h3 .n{font:400 .95rem var(--f-display);color:var(--margin);font-variant-numeric:tabular-nums}
+.steps .txt{flex:1;min-width:0}
+.outro{font-style:italic;color:var(--ink-2);border-top:1px solid var(--line);padding-top:14px;margin:0}
+.ednote{display:flex;gap:10px;background:var(--amber-soft);color:var(--ink);border-radius:8px;padding:12px 14px;font-size:.92rem}
+.ednote svg{width:18px;height:18px;color:var(--amber);flex:none;margin-top:2px}
+.ednote b{color:var(--amber)}
+.ednote.done{opacity:.6}
+.ednote.done p{text-decoration:line-through}
+.ednote p{margin:0}
+.ednote .btn{margin-top:6px;padding-left:0}
+
+.side{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+@media (max-width:980px){.side{position:static}}
+.side .panel h2{font-size:1.15rem}
+.memory{border-left:2px solid var(--margin);padding:2px 0 2px 12px}
+.memory p{margin:0;white-space:pre-wrap}
+.memory .by{font:500 1.25rem/1.1 var(--f-hand);color:var(--margin);margin-top:4px}
+.stack{display:grid;gap:14px}
+
+/* ---------- suggestions ---------- */
+.sugg{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;display:grid;gap:10px}
+.sugg-head{display:flex;justify-content:space-between;gap:10px;align-items:flex-start;flex-wrap:wrap}
+.sugg-head a{font-family:var(--f-display);font-size:1.1rem;text-decoration:none}
+.sugg-head a:hover{text-decoration:underline}
+.sugg .kind{font-size:.8rem;color:var(--ink-3)}
+.diff{display:grid;gap:6px;font:400 .95rem/1.45 var(--f-type)}
+.diff .was,.diff .now{padding:8px 10px;border-radius:6px;white-space:pre-wrap;overflow-wrap:anywhere}
+.diff .was{background:var(--margin-soft);text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--margin) 55%,transparent);color:var(--ink-2)}
+.diff .now{background:var(--sea-soft)}
+.diff .lab{font:600 .68rem/1 var(--f-body);letter-spacing:.1em;text-transform:uppercase;color:var(--ink-3);display:block;margin-bottom:4px;text-decoration:none}
+.why{font-size:.92rem;color:var(--ink-2);margin:0}
+.sugg-foot{display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap;font-size:.84rem;color:var(--ink-3)}
+.sugg-foot .by{font:500 1.2rem/1 var(--f-hand);color:var(--ink-2)}
+.resolution{font-size:.88rem;background:var(--card-2);border-radius:6px;padding:8px 10px;margin:0}
+.list-cols{display:grid;grid-template-columns:240px minmax(0,1fr);gap:24px;align-items:start}
+@media (max-width:860px){.list-cols{grid-template-columns:1fr}}
+.filters{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
+@media (max-width:860px){.filters{position:static}}
+.filters select{width:100%;padding:8px 10px;border-radius:8px;border:1px solid var(--line);background:var(--card)}
+
+/* ---------- page header ---------- */
+.ph{display:flex;justify-content:space-between;align-items:end;gap:16px;flex-wrap:wrap;margin-bottom:22px}
+.ph h1{font-size:clamp(1.8rem,3.6vw,2.5rem)}
+.ph p{margin:6px 0 0;color:var(--ink-2);max-width:62ch}
+
+/* ---------- shopping list ---------- */
+.shop{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:16px}
+.shop .panel h3{font-size:1.1rem;margin-bottom:6px}
+.shop .ing .txt{font-size:.95rem}
+
+/* ---------- dialog ---------- */
+dialog{border:0;padding:0;border-radius:14px;background:var(--card);color:var(--ink);width:min(640px,calc(100vw - 24px));max-height:calc(100dvh - 32px);box-shadow:0 30px 80px -20px rgba(0,0,0,.45)}
+dialog::backdrop{background:rgba(17,21,31,.5);backdrop-filter:blur(2px)}
+.dlg{display:flex;flex-direction:column;max-height:calc(100dvh - 32px)}
+.dlg-h{padding:18px 20px 12px;border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:flex-start}
+.dlg-h h2{font-size:1.4rem}
+.dlg-b{padding:16px 20px;overflow:auto;display:grid;gap:14px}
+.dlg-f{padding:12px 20px 16px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:10px;align-items:center;flex-wrap:wrap}
+.field{display:grid;gap:6px}
+.field label,.field .lbl{font-weight:600;font-size:.88rem}
+.field .hint{font-size:.8rem;color:var(--ink-3)}
+.field input,.field textarea,.field select{width:100%;border:1px solid var(--line);background:var(--card-2);border-radius:8px;padding:10px 12px}
+.field textarea{min-height:84px;resize:vertical}
+.field textarea.typed{font-family:var(--f-type)}
+.field input:focus,.field textarea:focus,.field select:focus{outline:2px solid var(--focus);outline-offset:0;border-color:transparent}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:12px}
+@media (max-width:520px){.two{grid-template-columns:1fr}}
+.x{border:0;background:transparent;cursor:pointer;color:var(--ink-3);padding:6px;border-radius:8px}
+.x:hover{background:var(--card-2);color:var(--ink)}
+.x svg{width:20px;height:20px;display:block}
+.formmsg{font-size:.88rem;color:var(--margin)}
+
+/* ---------- ask claude ---------- */
+.answer{background:var(--card-2);border:1px solid var(--line);border-radius:10px;padding:14px;white-space:pre-wrap;font-size:.95rem;min-height:60px}
+.answer:empty{display:none}
+
+/* ---------- cook mode ---------- */
+.cook{position:fixed;inset:0;z-index:50;background:var(--paper);display:flex;flex-direction:column;padding:calc(env(safe-area-inset-top,0px) + 14px) 20px calc(env(safe-area-inset-bottom,0px) + 14px)}
+.cook-top{display:flex;justify-content:space-between;gap:10px;align-items:center;max-width:980px;width:100%;margin:0 auto}
+.cook-top h2{font-size:1.1rem;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.cook-main{flex:1;display:grid;grid-template-columns:minmax(0,1fr) 300px;gap:24px;max-width:980px;width:100%;margin:18px auto;min-height:0}
+@media (max-width:820px){.cook-main{grid-template-columns:1fr}.cook-ing{display:none}.cook-ing.show{display:block}}
+.cook-step{display:flex;flex-direction:column;justify-content:center;gap:16px;min-height:0;overflow:auto}
+.cook-step .grp{font:600 .8rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--margin)}
+.cook-step p{font:400 clamp(1.5rem,3.6vw,2.4rem)/1.3 var(--f-display);margin:0;text-wrap:pretty}
+.cook-ing{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:16px;overflow:auto}
+.cook-nav{display:flex;justify-content:space-between;align-items:center;gap:10px;max-width:980px;width:100%;margin:0 auto}
+.progress{flex:1;height:4px;background:var(--line);border-radius:4px;overflow:hidden}
+.progress i{display:block;height:100%;background:var(--margin);transition:width .2s}
+
+.toast{position:fixed;left:50%;bottom:calc(env(safe-area-inset-bottom,0px) + 20px);transform:translateX(-50%);background:var(--ink);color:var(--paper);padding:10px 16px;border-radius:999px;font-weight:600;font-size:.9rem;z-index:60;box-shadow:var(--shadow);max-width:calc(100vw - 32px)}
+.notice{background:var(--card-2);border:1px dashed var(--line);border-radius:8px;padding:10px 12px;font-size:.88rem;color:var(--ink-2)}
+footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);font-size:.85rem}
+</style>
+
+<header class="bar">
+  <div class="wrap bar-in">
+    <a class="brand" href="#" aria-label="The Chambers Family Cookbook, home">
+      <span class="brand-mark" aria-hidden="true"></span>
+      <span class="brand-name">The Chambers Family Cookbook<small>Dedicated to Nancy Chambers</small></span>
+    </a>
+    <label class="search"><span class="sr">Search recipes and ingredients</span>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <input id="q" type="search" placeholder="Search recipes or ingredients, e.g. fennel" autocomplete="off">
+    </label>
+    <nav class="nav" aria-label="Sections">
+      <a href="#" data-nav="home">Recipes</a>
+      <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
+      <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
+      <a href="#desk" data-nav="desk">Editor's desk</a>
+    </nav>
+  </div>
+</header>
+
+<main class="wrap" id="view" tabindex="-1"></main>
+
+<footer><div class="wrap">Made for the Chambers family. Spotted something to fix? Every ingredient and step has a pencil. Tap it to suggest a change.</div></footer>
+
+<!-- Suggest / memory dialog -->
+<dialog id="dlg-suggest" aria-labelledby="sg-title">
+  <form class="dlg" id="sg-form" novalidate>
+    <div class="dlg-h">
+      <div><div class="eyebrow" id="sg-eyebrow">Suggest a change</div><h2 id="sg-title">Help improve the book</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b">
+      <div class="field" id="f-kind-wrap">
+        <span class="lbl">What kind of change?</span>
+        <div class="chips" id="f-kind" role="group" aria-label="Kind of change"></div>
+      </div>
+      <div class="field" id="f-recipe-wrap">
+        <label for="f-recipe">Recipe</label>
+        <select id="f-recipe"></select>
+      </div>
+      <div id="f-new" hidden class="stack">
+        <div class="two">
+          <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
+          <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
+        </div>
+        <div class="field"><label for="f-ning">Ingredients</label><textarea id="f-ning" class="typed" placeholder="One per line"></textarea></div>
+        <div class="field"><label for="f-nsteps">Steps</label><textarea id="f-nsteps" placeholder="One per line"></textarea></div>
+      </div>
+      <div class="field" id="f-was-wrap">
+        <label for="f-was">What the book says now</label>
+        <textarea id="f-was" class="typed" rows="2" placeholder="Tap the pencil next to a line to fill this in, or paste it here"></textarea>
+      </div>
+      <div class="field" id="f-now-wrap">
+        <label for="f-now" id="f-now-label">What it should say</label>
+        <textarea id="f-now" class="typed" rows="3"></textarea>
+      </div>
+      <div class="field" id="f-why-wrap">
+        <label for="f-why">Why? <span class="muted">(optional)</span></label>
+        <textarea id="f-why" rows="2" placeholder="e.g. Mom always used 2 cups, it's on her original card"></textarea>
+      </div>
+      <div class="field">
+        <label for="f-name">Your name, as the family knows you</label>
+        <input id="f-name" placeholder="e.g. Aunt Carol" autocomplete="nickname">
+        <span class="hint">Shown next to your suggestion. Remembered on this device.</span>
+      </div>
+      <div class="notice" id="f-offline" hidden>Suggestions can't be saved from this view. Use "Copy suggestion" and send it to Robert by email or text.</div>
+      <div class="formmsg" id="f-msg" role="alert"></div>
+    </div>
+    <div class="dlg-f">
+      <span class="muted" style="font-size:.82rem">Everyone with access to this page can see suggestions.</span>
+      <div style="display:flex;gap:8px">
+        <button type="button" class="btn ghost" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="f-submit">Send suggestion</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- Ask Claude dialog -->
+<dialog id="dlg-ask" aria-labelledby="ask-title">
+  <form class="dlg" id="ask-form">
+    <div class="dlg-h">
+      <div><div class="eyebrow">Ask Claude about</div><h2 id="ask-title">Recipe</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b">
+      <div class="chips" id="ask-chips"></div>
+      <div class="field"><label for="ask-q">Your question</label><textarea id="ask-q" rows="2" placeholder="e.g. Can I make this the day before?"></textarea></div>
+      <div class="answer" id="ask-a" aria-live="polite"></div>
+      <span class="muted" style="font-size:.8rem">Answers are general cooking advice. The family recipe stays as written unless someone suggests a change.</span>
+    </div>
+    <div class="dlg-f">
+      <button type="button" class="btn sm ghost" id="ask-suggest" hidden>Turn this into a suggestion</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button type="button" class="btn ghost" data-close>Close</button>
+        <button type="submit" class="btn ink" id="ask-go">Ask</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- Resolve dialog (editors) -->
+<dialog id="dlg-resolve" aria-labelledby="rs-title">
+  <form class="dlg" id="rs-form">
+    <div class="dlg-h"><div><div class="eyebrow">Editor</div><h2 id="rs-title">Accept suggestion</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
+    <div class="dlg-b">
+      <div class="field"><label for="rs-note">Note to the family <span class="muted">(optional)</span></label>
+        <textarea id="rs-note" rows="3" placeholder="e.g. Thanks! Fixed in the print edition."></textarea></div>
+    </div>
+    <div class="dlg-f"><span></span><div style="display:flex;gap:8px"><button type="button" class="btn ghost" data-close>Cancel</button><button type="submit" class="btn primary" id="rs-go">Accept</button></div></div>
+  </form>
+</dialog>
+
+<div class="cook" id="cook" hidden role="dialog" aria-modal="true" aria-labelledby="cook-title"></div>
+<div class="toast" id="toast" hidden role="status"></div>
+<script type="text/plain" id="book">
+# Appetizers
+@ Almond Cheddar Appetizers
+> These warm, cheesy bites are perfect for parties or gatherings. The combination of crispy almonds, bacon, and cheddar on toasted baguette slices makes for a delightful appetizer that's both savory and satisfying.
+- 1 cup mayonnaise (not Miracle Whip)
+- 1 cup shredded cheddar cheese
+- 1 medium onion, chopped
+- ¾ cup slivered almonds
+- 6 strips bacon, crumbled
+- 1 baguette
+= Preheat the Oven
+* Set the oven to 400°F.
+= Prepare the Mixture
+* In a mixing bowl, combine the mayonnaise, cheddar cheese, chopped onion, slivered almonds, and crumbled bacon. Mix well.
+= Assemble the Appetizers
+* Slice the baguette into ½-inch thick rounds.
+* Spread a generous amount of the mixture onto each slice.
+= Bake
+* Place the topped baguette slices on a baking sheet.
+* Bake at 400°F for 8 minutes, or until the cheese is bubbly and slightly golden.
+= Serve
+* Let cool slightly before serving. Enjoy these crispy, cheesy bites warm!
+. Perfect for entertaining, these appetizers will disappear fast!
+
+@ Guacamole
+> This fresh and flavorful guacamole is perfect for dipping, spreading on toast, or serving as a topping for tacos and burritos. Made with ripe avocados, juicy tomatoes, and a hint of spice, it's a simple yet delicious dish that can be customized to taste.
+- 4 ripe avocados
+- 1 small amount of jalapeño (about ¼ diced)
+- ½ medium onion, chopped
+- 2 fresh tomatoes, chopped
+- Salt to taste
+- (Optional) 2 tablespoons of oil
+= Prepare the Ingredients
+* Cut the avocados in half, remove the pits, and scoop the flesh into a bowl.
+* Dice the jalapeño finely (use more or less depending on spice preference).
+* Chop the onion and tomatoes into small chunks.
+= Mix Everything Together
+* Lightly mash the avocados with a fork, keeping some chunks for texture.
+* Add the jalapeño, onion, and tomatoes.
+* Sprinkle with salt to taste and mix well.
+= Final Touches
+* If desired, add 2 tablespoons of oil for a smoother texture.
+* Serve immediately with tortilla chips, tacos, or as a topping for your favorite dishes.
+. Enjoy your homemade guacamole!
+
+@ Crabmeat Dip
+> This creamy and flavorful crabmeat dip is perfect for parties, gatherings, or as a delicious appetizer. The combination of cream cheese, crab, and a touch of sherry creates a rich and satisfying dip.
+- 8 oz cream cheese
+- 1 teaspoon sherry
+- 6 ½ oz crabmeat
+- 2 tablespoons chopped onion
+- ½ teaspoon horseradish
+- ¼ teaspoon salt
+- Pepper (to taste)
+- Slivered almonds (for topping)
+= Prepare the Mixture
+* In a saucepan over low heat, blend the cream cheese, sherry, crabmeat, onion, horseradish, salt, and pepper.
+* Stir continuously until smooth and well combined.
+= Bake the Dip
+* Preheat the oven to 375°F (190°C).
+* Transfer the mixture to a casserole dish.
+* Sprinkle slivered almonds on top.
+= Final Baking
+* Bake for 15 minutes until warm and bubbly.
+= Serve & Enjoy
+* Serve hot with crackers, toasted bread, or fresh vegetables for dipping.
+. This delicious crabmeat dip is a perfect addition to any appetizer spread!
+
+@ Shrimp Tarragon
+> This elegant shrimp dish features a rich, creamy tarragon sauce with a touch of cognac for a bold and flavorful finish. Perfect for a special dinner, it pairs beautifully with rice or crusty bread.
+- 5 tablespoons butter
+- 36 medium-sized shrimp, peeled and deveined
+- Salt (to taste)
+- 2 tablespoons finely minced shallots
+- ½ teaspoon tarragon
+- Black pepper (to taste)
+- 1 teaspoon lemon juice
+- 3 tablespoons warm cognac
+- ¾ cup heavy cream, heated
+- 1 tablespoon flour
+= Sauté the Shrimp
+* Melt 4 tablespoons of butter in a pan over medium heat.
+* Add the shrimp in a single layer and sprinkle with salt.
+* Cook for about 4 minutes, stirring occasionally, until shrimp are pink and opaque.
+= Add Flavor
+* Sprinkle the shrimp with lemon juice, shallots, tarragon, and black pepper.
+* Stir to combine.
+= Flambé with Cognac
+* Sprinkle the warm cognac over the shrimp and carefully ignite.
+* Let the flames burn off while spooning the sauce over the shrimp.
+= Make the Cream Sauce
+* Pour in the heated heavy cream and bring the mixture to a gentle boil.
+* Whisk in the flour to thicken the sauce, stirring continuously.
+= Serve & Enjoy
+* Remove from heat and serve immediately over rice, pasta, or with crusty bread.
+. This Shrimp Tarragon is a luxurious dish perfect for impressing guests or treating yourself to a gourmet meal at home!
+! The ingredient list calls for 5 tablespoons of butter, but the steps only use 4. The fifth tablespoon is never mentioned.
+
+@ Norma's Meatballs
+> These tender and flavorful meatballs are baked to perfection and coated in a sweet and tangy sauce. A family favorite, they make a great appetizer or main dish.
+-: For the Meatballs
+- 4 lbs lean ground beef
+- 1 cup fine bread crumbs
+- 1 cup milk
+- 4 eggs
+- Lots of fresh parsley, chopped
+- ⅓ cup onion, finely chopped
+- 2 teaspoons dry mustard
+- 1 ½ teaspoons salt
+-: For the Sauce
+- 1 jar grape jelly
+- 1 jar chili sauce
+- Juice of 1 lemon
+- A splash of sherry
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Meatballs
+* In a large bowl, combine the ground beef, bread crumbs, milk, eggs, parsley, onion, dry mustard, and salt.
+* Mix well until evenly incorporated.
+* Shape the mixture into small meatballs and place them on a baking sheet.
+= Bake
+* Bake the meatballs for 25 minutes or until fully cooked and lightly browned.
+= Prepare the Sauce
+* In a saucepan, mix the grape jelly, chili sauce, lemon juice, and sherry.
+* Heat over medium-low heat, stirring until the sauce is smooth and well combined.
+= Combine and Serve
+* Transfer the baked meatballs into a large pot or slow cooker.
+* Pour the warm sauce over the meatballs and stir gently to coat.
+* Simmer on low heat for a few minutes before serving.
+. Enjoy these as a delicious appetizer or over rice for a hearty meal!
+! A second, slightly different set of meatball steps (skillet option, 10–15 minute simmer) is stranded at the end of Frank's Crab Cakes in the manuscript. Decide which version belongs here.
+
+@ Basil Tomato Tart
+> This savory basil tomato tart features juicy tomatoes, fresh basil, and a rich cheese filling in a flaky pie crust. It's perfect as a light lunch, appetizer, or side dish.
+- 1 9-inch pie shell, pre-baked
+- ½ cup shredded mozzarella
+- 4–5 medium tomatoes
+- 10 loosely packed basil leaves
+- 4 cloves garlic
+- ½ cup mayonnaise
+- ¼ cup grated parmesan
+- ⅛ teaspoon ground white pepper
+= Preheat & Prepare Crust
+* Preheat oven to 375°F (190°C).
+* Pre-bake the pie crust according to package or recipe instructions.
+* While still warm, sprinkle ½ cup mozzarella over the bottom and let it melt.
+= Prepare the Tomatoes
+* Slice tomatoes into wedges and drain on paper towels to remove excess moisture.
+* Arrange the tomato slices over the melted cheese in the pie shell.
+= Make the Basil Mixture
+* In a food processor, combine basil, garlic, and ½ teaspoon olive oil until coarsely chopped.
+* Sprinkle this mixture over the tomatoes.
+= Prepare the Cheese Topping
+* In a mixing bowl, combine the remaining mozzarella, mayonnaise, parmesan, and white pepper.
+* Spoon the cheese mixture evenly over the tart.
+= Bake & Serve
+* Bake at 375°F (190°C) for 25–30 minutes, or until golden and bubbly.
+* Let cool slightly before slicing.
+. A perfect blend of fresh summer flavors and creamy cheese goodness!
+! The steps use "the remaining mozzarella", but all ½ cup was already used on the crust. The original card probably called for more mozzarella. Olive oil is also used in the steps but missing from the ingredients.
+
+@ Oysters Bienville
+> A rich and flavorful dish featuring oysters baked with a creamy shrimp and bacon sauce!
+- 4-5 slices bacon (cooked & chopped)
+- ½ cup diced onion
+- Salt & a pinch of cayenne
+- 3 cloves garlic, minced (add late to prevent burning)
+- 30g butter
+- Flour (to make a thick roux)
+- Sliced mushrooms
+- 1 cup chopped raw shrimp
+- White wine (for flavor)
+- 2 egg yolks
+= Prepare the Bacon & Aromatics
+* Cook bacon until crispy, then chop.
+* In the same pan, sauté onions with salt and cayenne.
+* Add garlic towards the end to prevent burning.
+= Make the Roux & Sauce
+* In a separate pan, melt butter, then stir in flour gradually to form a thick roux.
+* Slowly add sliced mushrooms, stirring constantly.
+* Stir in chopped shrimp, followed by a splash of white wine.
+* Simmer, letting the shrimp cook through.
+* Remove from heat and whisk in egg yolks to thicken the sauce.
+= Assemble & Bake
+* Spoon the shrimp & bacon sauce over fresh oysters in their shells.
+* Bake at 350°F (175°C) for 20 minutes, until bubbly and golden.
+. A decadent and elegant seafood dish, perfect for special occasions!
+! The oysters themselves are not in the ingredient list.
+
+@ Frank's Crab Cakes
+> These crispy, flavorful crab cakes are packed with delicate crab meat and a touch of spice. Pan-fried in butter and olive oil, they make a delicious appetizer or main course.
+-: Per pound of crab meat
+- 1 lb crab meat
+- ½ teaspoon mustard powder
+- ½ teaspoon celery salt
+- Pinch of cayenne pepper
+- ½ cup mayonnaise
+- 1 egg
+- Bread crumbs (for coating)
+- Olive oil & butter (for frying)
+= Prepare the Crab Cake Mixture
+* In a bowl, mix the mustard powder, celery salt, cayenne pepper, mayonnaise, and egg.
+* Add the crab meat and mix gently until well combined.
+= Form & Coat the Crab Cakes
+* Shape the mixture into small patties.
+* Roll each patty in bread crumbs, ensuring an even coating.
+= Fry the Crab Cakes
+* Heat a generous amount of olive oil and butter in a hot skillet over medium heat.
+* Fry the crab cakes for 3–4 minutes per side, or until golden brown and crispy.
+= Serve & Enjoy
+* Serve hot with a squeeze of lemon or a creamy dipping sauce.
+. Crispy on the outside and tender on the inside, perfect for any seafood lover!
+! In the manuscript, meatball sauce steps follow this recipe by mistake, and a stray line ("Here's the combined recipe for Pakistani Chicken…") sits just above it. Both need to be removed from the book file.
+
+# Salads
+@ Roasted Fennel Salad
+> A delicious blend of caramelized fennel, citrus, and crunchy pine nuts, perfect for a refreshing side dish or light meal. The roasting process enhances the natural sweetness of fennel, while the citrus zest and lemon juice provide a bright contrast.
+- 1 fennel bulb
+- Olive oil
+- Salt & pepper
+- 1 orange
+- ½ small red onion
+- 1 handful diced olives
+- 1 handful pine nuts
+- Lemon juice & zest (to taste)
+= Prepare the fennel
+* Trim off any tough outer layers and cut the fennel bulb into ½-inch thick slices. Reserve a handful of the fronds for garnish.
+= Roast the fennel
+* Heat olive oil in a pan and sauté fennel slices on both sides until caramelized.
+* Season with salt and pepper. Set aside.
+= Prepare the other ingredients
+* Slice the red onion into paper-thin slices.
+* Zest the orange and set aside.
+* Remove the orange skin, then dice the fruit into bite-sized pieces.
+= Assemble the salad
+* Scatter the diced olives and pine nuts over the roasted fennel.
+= Dress the salad
+* Squeeze fresh lemon juice over the salad and drizzle with olive oil to taste.
+= Garnish
+* Sprinkle the reserved fennel fronds over the top and serve immediately.
+. This salad pairs beautifully with grilled fish or roasted chicken.
+! The orange, its zest and the red onion are prepared but never added to the salad in the steps.
+
+@ Classic Caesar Salad (La Casa Pepe Style)
+> This homemade Caesar salad captures the bold flavors of a traditional dressing, combined with crisp romaine lettuce, crunchy croutons, and savory Parmesan. Perfect for a light lunch or a flavorful side dish!
+-: Dressing
+- 3 cloves garlic, minced
+- 2 tsp hot mustard (powder)
+- 1 egg yolk
+- ½ lemon (juiced)
+- 2 tbsp vinegar
+- 6 tbsp oil (olive oil recommended)
+-: Salad
+- Romaine lettuce, chopped
+- Croutons
+- Crumbled Parmesan cheese
+- Cooked and crumbled bacon
+- (Optional) Capers or pimentos for extra flavor
+= Prepare the Dressing
+* In a mixing bowl, whisk together the minced garlic, mustard powder, egg yolk, lemon juice, and vinegar.
+* Slowly drizzle in the oil while continuously whisking to emulsify the dressing.
+= Assemble the Salad
+* In a large salad bowl, toss the romaine lettuce with croutons, Parmesan cheese, and crumbled bacon.
+* If using, add capers or pimentos for extra flavor.
+= Combine & Serve
+* Pour the dressing over the salad and toss to coat evenly.
+* Serve immediately for the freshest taste.
+
+@ Greek Salad Dressing
+> Fresh, tangy, and full of Mediterranean flavors. Perfect for drizzling over salads, marinating meats, or even as a dipping sauce for bread.
+- 2 tablespoons lemon juice
+- 1 tablespoon red wine vinegar
+- 1 clove garlic, mashed
+- 1 teaspoon salt
+- ½ teaspoon pepper
+- ½ cup olive oil
+- 1 tablespoon chopped fresh cilantro
+- 1 tablespoon chopped fresh mint
+- 1 tablespoon chopped green onions or chives
+- 1 teaspoon fresh oregano
+= Combine Ingredients
+* In a small bowl or jar, whisk together the lemon juice, red wine vinegar, garlic, salt, and pepper.
+= Add the Olive Oil
+* Slowly drizzle in the olive oil while whisking continuously to help emulsify the dressing.
+= Mix in the Herbs
+* Stir in the chopped cilantro, mint, green onions (or chives), and oregano.
+= Serve or Store
+* Use immediately or store in an airtight container in the refrigerator for up to a week.
+* Shake or stir before using, as separation is natural.
+
+@ Fennel, Apple & Prosciutto Salad
+> Combines the crispness of fennel and apples with the savory richness of prosciutto and Asiago cheese. Tossed with a tangy vinaigrette, it's a perfect appetizer or side dish.
+-: For the Salad
+- 4 cups thinly sliced fennel bulb
+- 2 cups thinly sliced green apple
+- 1 tablespoon lemon juice
+- ½ cup grated Asiago cheese
+- 8 slices prosciutto (torn into pieces)
+- ½ cup chopped toasted pecans
+-: For the Vinaigrette
+- 2 tablespoons light mayonnaise
+- 2 tablespoons apple cider vinegar
+- 2 tablespoons chopped chives
+- ½ teaspoon sugar
+- ¼ cup olive oil
+- Salt & pepper (to taste)
+= Prepare the Salad Base
+* In a large bowl, toss the sliced fennel and apple with lemon juice to prevent browning.
+* Add the grated Asiago cheese and gently mix.
+= Make the Vinaigrette
+* In a small bowl, whisk together mayonnaise, apple cider vinegar, chopped chives, sugar, olive oil, salt, and pepper until well combined.
+= Assemble the Salad
+* Divide the fennel-apple mixture into individual serving bowls.
+* Drizzle the vinaigrette evenly over the salad.
+* Top with torn prosciutto pieces and toasted pecans.
+= Serve & Enjoy
+* Serve immediately for a fresh, crisp salad with a perfect balance of flavors.
+
+@ Black Bean & Corn Salad
+> A fresh, vibrant dish packed with protein and crunch. Perfect as a side dish, a topping for tacos, or a light lunch.
+-: Salad
+- 1 can black beans, rinsed
+- 1 red pepper, chopped
+- 2 cups corn kernels
+- ½ cup chopped celery
+- ¼ cup green onions, chopped
+- 2 tablespoons chopped cilantro or parsley
+-: Dressing
+- 3 tablespoons white or cider vinegar
+- 1 ½ tablespoons Dijon mustard
+- ¼ teaspoon salt
+- ¼ teaspoon black pepper
+- 1 teaspoon each of water & olive oil
+= Prepare the Salad
+* In a large bowl, combine black beans, red pepper, corn, celery, green onions, and cilantro or parsley.
+= Make the Dressing
+* In a small bowl, whisk together vinegar, Dijon mustard, salt, pepper, water, and olive oil.
+= Mix & Chill
+* Pour the dressing over the salad ingredients and toss well to coat.
+* Let sit in the refrigerator for at least 30 minutes to enhance the flavors.
+= Serve
+* Enjoy chilled as a salad, in tacos, or as a side to grilled meats.
+
+@ Mediterranean Couscous Salad
+> A fresh and flavorful dish, packed with vibrant herbs, feta cheese, and juicy tomatoes.
+-: Base
+- 1 ¾ cups water
+- ½ teaspoon salt
+- 1 ¼ cups couscous
+-: Vegetables & Add-ins
+- ⅓ cup chopped green onions
+- 2 tomatoes, dried & chopped
+- 1 cup feta cheese, cubed
+- ½ cup black olives, pitted & quartered (or finely chopped)
+- 2 tablespoons fresh mint or oregano, chopped
+- ⅓ cup olive oil
+- ¼ cup lemon juice
+= Prepare the Couscous
+* Bring water and salt to a boil in a saucepan.
+* Stir in couscous, cover, remove from heat, and let stand for 4 minutes.
+* Fluff with a fork to separate the grains.
+= Assemble the Salad
+* Add green onions, dried tomatoes, feta, black olives, and fresh herbs to the couscous.
+* Drizzle with olive oil and lemon juice.
+= Mix & Serve
+* Toss well to combine all ingredients.
+* Serve chilled or at room temperature.
+. Pairs perfectly with grilled meats, seafood, or as a light vegetarian meal!
+
+@ Fennel Salad
+> Crisp, refreshing, and perfect as a light side dish!
+- 1 fennel bulb
+- Juice & zest from ½ lemon
+- 1 spoonful of honey
+- A few splashes of olive oil
+- A sprinkle of salt & pepper
+= Prepare the Fennel
+* Remove stalks from the fennel bulb.
+* Cut the bulb in half and trim out the woody core.
+* Slice the remaining bulb as thinly as possible (or use a box grater for extra fine shavings).
+= Make the Dressing
+* In a bowl, whisk together the lemon juice & zest, honey, olive oil, salt, and pepper.
+= Assemble the Salad
+* Toss the sliced fennel in the dressing until well coated.
+* Optionally, garnish with mint, chives, or basil for extra flavor.
+. Pairs well with seafood, grilled meats, or as a crisp contrast to rich dishes!
+
+@ Tabbouleh
+> A refreshing Mediterranean salad made with bulgur, fresh herbs, and a zesty dressing. Perfect as a light meal, side dish, or a complement to grilled meats.
+- 1 ½ cups bulgur wheat
+- 3 red tomatoes, finely chopped
+- 1 ½ cups fresh parsley, finely chopped
+- ½ cup green onions, chopped
+- ¼ cup olive oil
+- 2 tablespoons lemon juice (or 1 tablespoon lemon juice + 1 tablespoon red wine vinegar)
+- Salt & pepper (to taste)
+= Prepare the Bulgur
+* Place bulgur in a bowl and cover with boiling water.
+* Let it sit for 30 minutes, then drain and squeeze out excess moisture.
+= Chop & Combine
+* In a large bowl, combine the tomatoes, parsley, and green onions with the drained bulgur.
+= Make the Dressing
+* In a small bowl, whisk together olive oil, lemon juice (or vinegar), salt, and pepper.
+= Mix & Chill
+* Pour the dressing over the bulgur mixture and toss well.
+* Refrigerate for at least 30 minutes to let the flavors blend.
+= Serve
+* Enjoy chilled as a salad or side dish.
+
+@ Grilled Avocado & Seafood Salsa
+> Combines creamy avocados, smoky grilled seafood, and zesty citrus for a delicious topping or dip.
+- 2 avocados, diced
+- 2 grilled seafood skewers (shrimp, fish, or scallops), chopped
+- ½ red onion, finely diced
+- ¼ cup fresh cilantro, chopped
+- 1 jalapeño, finely diced
+- Juice of 1 lime
+- 1 tablespoon olive oil
+- Salt & pepper (to taste)
+= Grill the Seafood
+* Grill seafood skewers until cooked through.
+* Remove from skewers and chop into bite-sized pieces.
+= Prepare the Salsa
+* In a large bowl, combine diced avocados, red onion, cilantro, and jalapeño.
+* Add the grilled seafood.
+= Season & Toss
+* Drizzle with lime juice and olive oil.
+* Season with salt and pepper to taste.
+* Gently toss to combine without mashing the avocado.
+= Serve & Enjoy
+* Serve as a dip with tortilla chips or as a topping for tacos, grilled meats, or salads.
+
+# Soups & Chowders
+@ Seafood Chowder (Crockpot Version)
+^ 4
+> This creamy and hearty seafood chowder is perfect for a cozy meal. Packed with tender fish, potatoes, and aromatic vegetables, this crockpot version makes it easy to prepare while letting the flavors meld beautifully over time.
+- 1 ½ lbs fresh or frozen cod (or other white fish fillets)
+- 3 slices bacon, diced
+- 1 onion, chopped
+- ¾ cup chopped green onions (with tops)
+- 2-3 potatoes, cubed
+- 1 ½ cups water
+- 1 tsp salt
+- ¼ tsp pepper
+- 1 (13-oz) can evaporated milk
+= Prepare the Ingredients
+* Cut the fish fillets into bite-sized pieces and set aside.
+* In a skillet, cook the diced bacon until golden and crispy.
+* Add the chopped onions to the skillet and sauté until soft.
+= Assemble in the Crockpot
+* Transfer the cooked bacon and onions to the crockpot.
+* Add the cubed potatoes, chopped green onions, water, salt, and pepper.
+= Cook
+* Cover and cook on Low for 6-8 hours or High for 2-4 hours, until the potatoes are tender.
+= Add the Milk
+* Stir in the evaporated milk during the last hour of cooking to create a rich and creamy texture.
+. Serve hot with crusty bread or oyster crackers. Garnish with fresh parsley or additional green onions, or add a dash of hot sauce or Old Bay seasoning.
+! The fish is cut up in step 1 but never added to the crockpot. It most likely goes in with the milk during the last hour.
+
+@ Curried Baby Pea Soup
+^ 8
+> A creamy, flavorful dish infused with the warmth of curry and ginger. Perfect as a comforting appetizer or a light meal.
+- 2 tablespoons unsalted butter
+- 1 leek (white part only), sliced
+- 1 clove garlic, minced
+- ½ teaspoon grated fresh ginger root
+- 1 ½ teaspoons curry powder
+- 1 cup frozen baby sweet peas
+- 1 cup chicken stock
+- ¼ cup sliced almonds
+- ⅓ cup whipping cream
+- Salt & freshly ground pepper (to taste)
+= Sauté Aromatics
+* Melt butter in a medium saucepan over low heat.
+* Add leek, garlic, and ginger, cooking until softened.
+= Add Curry & Peas
+* Stir in the curry powder and cook for 1 minute until fragrant.
+* Add the baby peas and chicken stock, bringing to a simmer.
+= Blend the Soup
+* Transfer the mixture to a blender or food processor and purée until smooth.
+* Return the soup to the pan and stir in the whipping cream.
+= Season & Serve
+* Heat through without boiling.
+* Season with salt and pepper to taste.
+* Garnish with toasted almonds or a swirl of cream before serving.
+! "Serves 8" seems high for 1 cup of peas and 1 cup of stock. Worth checking against the original card.
+
+# Main Courses
+@ Dijon Chicken
+- Boneless, skinless chicken breasts
+- Flour (for dredging)
+- Salt & pepper
+- 2 tbsp butter
+- 1 cup chicken bouillon
+- 2 tbsp Dijon mustard
+- 1 tsp tarragon
+- ¾ tsp honey
+- ¼ cup sour cream
+* Dredge chicken breasts in flour, salt, and pepper.
+* Brown the chicken in 2 tbsp butter, cooking both sides until golden brown. Remove and set aside.
+* In the same pan, combine bouillon, Dijon mustard, tarragon, and honey.
+* Add the chicken back to the pan and cook in the sauce until done.
+* Stir in sour cream last, mixing well before serving.
+! No introduction yet. A family member could write one.
+
+@ Hunter's Chicken
+> A rich and hearty dish featuring tender chicken simmered in a flavorful sauce made with mushrooms, white wine, beef stock, and herbs. Pairs well with rice, mashed potatoes, or crusty bread to soak up the sauce.
+- 1 whole chicken, cut into pieces
+- 2 tbsp butter
+- ½ cup chopped onion
+- 1 pkg mushrooms
+- ½ cup white wine (cubist)
+- ¼ cup beef stock
+- 2 tbsp tomato paste (or ketchup)
+- 1 tbsp cornstarch
+- 3 tbsp cold water
+- 1 tsp parsley
+- 1 tsp tarragon
+- Salt & pepper, to taste
+= Cook the Chicken
+* In a large skillet, melt the butter over medium heat.
+* Add the chicken pieces and cook for 18-20 minutes until browned on all sides.
+* Remove the chicken and set it aside.
+= Prepare the Sauce
+* In the same skillet, add the chopped onions and mushrooms.
+* Season with salt and pepper.
+* Cook for 4 minutes until softened.
+= Deglaze and Simmer
+* Add the white wine and let it cook for 3 minutes, allowing the alcohol to evaporate.
+* Stir in the beef stock and tomato paste.
+= Thicken the Sauce
+* In a small bowl, mix cornstarch with cold water until smooth.
+* Slowly add the cornstarch mixture to the skillet, stirring continuously.
+= Finish Cooking
+* Return the chicken to the pan and add the parsley and tarragon.
+* Let the dish simmer until the sauce has thickened and the chicken is fully cooked.
+= Serve
+* Enjoy with rice, mashed potatoes, or a warm baguette.
+! "(cubist)" after white wine looks like a transcription error. Possibly a brand or "dry".
+
+@ Mushroom Braised Chicken
+> Tender chicken simmered in a rich white wine and mushroom sauce, finished with a creamy texture. Pairs well with rice, pasta, or crusty bread.
+- Chicken pieces (your choice)
+- 1 onion, chopped
+- 1 cup mushrooms, sliced
+- ½ cup white wine
+- ½ tsp tarragon
+- 2 tbsp flour
+- ⅓ cup whipping cream
+= Brown the Chicken
+* In a large pan, brown the chicken on both sides.
+= Simmer
+* Add chopped onions and mushrooms to the pan.
+* Pour in ½ cup white wine and sprinkle with ½ tsp tarragon.
+* Cover and simmer for 15-20 minutes.
+= Thicken the Sauce
+* Remove the lid from the pan.
+* Mix 2 tbsp flour into ⅓ cup whipping cream until smooth.
+* Stir the mixture into the sauce.
+= Final Simmer
+* Let the sauce simmer uncovered until it thickens to a rich consistency.
+. Enjoy over rice, mashed potatoes, or buttered egg noodles. Garnish with fresh parsley.
+! The book has two different Mushroom Braised Chicken recipes. Keep both with distinct names, or merge them.
+
+@ Classic Meatloaf
+> Hearty, flavorful, and perfect for a comforting homemade meal. With a blend of minced beef, fresh vegetables, and a tangy hint of horseradish, it's sure to become a family favorite.
+- 2 lbs minced beef
+- ¼ cup chopped onion
+- ¼ cup chopped green pepper
+- 2 cups cubed bread
+- 2 eggs, beaten
+- ¼ cup ketchup
+- 2 tbsp horseradish
+- ¼ cup milk
+- Small tsp dry mustard
+- Salt & pepper to taste
+= Preheat Oven
+* Set your oven to 400°F (200°C).
+= Mix Ingredients
+* In a large bowl, combine the minced beef, chopped onion, green pepper, cubed bread, and beaten eggs.
+* Add ketchup, horseradish, milk, dry mustard, salt, and pepper.
+* Mix until all ingredients are well incorporated.
+= Shape & Bake
+* Shape the mixture into a loaf and place it in a greased baking dish or loaf pan.
+* Bake for 45 minutes or until the meatloaf is cooked through and golden brown.
+= Serve & Enjoy
+* Let the meatloaf rest for a few minutes before slicing. Serve with mashed potatoes or your favorite side dishes.
+
+@ Tuna Noodle Casserole (Crockpot Version)
+> A classic comfort food, made even easier with a crockpot! Tender noodles, tuna, and vegetables in a rich sauce, topped with crunchy almonds.
+- 2 cans tuna, drained
+- 2 cans cream of mushroom soup
+- 1 cup milk
+- 2 tbsp dried parsley
+- 1 (10 oz) package frozen mixed vegetables, thawed
+- 1 (10 oz) package noodles, cooked and drained
+- ½ cup toasted almonds
+= Prepare the Mixture
+* In a large bowl, combine the tuna, soup, milk, parsley, and vegetables.
+* Stir well until fully mixed.
+= Add Noodles
+* Gently fold in the cooked noodles until evenly coated with the sauce.
+= Cook in the Crockpot
+* Grease the crockpot lightly and pour in the mixture.
+* Sprinkle toasted almonds on top.
+= Set the Cooking Time
+* Cook on Low for 7-9 hours or High for 3-4 hours until heated through.
+. Serve warm with a fresh salad or garlic bread. Add a sprinkle of cheese or breadcrumbs on top before serving for extra flavor.
+
+@ Swiss Steak (Crockpot Version)
+> Tender beef simmered in a rich tomato sauce with vegetables. The crockpot makes it incredibly easy, letting the flavors develop over time.
+- 1 ½ lbs round steak (¾-inch thick)
+- 2 tbsp flour
+- ½ tsp salt
+- ¼ tsp pepper
+- 1 medium onion, sliced
+- 1 carrot, chopped
+- 1 celery stalk, chopped
+- 1 (15-oz) can tomato sauce
+= Prepare the Steak
+* Cut the steak into serving-sized pieces.
+* In a small bowl, mix the flour, salt, and pepper.
+* Dredge the steak pieces in the seasoned flour mixture, ensuring even coating.
+= Layer in the Crockpot
+* Place the sliced onions at the bottom of the crockpot.
+* Add the flour-coated steak pieces on top.
+* Scatter the chopped carrots and celery over the meat.
+= Add the Sauce & Cook
+* Pour the tomato sauce over the layered ingredients.
+* Cover and cook on Low for 8-10 hours or High for 3-5 hours, until the meat is fork-tender.
+. Serve hot over mashed potatoes, rice, or buttered egg noodles, with steamed green beans or a fresh salad.
+
+@ Oriental Beef & Noodles
+^ 6
+> This slow-cooked Asian-inspired beef dish is packed with tender sirloin, colorful vegetables, and a rich, flavorful sauce. Served over vermicelli noodles, it's a hearty and satisfying meal.
+- 1½ lb lean boneless sirloin, cut into strips
+- 1 red bell pepper, chopped
+- 3 carrots, chopped
+- 2 tbsp rice vinegar (use white if preferred)
+- ¼ cup soy sauce
+- ¼ cup sherry
+- 1 tbsp oyster sauce
+- 1 tsp sugar
+- 2 tbsp chopped peanuts
+- 12 oz cooked vermicelli noodles
+= Prepare the Slow Cooker
+* Add all ingredients except the noodles into the crockpot.
+= Cook
+* Cook on High for 4-5 hours or Low for 8-10 hours, until the beef is tender and the flavors are well combined.
+= Serve
+* Cook vermicelli noodles separately according to package instructions.
+* Serve the beef mixture over the noodles and enjoy!
+. Garnish with extra chopped peanuts or green onions for added texture and flavor.
+
+@ Italian Pork Chops (Crockpot Recipe)
+^ 4-6
+> Slow-cooked pork chops in a hearty tomato sauce with mushrooms, garlic, and herbs. Dry sherry and lemon juice add depth and brightness.
+- 4-6 pork chops
+- 1 tbsp oil
+- ½ lb sliced mushrooms
+- 1 onion, chopped
+- 1 clove garlic, chopped
+- 2 (8 oz) cans tomato sauce
+- ¼ cup dry sherry
+- 1 tbsp lemon juice
+- ½ tsp salt
+- 1 tbsp parsley flakes
+- ½ tsp oregano
+- ½ tsp basil
+- ½ tsp pepper
+- 2 green peppers, cut into rings
+= Brown the Chops
+* In a skillet, heat 1 tbsp oil and brown the pork chops on both sides. Remove from heat.
+= Prepare the Ingredients
+* Chop the mushrooms, onions, garlic, and green peppers.
+= Combine in Crockpot
+* Add mushrooms, onions, garlic, and green peppers to the crockpot.
+* Pour in tomato sauce, sherry, lemon juice, and seasonings (salt, parsley, oregano, basil, and pepper).
+* Stir well to combine.
+= Cook
+* Place browned pork chops into the sauce mixture in the crockpot.
+* Cover and cook on Low for 7-9 hours or High for 4-5 hours until tender.
+. Serve over pasta, mashed potatoes, or with crusty bread to soak up the rich sauce.
+
+@ Pork Cutlets in Mustard Sauce
+^ 4
+> Tender pork cutlets seared and simmered in a rich mustard sauce with sautéed mushrooms and apples. Savory and slightly sweet, comforting yet elegant.
+- 2 tbsp oil
+- 4 pork cutlets (chops)
+- 1 pkg mushrooms, sliced
+- 1 apple, peeled & sliced thick
+- ½ cup chicken stock
+- 1 tbsp cornstarch
+- 2 tbsp cold water
+- 1 tbsp Dijon mustard
+= Sear the Pork
+* Heat 1 tbsp oil in a pan over medium-high heat.
+* Cook pork cutlets for 3-4 minutes per side until browned.
+* Remove from pan and set aside.
+= Sauté Mushrooms & Apples
+* Add the remaining 1 tbsp oil (and a bit of butter if desired).
+* Sauté mushrooms and apples for about 3 minutes, stirring occasionally.
+= Prepare the Sauce
+* Stir in chicken stock and bring to a gentle boil.
+* In a small bowl, mix cornstarch and cold water to create a slurry.
+* Add to the pan, stirring continuously.
+= Simmer & Finish
+* Stir in Dijon mustard and mix well.
+* Return pork cutlets to the pan.
+* Cook on low heat until the sauce thickens and the pork is cooked through.
+. Serve with mashed potatoes, rice, or buttered noodles for a complete meal.
+
+@ Pot-Roasted Pork in White Wine with Fennel and Rosemary
+- 1 3½ lb loin pork roast
+- 2–3 tbsp fennel seeds
+- Salt and pepper
+- 2–3 tbsp butter or olive oil
+- 8 cloves garlic (skin left on)
+- 1 handful fresh rosemary (½–1 tsp dried)
+- 4 bay leaves
+- 1 fennel bulb, sliced
+- ½ bottle Chardonnay (or other dry wine)
+* Preheat oven to 400°F.
+* Season roast with salt, pepper, and fennel seeds.
+* Heat butter or olive oil in a pan and brown the pork on all sides.
+* Add garlic, rosemary, bay leaves, fennel slices, and wine to the pan.
+* Cover the roast with wet waxed paper.
+* Bake for 1½ hours (for a 4–6 lb roast, 1¾–2 hours for a 7–9 lb roast).
+* If the roast has the bone, it will take longer.
+* After cooking, remove the roast and let it rest.
+* For the finishing sauce, remove the garlic cloves, squish them open, and squeeze out the juice from the bottom of the pan.
+! The manuscript reads "1–3 ½ lb loin pork roast". Shown here as one 3½ lb roast; please confirm. The bake times also mention 4–9 lb roasts, which don't match. No introduction yet.
+
+@ Penne Abigail
+^ 4-6
+> A hearty pasta dish that combines ground beef, zucchini, kidney beans, and a touch of spice. Basil, chili powder, and hot sauce bring warmth and depth, while mozzarella gives it a creamy finish.
+- 2 tbsp olive oil
+- 1 onion, chopped
+- ½ hot green pepper, seeded and chopped
+- 1 small zucchini, diced with skin
+- 1 lb ground beef
+- 1 (25 oz) tin tomatoes, chopped and drained
+- 1 tbsp chopped parsley
+- ½ tsp chili powder
+- 1 tsp basil (more if fresh)
+- ½ (large can) red kidney beans
+- 4 cups cooked penne pasta
+- 1 cup grated mozzarella cheese
+- Salt, pepper, and hot sauce to taste
+= Sauté Vegetables
+* Heat olive oil in a large pan over medium heat.
+* Add onion, hot pepper, and zucchini. Cook for 7-8 minutes, stirring occasionally.
+= Cook Meat
+* Add ground beef, breaking it up with a spoon.
+* Cook for 4-5 minutes until browned.
+= Season & Simmer
+* Season with salt, pepper, and hot sauce to taste.
+* Stir in tomatoes, parsley, and kidney beans.
+* Add basil and chili powder, mixing well.
+* Reduce heat and let simmer for 15 minutes.
+= Add Pasta & Cheese
+* Stir in cooked penne and mozzarella cheese.
+* Cook for another 4 minutes, stirring occasionally, until cheese is melted and pasta is well combined.
+= Serve & Enjoy!
+* Serve warm, garnished with extra parsley or basil if desired.
+. Perfect for a family dinner or meal prep, as the flavors continue to develop over time.
+
+@ Seafood Casserole
+> A rich and creamy seafood casserole filled with lobster, crab, shrimp, and a smooth cheese sauce. Perfect for special occasions or cozy dinners.
+- 2 cups chopped onion
+- 3 cups chopped celery
+- 3 tbsp butter
+- 1 tsp salt
+- ¼ tsp pepper
+- ¾ cup flour
+- ½ cup butter
+- 5 cups milk
+- 1 lb Velveeta cheese
+- 10 oz lobster meat
+- ½ lb crab meat
+- ¾ lb cooked shrimp
+- 1 lb cooked scallops
+* Sauté the onion and celery in 3 tbsp butter until softened. Add salt and pepper.
+* Prepare a white sauce: Melt ½ cup butter, stir in flour, then slowly whisk in milk until thickened.
+* Add the sautéed vegetables and Velveeta cheese, stirring until the cheese is fully melted.
+* Mix in the seafood, then transfer to a large casserole dish or individual serving dishes.
+* Bake until bubbly and lightly browned.
+! Not in the table of contents. It looks like the complete version of Seafood Casserole (Cy's). Consider merging the two. Needs an oven temperature and time.
+
+@ Veal Marsala
+> A classic Italian dish, rich, savory, and elegant. Thin veal cutlets are coated in Parmesan, seared until golden, and simmered in a Marsala wine sauce with mushrooms and garlic.
+- 1 lb thin veal cutlets
+- ⅓ cup grated Parmesan cheese
+- ¼ cup butter or margarine
+- 1 clove garlic, minced
+- 4-5 mushrooms, thinly sliced
+- Dash of cayenne pepper
+- ¼ bouillon cube
+- ¼ cup hot water
+- ¼ cup Marsala wine
+* Flatten the veal cutlets and cut them into 2-inch pieces. Coat each piece well with grated Parmesan.
+* In a skillet, sauté the garlic in butter until fragrant. Add the coated veal pieces and cook until golden brown, adding extra butter if needed. Remove the veal from the pan and discard the garlic.
+* In the same pan, sauté mushrooms for about 5 minutes, then remove and set aside.
+* Add butter to the pan, stir in cayenne, bouillon cube, and hot water, mixing until the bouillon dissolves.
+* Return the veal and mushrooms to the pan and cook for about 1 minute over high heat.
+* Add Marsala wine, stir, and serve immediately.
+! Not in the table of contents and has no section heading in the manuscript.
+
+@ Pasta Sauce with Pork Hocks
+> An inexpensive yet delicious pasta sauce. Slow simmering the pork hocks gives it deep flavor, perfect for a cozy family dinner.
+- 2 meaty pork hocks (skin removed)
+- 4 cloves garlic
+- ½ large carrot, chopped
+- 1 stalk celery, chopped
+- 1 onion, chopped
+- 1 can diced tomatoes
+- 1 bay leaf
+- ¼ tsp thyme
+- Salt and pepper, to taste
+* In a large pot, brown the pork hocks over medium heat. Remove and set aside.
+* In the same pot, sauté garlic, carrot, celery, and onion until softened.
+* Return pork hocks to the pot and add diced tomatoes, bay leaf, thyme, salt, and pepper.
+* Cover and simmer gently for 1½ hours.
+* Remove pork hocks from the pot, remove meat from bones, and chop finely.
+* Return chopped pork to the sauce, simmering for an additional 15 minutes.
+* Serve over your favorite noodles and enjoy!
+! Not in the table of contents and has no section heading in the manuscript.
+
+@ Broccoli Casserole
+> A delicious, creamy side dish for any meal. Easy to prepare, and it can be made ahead of time!
+- 2 eggs
+- ¾ cup mayonnaise
+- ¾ cup shredded cheese
+- ¼ cup small onion, chopped
+- 1 can mushroom soup
+- Partially cooked broccoli
+- Bread crumbs (for topping)
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Mixture
+* In a mixing bowl, whisk the eggs, then add the mayonnaise, shredded cheese, chopped onion, and mushroom soup. Mix well.
+= Combine with Broccoli
+* Pour the mixture over the partially cooked broccoli in a baking dish.
+= Add the Topping
+* Sprinkle bread crumbs evenly over the top for a crispy finish.
+= Bake
+* Place in the oven and bake for about 30 minutes or until golden and bubbly.
+= Serve & Enjoy
+* Let it cool slightly before serving.
+. Can be made ahead of time for convenience!
+
+@ Marinated Balsamic Grilled Vegetables
+> Grilled vegetables with a tangy balsamic vinaigrette and creamy feta cheese. Perfect as a side dish or light main course!
+-: For the Vegetables
+- Asparagus
+- Onion
+- Zucchini
+- Mushrooms
+- Peppers
+- Olive oil (for tossing)
+- Salt & pepper (to taste)
+-: For the Vinaigrette
+- 1 small tub of feta cheese, cubed
+- 2 tablespoons balsamic vinegar
+- 2 tablespoons olive oil
+- Fresh basil, sliced
+- Salt & pepper (to taste)
+= Prepare the Vegetables
+* Cut the vegetables into bite-sized pieces.
+* Toss them with a drizzle of olive oil, salt, and pepper.
+= Grill the Vegetables
+* Place the vegetables in a grill basket.
+* Grill over medium heat, tossing often, until tender and slightly charred.
+= Make the Vinaigrette
+* In a bowl, whisk together balsamic vinegar, olive oil, fresh basil, salt, and pepper.
+= Assemble & Serve
+* Toss the grilled vegetables with the feta cheese and vinaigrette.
+* Serve warm or at room temperature.
+
+@ Olive & Chicken Curry Crêpes
+^ 6–8
+> Savory crêpes filled with a creamy chicken and olive curry, then baked with a sprinkle of parmesan. A perfect dish for a special brunch or dinner!
+- ¼ cup butter
+- ¼ cup diced celery
+- 1 cup diced onion
+- 2 tablespoons flour
+- 1 teaspoon salt
+- ¾ teaspoon curry powder
+- 1 cup milk
+- 2 cubes chicken bouillon
+- ½ cup warm water
+- ¾ cup sliced olives
+- 2 ½ cups cooked chicken, shredded or diced
+- ¼ cup parmesan cheese
+- Basic Crêpes (see Desserts)
+= Prepare the Filling
+* Melt butter in a skillet over medium heat.
+* Add diced celery and onion, cooking until softened.
+* Stir in flour, salt, and curry powder, blending well.
+= Make the Sauce
+* Dissolve the bouillon cubes in warm water.
+* Gradually add the milk and bouillon mixture to the skillet, stirring constantly until the sauce thickens.
+= Add Chicken & Olives
+* Stir in the sliced olives and cooked chicken, blending everything together.
+= Assemble the Crêpes
+* Fill each crêpe with the chicken curry mixture and roll them up.
+* Place the filled crêpes in a lightly greased baking dish.
+= Bake
+* Sprinkle the crêpes with parmesan cheese.
+* Bake at 400°F (200°C) for 12 minutes, until heated through and slightly golden on top.
+
+@ Seafood Casserole (Cy's)
+> A creamy and comforting seafood casserole with a rich Velveeta cheese sauce and sautéed vegetables.
+-: For the Sautéed Vegetables
+- 3 cups chopped celery
+- 2 cups chopped onion
+- Butter (for sautéing)
+-: For the Cheese Sauce
+- ¾ cup flour
+- ½ cup butter
+- 5 cups milk
+- 1 lb Velveeta cheese
+- Salt & pepper (to taste)
+= Sauté the Vegetables
+* In a large pan, melt butter over medium heat.
+* Add chopped celery and onion, sautéing until soft and translucent.
+= Prepare the Cheese Sauce
+* In a separate saucepan, melt ½ cup butter.
+* Whisk in flour and cook for 1–2 minutes until slightly golden.
+* Gradually add milk, whisking constantly to create a smooth sauce.
+* Stir in Velveeta cheese and continue stirring until melted.
+* Season with salt and pepper to taste.
+= Assemble the Casserole
+* Preheat oven to 375°F (190°C).
+* Combine the sautéed vegetables with the cheese sauce and pour into a greased casserole dish.
+= Bake & Serve
+* Bake uncovered for about 30 minutes until bubbly and golden on top.
+* Let cool slightly before serving.
+! This version has no seafood in it at all. The uncatalogued Seafood Casserole has the lobster, crab, shrimp and scallops.
+
+@ Pakistani Chicken with Potato and Spinach
+-: For the Chicken
+- 2 large onions, thinly sliced
+- 2–3 lbs chicken (skinned, bone-in or boneless)
+- 2 tbsp oil
+- 1 tsp cayenne pepper
+- 1 tsp chili powder
+- 1 bay leaf
+- 2–3 tomatoes, chopped
+- 1 cup chickpeas or lentils (optional)
+- 2 stalks celery, chopped
+- 1 tbsp turmeric
+- Salt and pepper to taste
+-: For the Potatoes
+- 2 large potatoes, pre-cooked and cubed
+- 1 cup fresh spinach, chopped
+- 1 tsp turmeric
+- 1 tbsp oil for sautéing
+-: For the Chapatis
+- 1 cup whole wheat flour
+- 1 cup white flour
+- ½ cup water (adjust as needed)
+- 1 tbsp oil
+- ½ tsp salt
+= Prepare the Chicken
+* Heat oil in a pan and sauté the onions until golden brown.
+* Add the chicken pieces and brown them on all sides.
+* Stir in cayenne, chili powder, and bay leaf.
+* Add chopped tomatoes and simmer until they soften.
+* Add chickpeas/lentils, celery, turmeric, and enough water to cover the ingredients.
+* Simmer for 30-40 minutes until chicken is fully cooked and tender.
+= Prepare the Potatoes
+* In a separate pan, heat oil over medium heat.
+* Add pre-cooked potato chunks and sauté.
+* Stir in chopped spinach and turmeric.
+* Cook for a few minutes until the spinach is wilted and potatoes are well-coated.
+= Make the Chapatis
+* In a bowl, mix both flours, salt, and oil.
+* Gradually add water and knead into a soft dough.
+* Let rest for 15 minutes, then divide into small balls.
+* Roll out each ball into thin rounds.
+* Cook on a dry, hot pan for about 1-2 minutes per side until slightly charred and puffed.
+. Serve the chicken with the sautéed potatoes and spinach on the side, with fresh homemade chapatis.
+! The manuscript ends this recipe with "Let me know if you'd like any modifications!", leftover assistant text that should be removed. No introduction yet.
+
+@ Mushroom Braised Chicken (with Cream & Noodles)
+> Rich, flavorful, and tender, cooked in a creamy white wine sauce and served over buttered noodles. A comforting and elegant dish for any occasion.
+- 3 lbs chicken (cut into quarters)
+- 3 tablespoons butter
+- Salt & pepper (to taste)
+- 1 onion, chopped
+- ½ lb mushrooms, sliced
+- ¼–½ cup white wine
+- ¼ teaspoon tarragon
+- 1 tablespoon flour
+- 1 cup cream
+- Buttered noodles (for serving)
+= Brown the Chicken
+* Heat butter in a large skillet over medium heat.
+* Season chicken with salt and pepper, then brown it on all sides.
+= Add Vegetables & Wine
+* Once the chicken is browned, add the mushrooms, onions, white wine, and tarragon.
+= Braise the Chicken
+* Cover and simmer for 45 minutes, or until the chicken is fully cooked and tender.
+= Make the Sauce
+* Remove the chicken from the pan and set aside.
+* Stir in the flour, scraping up any browned bits from the bottom of the pan.
+* Gradually add the cream, whisking until smooth.
+* Let the sauce simmer until thickened.
+= Serve
+* Return the chicken to the sauce, letting it heat through.
+* Serve over buttered noodles and garnish with parsley if desired.
+! Second recipe titled "Mushroom Braised Chicken" in the manuscript. Renamed here so the two can be told apart.
+
+@ Crêpes with Spinach, Bacon & Mushroom Filling
+^ 4
+> Savory crêpes filled with a creamy spinach, bacon, and mushroom mixture, then topped with a warm egg sauce.
+- 6 slices bacon
+- 1 tablespoon unsalted butter
+- ½ lb mushrooms, sliced
+- 3 tablespoons butter
+- ¼ cup flour
+- 1 cup milk
+- 1 package chopped spinach
+- 1 tablespoon parsley
+- 2 tablespoons parmesan cheese
+- Salt & pepper (to taste)
+- Basic Crêpes (see Desserts)
+= Cook the Bacon
+* Cook bacon in a skillet until crispy, then crumble and set aside.
+= Sauté the Mushrooms
+* Add 1 tablespoon butter to the bacon drippings and cook mushrooms until tender.
+= Make the Sauce
+* In a saucepan, melt 3 tablespoons butter over medium heat.
+* Whisk in flour and cook for 1 minute.
+* Gradually add milk, whisking constantly until smooth and thickened.
+= Combine the Filling
+* Stir in the cooked bacon, mushrooms, spinach, parsley, parmesan cheese, salt, and pepper.
+* Simmer for 1 minute to combine flavors.
+= Assemble the Crêpes
+* Fill each crêpe with the spinach-bacon-mushroom mixture and roll up.
+= Warm & Serve
+* Top with a warm egg-based sauce if desired and heat in the oven before serving.
+! The egg sauce is mentioned but there is no recipe for it.
+
+@ Scallop, Lobster & Mushroom Crêpes
+^ 30 crêpes
+> Luxurious seafood crêpes filled with a creamy mixture of scallops, lobster, mushrooms, and Swiss cheese. An elegant dish for special occasions.
+-: For the Filling
+- 2 lbs scallops (cooked & chopped)
+- Meat from 10 lobsters (cooked & chopped)
+- 8 oz fresh spinach (cooked, drained & chopped)
+- 1 lb mushrooms, chopped
+- ¾ cup butter
+- 4 shallots, finely chopped
+- ⅔ cup flour
+- 4 cups milk
+- 2 cups heavy cream
+- 3–4 cups grated Swiss, muenster, or gruyère cheese
+- 1 cup grated parmesan cheese
+- ½ teaspoon cayenne pepper
+- ½ teaspoon nutmeg
+- Salt & pepper (to taste)
+-: For Assembly
+- 30 crêpes
+= Prepare the Seafood & Vegetables
+* Cook and chop the scallops and lobster meat, then set aside.
+* Cook the spinach, drain excess liquid, and chop finely.
+* Sauté the mushrooms in 2 tablespoons of butter until soft.
+= Make the Sauce
+* In a large saucepan, melt ¾ cup butter over medium heat.
+* Add the shallots and cook until fragrant.
+* Stir in the flour, cooking for 1–2 minutes.
+* Gradually whisk in the milk and heavy cream, stirring constantly until thickened.
+* Add the grated Swiss cheese, cayenne, nutmeg, salt, and pepper.
+= Combine the Filling
+* Stir the cooked scallops, lobster, spinach, and mushrooms into the sauce.
+* Mix well and let simmer for a few minutes to blend the flavors.
+= Assemble the Crêpes
+* Spoon the seafood filling into each crêpe and roll them up.
+* Place the filled crêpes in a greased baking dish.
+* Sprinkle with parmesan cheese.
+= Bake & Serve
+* Bake at 375°F (190°C) for 15–20 minutes until golden and bubbly.
+* Serve hot and enjoy this decadent seafood dish!
+
+# Bread & Baking
+@ Plum Loaf
+> A rich, spiced bread with a hint of cinnamon and nutmeg. Soft, slightly sweet, and packed with raisins, perfect for breakfast or as a cozy treat with tea.
+- ½ – ¾ cup shortening
+- 1 cup sugar
+- 1 egg
+- 1 tablespoon yeast dissolved in ⅓ cup warm water + 1 teaspoon sugar
+- 4 cups boiling water
+- ¾ cup raisins
+- ½ teaspoon nutmeg
+- 1 teaspoon vanilla
+- ½ to 1 teaspoon cinnamon
+- 1 tablespoon salt
+- 12–14 cups flour (enough to make a soft dough, just stiff enough to handle)
+= Prepare the Base
+* Cream together the shortening and sugar in a large mixing bowl.
+* Add the egg and mix well.
+= Prepare the Yeast Mixture
+* In a small bowl, dissolve the yeast in warm water with 1 teaspoon of sugar. Let sit until frothy (about 5–10 minutes).
+= Add Boiling Water & Raisins
+* Pour the boiling water into the shortening-sugar mixture and stir.
+* Add the raisins while the mixture is still warm, allowing them to plump up.
+* Let the mixture cool to lukewarm.
+= Incorporate the Yeast & Spices
+* Once cooled, add the yeast mixture, nutmeg, vanilla, cinnamon, and salt. Mix well.
+= Form the Dough
+* Gradually add flour, mixing continuously, until a soft, kneadable dough forms (about 12–14 cups).
+* Knead the dough well until smooth and elastic.
+= Let the Dough Rise
+* Cover the dough and let it rise in a warm place for about 1 ½ hours, or until doubled in size.
+= Shape & Bake
+* Punch down the dough and shape it into loaves.
+* Place in greased loaf pans and let rise again until doubled.
+* Bake at 375°F (190°C) until golden brown.
+. Enjoy warm, with butter or jam!
+! No bake time given. The egg is added to boiling water in step 3. Check whether the original adds it after cooling.
+
+@ Christmas Shortbread
+> Rich, buttery, and slightly sweet, the perfect holiday treat. Simple to prepare, great for gifting or enjoying with a cup of tea.
+- 1 lb butter (softened)
+- 1 cup light brown sugar
+- 4 cups flour
+= Prepare the Dough
+* In a large bowl, mix the butter, brown sugar, and flour.
+* Knead the mixture for about 20 minutes until it forms a smooth ball.
+= Chill the Dough
+* Divide the dough into portions and chill for at least 30 minutes to make it easier to roll out.
+= Roll & Cut
+* Roll out the dough to about ⅓-inch thickness on a lightly floured surface.
+* Use cookie cutters to create festive shapes.
+= Bake
+* Preheat the oven to 250°F (120°C).
+* Place the cookies on a parchment-lined baking sheet and bake for 30 minutes until firm but not browned.
+= Cool & Enjoy
+* Let the cookies cool completely before storing in an airtight container.
+! Appears twice in the manuscript, word for word, under both Bread & Baking and Desserts. Keep one.
+
+@ Nannie's Bread
+> A cherished classic, passed down through generations. It produces a soft, hearty loaf with a beautifully golden crust, perfect for sandwiches, toast, or simply enjoyed warm with butter.
+- 11 cups flour
+- 2 packets fast-rising yeast
+- ½ cup lukewarm water (not hot)
+- 2 teaspoons white sugar
+- 3 ½ cups lukewarm water
+- 3 tablespoons sugar
+- 2 tablespoons lard
+- 1 ½ tablespoons salt
+= Prepare the yeast mixture
+* Dissolve yeast and 2 teaspoons sugar in ½ cup lukewarm water. Set aside until foamy.
+= Mix the dough
+* In a large bowl, sift flour. Add 3 ½ cups lukewarm water, 3 tablespoons sugar, lard, and salt.
+= Combine ingredients
+* Gradually mix in yeast mixture until dough is smooth and stiff enough to handle without sticking.
+= First rise
+* Roll dough onto a floured surface, cover, and let rest for 10 minutes. Transfer to a greased bowl, grease top of dough, cover, and let rise for about 1 hour.
+= Shape the loaves
+* Divide dough into three portions and knead each portion into loaf shape.
+= Second rise
+* Place shaped dough into greased loaf pans. Allow loaves to rise in a slightly warm oven with a pan of hot water for about 1 ½ hours.
+= Bake
+* Preheat oven to 375°F. Bake loaves for 1 hour, until golden brown.
+= Cool & serve
+* Remove from oven, let cool slightly before slicing, and enjoy.
+
+@ Mom's Classic Scones
+> Soft, slightly sweet, and perfect with jam, butter, or clotted cream. Enjoy them fresh from the oven with your favorite tea or coffee!
+- 2 cups flour
+- 3 tsp baking powder
+- ½ cup Crisco (or butter)
+- ⅓ cup sugar
+- 1 egg
+- ½ cup milk
+- ⅓ cup raisins
+- 1 tsp vanilla
+- Pinch of salt
+= Preheat the Oven
+* Set oven to 400°F.
+= Prepare the Dough
+* In a mixing bowl, combine flour, baking powder, sugar, and salt.
+* Cut in the Crisco (or butter) until the mixture is crumbly.
+* In a separate bowl, whisk together the milk, beaten egg, and vanilla.
+* Add the wet ingredients to the dry, stirring gently until just combined.
+* Fold in the raisins.
+= Shape and Bake
+* Turn the dough onto a floured surface and gently knead a few times.
+* Pat the dough into a ½-inch thick circle and cut into rounds or wedges.
+* Place on a baking sheet and bake for 15-18 minutes or until golden brown.
+= Cool and Serve
+* Allow to cool slightly before serving warm with butter or jam.
+
+@ Irish Scones
+> Lightly sweet, tender, and perfect for breakfast or tea time. Raisins or currants add bursts of sweetness, while nutmeg brings a gentle warmth.
+- 4 cups flour
+- 1 cup brown sugar
+- 1 cup lard
+- 2 eggs
+- 1 teaspoon salt
+- 1 teaspoon baking soda
+- ½ teaspoon cream of tartar
+- ½ cup milk
+- ½ cup raisins or currants (optional)
+- ½ teaspoon nutmeg (optional)
+* Preheat oven to 375°F (190°C).
+* In a large bowl, combine flour, sugar, salt, baking soda, cream of tartar, and nutmeg.
+* Cut lard into dry ingredients until the mixture resembles coarse crumbs.
+* In a separate bowl, beat eggs with milk, reserving a small amount for glazing.
+* Mix egg-milk mixture into dry ingredients until just combined; gently fold in raisins or currants if using.
+* Pat dough out to ½-inch thickness and cut into desired shapes.
+* Brush tops with reserved egg mixture.
+* Bake for 15–20 minutes, until golden brown.
+
+# Desserts
+@ Hershey's Chocolate Cake
+> Rich and moist, made with cocoa and a hint of coffee for extra depth. Perfect for any occasion, with a smooth coffee-flavored icing.
+-: For the Cake
+- 2 cups flour
+- 1 ½ cups sugar
+- 2 eggs
+- ½ cup mayonnaise
+- ½ cup milk + 2 teaspoons baking soda
+- 1 ½ teaspoons vanilla
+- 6 rounded tablespoons cocoa
+- 1 cup boiling water
+-: For the Icing
+- ½ package icing sugar
+- 25g unsweetened chocolate
+- Coffee
+- Salt (a pinch)
+- Vanilla (to taste)
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Batter
+* In a large bowl, beat together flour, sugar, eggs, and mayonnaise.
+* Add the milk mixed with baking soda, vanilla, and cocoa. Mix until smooth.
+* Slowly stir in the boiling water, blending well.
+= Bake
+* Pour the batter into a greased cake pan.
+* Bake for 55 minutes or until a toothpick inserted in the center comes out clean.
+* Let the cake cool before icing.
+= Prepare the Icing
+* Melt the unsweetened chocolate.
+* Mix with icing sugar, coffee, salt, and vanilla.
+* Beat until smooth and spread over the cooled cake.
+! Pan size isn't given. 55 minutes suggests a 9×13 or tube pan.
+
+@ Vanilla Wafers
+> A simple, buttery delight with a crisp texture and a rich vanilla flavor. Perfect for snacking, layering in banana pudding, or serving alongside tea or coffee.
+- 8 tablespoons (1 stick) butter, softened
+- ⅓ cup sugar
+- 1 egg
+- Pinch of salt
+- ½ teaspoon vanilla extract
+- ⅔ cup flour
+* Preheat oven to 325°F (163°C).
+* Cream butter and sugar together in a mixing bowl until light and fluffy.
+* Add the egg, salt, and vanilla extract, mixing until fully combined.
+* Gradually mix in the flour until a smooth dough forms.
+* Scoop small portions of dough onto a baking sheet, spacing them evenly apart.
+* Bake for 7-8 minutes, or until the edges turn lightly golden.
+* Cool on a wire rack before serving.
+
+@ Basic Crêpes
+^ 8
+> Delicate and versatile crêpes for sweet or savory fillings. Perfect for breakfast, brunch, or dessert!
+- 1 cup flour
+- 2 eggs
+- ½ cup milk
+- ½ cup water
+- ¼ teaspoon salt
+- 2 tablespoons melted butter
+= Prepare the Batter
+* In a bowl, whisk together the flour and eggs.
+* Gradually add the milk and water, whisking continuously to avoid lumps.
+* Stir in the salt and melted butter.
+* Beat until the batter is smooth and slightly runny.
+= Cook the Crêpes
+* Heat a lightly greased non-stick skillet or crêpe pan over medium heat.
+* Pour about ¼ cup of batter into the pan, swirling it to coat the surface evenly.
+* Cook for about 1–2 minutes until the edges lift slightly and the bottom is lightly golden.
+* Flip and cook for another 30 seconds.
+= Serve & Enjoy
+* Fill with your favorite sweet or savory ingredients, such as fruit, jam, Nutella, ham, or cheese.
+* Fold or roll and serve warm.
+
+@ Boston Cream Cake (Nannie's Cake)
+> A light, fluffy cake layered with a rich, creamy filling, combining vanilla, custard, and a tender crumb.
+-: For the Cake
+- 1 ¾ cups flour
+- 3 ½ teaspoons baking powder
+- ½ teaspoon salt
+- ⅓ cup butter
+- 1 scant cup sugar
+- 1 cup milk
+- 1 egg
+- 1 teaspoon vanilla
+-: For the Filling
+- 1 ¾ cups milk (heated)
+- ¼ cup milk
+- 2 tablespoons cornstarch
+- ⅓ cup sugar
+- 2 tablespoons flour
+- 2 egg yolks
+- 1 teaspoon vanilla
+- 1 ½ tablespoons butter
+= Make the Cake
+* Preheat your oven to 375°F (190°C).
+* In a bowl, whisk together the flour, baking powder, and salt.
+* In a separate bowl, cream the butter, gradually adding the sugar while beating until light and fluffy.
+* Beat in the egg.
+* Alternately add the flour mixture and milk, beginning and ending with the flour.
+* Stir in the vanilla last.
+* Pour the batter into a greased cake pan and bake for 25 minutes or until a toothpick inserted in the center comes out clean.
+* Let the cake cool completely.
+= Make the Filling
+* Heat 1 ¾ cups of milk in a saucepan over medium heat.
+* In a separate bowl, mix ¼ cup milk, cornstarch, sugar, and flour until smooth.
+* Add the egg yolks to the mixture and whisk well.
+* Gradually pour this mixture into the hot milk, stirring constantly.
+* Cook over medium heat, stirring continuously, until the mixture thickens.
+* Remove from heat and stir in vanilla and butter.
+= Cool and Assemble
+* Transfer the filling to a bowl, cover with wax paper, and refrigerate until cool.
+* Once the cake and filling are cool, slice the cake in half and spread the filling between the layers.
+! The cake is identical to Nannie's 1-Egg Cake. The book could point from one to the other.
+
+@ Jam Tarts
+> A flaky, buttery crust filled with sweet raspberry jam. A perfect treat for tea time or dessert, especially with a dollop of whipped cream.
+- ¾ cup shortening
+- ¼ cup sugar
+- 1 egg, unbeaten
+- 1 tablespoon milk
+- ½ teaspoon salt
+- 1 ½ cups flour
+- ½ teaspoon vanilla
+- Raspberry jam (for filling)
+= Prepare the Dough
+* In a large bowl, mix the shortening and sugar until well combined.
+* Add the egg, milk, vanilla, salt, and flour. Mix until a dough forms.
+= Roll & Cut
+* Roll out the dough on a lightly floured surface.
+* Cut rounds using a cookie cutter or a glass to fit into tartlet molds.
+= Fill the Tarts
+* Place the dough rounds into a greased tartlet pan.
+* Fill each tart with a spoonful of raspberry jam.
+= Bake
+* Conventional oven: bake at 350°F (175°C) for 20 minutes.
+* Convection oven: bake at 325°F (163°C) for 16 minutes.
+= Serve & Enjoy
+* Allow the tarts to cool slightly before removing them from the pan.
+* Serve with a dollop of Cool Whip or whipped cream.
+
+@ Wanda's Butter Tarts
+- 2 eggs
+- 1 cup brown sugar
+- ½ cup butter
+- 1½ tsp cornstarch (or 1 tbsp maple syrup)
+- 2 tbsp water
+- 1 tsp vanilla
+- 1 cup raisins
+- 30 nuts
+- Tart shells
+* Soak raisins in Allegra (or another liquid, possibly rum or water).
+* Blend eggs, brown sugar, butter, cornstarch (or maple syrup), water, and vanilla together.
+* Stir in the soaked raisins and nuts.
+* Pour mixture into tart shells.
+* Bake at 350°F until done.
+! Found in the middle of Main Courses with leftover transcription text around it. Not in the contents. "Allegra" and "30 nuts" need checking against Wanda's original card, along with a bake time.
+
+@ Christmas Pineapple Cake
+> A rich, fruit-filled holiday treat with coconut, raisins, and cherries. It bakes low and slow for a moist and flavorful finish.
+- 3 eggs, separated
+- 1 ¾ cups white sugar
+- 1 cup butter
+- 1 lb white raisins
+- 2 ¾ cups flour
+- 1 teaspoon baking powder
+- ¼ cup grated orange rind
+- 1 lb mixed red & green cherries
+- 1 (20 oz) can crushed pineapple
+- 8 oz candied pineapple
+- 1 teaspoon vanilla
+- ½ teaspoon nutmeg
+- 1 teaspoon salt
+- 1 cup coconut
+= Prepare the Batter
+* Cream the butter and sugar together until light and fluffy.
+* Add the egg yolks one at a time, mixing well after each addition.
+= Add Dry Ingredients
+* In a separate bowl, whisk together the flour, baking powder, salt, and nutmeg.
+* Gradually add the dry ingredients to the butter mixture, mixing until combined.
+= Incorporate the Fruits
+* Stir in the grated orange rind, crushed pineapple, coconut, raisins, cherries, and candied pineapple.
+= Fold in the Egg Whites
+* In a clean bowl, beat the egg whites until stiff peaks form.
+* Gently fold the egg whites into the batter to keep the cake light.
+= Bake
+* Grease a loaf or bundt cake pan and pour in the batter.
+* Bake at 300°F (150°C) for 2 hours until a toothpick inserted in the center comes out clean.
+= Cool & Serve
+* Let the cake cool completely before removing it from the pan.
+* Slice and enjoy as a festive Christmas treat!
+! Vanilla is listed but never used in the steps.
+
+@ Nannie's 1-Egg Cake
+> Simple, classic, light and fluffy. A no-fuss recipe that needs just one egg, great for a quick homemade treat.
+- 1 ¾ cups flour
+- 3 ½ teaspoons baking powder
+- ½ teaspoon salt
+- ⅓ cup butter or shortening
+- 1 scant cup of white sugar
+- 1 egg
+- 1 cup sweet milk
+- 1 teaspoon vanilla
+= Prepare the Batter
+* Cream the butter or shortening until smooth.
+* Gradually add sugar, beating well between additions. The fine texture of the cake depends on proper beating.
+* Beat the egg separately and combine it with the butter-sugar mixture.
+= Combine Ingredients
+* Mix the dry ingredients (flour, baking powder, and salt) in a separate bowl.
+* Add the dry mixture to the wet ingredients alternately with the milk.
+* Stir in the vanilla last.
+= Bake
+* Pour the batter into a greased cake pan.
+* Bake at 375°F (190°C) for 25 minutes, or until a toothpick inserted in the center comes out clean.
+. Let the cake cool before serving. Enjoy it on its own, or frost it with your favorite icing!
+
+@ Lemon Sorbet
+> The perfect light and tangy dessert for hot summer days or as a palate cleanser between courses. Smooth, bright, and made with just a few ingredients.
+- 1 cup milk (2% or skim is fine)
+- 1 cup whipping cream
+- 5 lemons (to yield 1 cup fresh lemon juice)
+- ⅔ cup berry sugar (fine granulated sugar)
+= Prepare the Mixture
+* Squeeze the lemons to extract 1 cup of fresh lemon juice.
+* In a mixing bowl, combine the lemon juice, milk, whipping cream, and berry sugar. Stir well until the sugar is fully dissolved.
+= Freeze the Sorbet
+* Pour the mixture into a shallow dish and place it in the freezer.
+* Freeze for about 4 hours, stirring occasionally to break up ice crystals and create a smooth texture.
+= Final Touches
+* Once the sorbet reaches a slushy consistency, spoon it into serving dishes (such as lemon halves for a decorative touch).
+* Return the sorbet to the freezer until ready to serve.
+
+@ Rice Pudding
+> A comforting, creamy dessert that's simple to make and perfect for any time of year. A hint of vanilla and a touch of nutmeg make this baked version rich and satisfying.
+- 2 eggs
+- 1 ½ cups milk
+- ¾ cup cooked rice
+- ¼ cup brown sugar
+- ¼ teaspoon salt
+- 1 teaspoon vanilla
+- Nutmeg (for topping, optional)
+= Preheat & Prepare
+* Preheat oven to 325°F (160°C).
+* Grease a casserole dish.
+= Mix Ingredients
+* In a medium bowl, beat the eggs.
+* Stir in the milk, cooked rice, brown sugar, salt, and vanilla until well combined.
+= Bake
+* Pour the mixture into the prepared casserole dish.
+* Place the dish in a larger pan filled with hot water (water bath) to help it cook evenly.
+* Bake for about 45 minutes, stirring once during baking if desired.
+= Finish & Serve
+* If desired, sprinkle nutmeg on top before serving.
+* Serve warm or chilled.
+
+# Condiments
+@ Fleur De Sel Lunenburg Mustard
+- ¼ cup mustard seed
+- ¼ cup mustard powder
+- ½ cup water
+- ½ cup white wine vinegar
+- 1 small onion (diced)
+- 2 tablespoons brown sugar
+- 1 teaspoon salt
+- 2 garlic cloves (diced)
+- ½ teaspoon cinnamon
+- ¼ teaspoon turmeric
+- 2 thyme sprigs
+* Boil and reduce the mixture by half, then add it to the seeds and powder mixture.
+* Let it sit at room temperature in a non-reactive container for 3 days.
+* After 3 days, put it in jars.
+. Easy to make and perfect for storage in small jars!
+! The first step says "the mixture" without saying which ingredients go in the pot. Presumably everything except the seeds and powder. The name mentions fleur de sel but the list just says salt. No introduction yet.
+</script>
+<script>
+(() => {
+"use strict";
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const store = {
+  get(k, d) { try { const v = localStorage.getItem("ccb:" + k); return v == null ? d : JSON.parse(v); } catch { return d; } },
+  set(k, v) { try { localStorage.setItem("ccb:" + k, JSON.stringify(v)); } catch {} }
+};
+const ICON = {
+  pencil: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M4 20h4L19 9a2.8 2.8 0 0 0-4-4L4 16v4Z"/><path d="m13.5 6.5 4 4"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><path d="m5 12 5 5 9-10"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>',
+  heartO: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 20s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 10c0 5.6-7 10-7 10Z"/></svg>',
+  cart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>',
+  pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6Z"/><path d="M2 10h20M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/></svg>',
+  spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
+  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
+  dice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>',
+  down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
+  left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>'
+};
+
+/* ---------------- parse the book ---------------- */
+const CAT_VAR = { "Appetizers": "--c-app", "Salads": "--c-sal", "Soups & Chowders": "--c-soup", "Main Courses": "--c-main", "Bread & Baking": "--c-bread", "Desserts": "--c-des", "Condiments": "--c-cond" };
+const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function parseBook(txt) {
+  const out = []; let cat = "", r = null, grp = null;
+  for (const raw of txt.split("\n")) {
+    const l = raw.trim(); if (!l) continue;
+    const body = l.replace(/^(-:|[#@^>\-=*.!])\s?/, "");
+    if (l.startsWith("# ")) { cat = body; continue; }
+    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "", notes: [] }; out.push(r); grp = null; continue; }
+    if (!r) continue;
+    if (l.startsWith("^ ")) r.serves = body;
+    else if (l.startsWith("> ")) r.intro = body;
+    else if (l.startsWith("-:")) r.ing.push({ g: body });
+    else if (l.startsWith("- ")) r.ing.push({ t: body });
+    else if (l.startsWith("= ")) { grp = { h: body, items: [] }; r.steps.push(grp); }
+    else if (l.startsWith("* ")) { if (!grp) { grp = { h: "", items: [] }; r.steps.push(grp); } grp.items.push(body); }
+    else if (l.startsWith(". ")) r.outro = body;
+    else if (l.startsWith("! ")) r.notes.push(body);
+  }
+  out.forEach(r => { r.search = (r.name + " " + r.cat + " " + r.ing.map(i => i.t || "").join(" ")).toLowerCase(); r.nIng = r.ing.filter(i => i.t).length; r.nSteps = r.steps.reduce((a, g) => a + g.items.length, 0); });
+  return out;
+}
+const RECIPES = parseBook(document.getElementById("book").textContent);
+const BY = Object.fromEntries(RECIPES.map(r => [r.id, r]));
+const CATS = [...new Set(RECIPES.map(r => r.cat))];
+const catStyle = c => `--cat:var(${CAT_VAR[c] || "--ink-3"})`;
+
+/* ---------------- quantities ---------------- */
+const FR = { "½": .5, "⅓": 1 / 3, "⅔": 2 / 3, "¼": .25, "¾": .75, "⅛": .125 };
+const NUM = "(\\d+\\s?[½⅓⅔¼¾⅛]|\\d+\\/\\d+|\\d+(?:\\.\\d+)?|[½⅓⅔¼¾⅛])";
+const LEAD = new RegExp("^" + NUM + "(\\s*(?:–|-|to)\\s*" + NUM + ")?");
+function toNum(t) {
+  t = t.replace(/\s/g, "");
+  if (t.includes("/")) { const [a, b] = t.split("/"); return +a / +b; }
+  const m = t.match(/^(\d*)([½⅓⅔¼¾⅛])?$/); if (m) return (m[1] ? +m[1] : 0) + (m[2] ? FR[m[2]] : 0);
+  return parseFloat(t);
+}
+function fmt(n) {
+  if (n >= 20) return String(Math.round(n));
+  const w = Math.floor(n), f = n - w;
+  const opts = [[0, ""], [.125, "⅛"], [.25, "¼"], [1 / 3, "⅓"], [.5, "½"], [2 / 3, "⅔"], [.75, "¾"], [1, "+1"]];
+  let best = opts[0]; for (const o of opts) if (Math.abs(o[0] - f) < Math.abs(best[0] - f)) best = o;
+  if (best[1] === "+1") return String(w + 1);
+  if (!best[1]) return String(w || (n > 0 ? "⅛" : 0));
+  return w ? `${w} ${best[1]}` : best[1];
+}
+function scaleLine(t, f) {
+  if (f === 1) return { html: esc(t), scaled: false };
+  const m = t.match(LEAD); if (!m) return { html: esc(t), scaled: false };
+  let q = fmt(toNum(m[1]) * f); if (m[3]) q += "–" + fmt(toNum(m[3]) * f);
+  return { html: `<mark>${esc(q)}</mark>${esc(t.slice(m[0].length))}`, scaled: true, text: q + t.slice(m[0].length) };
+}
+const scaledText = (t, f) => { const s = scaleLine(t, f); return s.scaled ? s.text : t; };
+
+/* ---------------- state ---------------- */
+const S = {
+  q: "", cat: store.get("cat", "All"), filter: "all", factor: 1,
+  fav: new Set(store.get("fav", [])), checks: store.get("checks", {}), list: store.get("list", []),
+  sugg: [], stories: [], desk: {}, dbState: "loading",
+  me: { id: null, canEdit: false, canWrite: null, readOnly: false }, names: {},
+  sFilter: { status: "open", recipe: "" }
+};
+let db = null, user = null, sample = null, downloads = null;
+const saveLocal = () => { store.set("fav", [...S.fav]); store.set("checks", S.checks); store.set("list", S.list); store.set("cat", S.cat); };
+
+/* ---------------- routing ---------------- */
+function route() {
+  const h = decodeURIComponent(location.hash.slice(1));
+  if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: h.slice(2) };
+  if (["suggestions", "list", "desk"].includes(h)) return { v: h };
+  return { v: "home" };
+}
+let lastRoute = "";
+function render() {
+  const r = route(), key = r.v + (r.id || "");
+  const changed = key !== lastRoute;
+  if (changed && r.v === "recipe") S.factor = 1;
+  const view = $("#view");
+  if (r.v === "recipe") view.innerHTML = vRecipe(BY[r.id]);
+  else if (r.v === "suggestions") view.innerHTML = vSuggestions();
+  else if (r.v === "list") view.innerHTML = vList();
+  else if (r.v === "desk") view.innerHTML = vDesk();
+  else view.innerHTML = vHome();
+  const navKey = r.v === "recipe" ? "home" : r.v;
+  $$(".nav a").forEach(a => a.dataset.nav === navKey ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
+  const open = S.sugg.filter(s => s.status === "open").length;
+  const no = $("#nav-open"); no.hidden = !open; no.textContent = open;
+  const nl = $("#nav-list"); const listN = S.list.reduce((a, x) => a + x.items.filter(i => !i.done).length, 0); nl.hidden = !listN; nl.textContent = listN;
+  if (changed) { lastRoute = key; window.scrollTo(0, 0); document.title = r.v === "recipe" ? BY[r.id].name + " · The Chambers Family Cookbook" : "The Chambers Family Cookbook"; }
+}
+addEventListener("hashchange", render);
+
+/* ---------------- helpers ---------------- */
+const suggFor = id => S.sugg.filter(s => s.recipeId === id);
+const storiesFor = id => S.stories.filter(s => s.recipeId === id);
+function who(o) { return o.signedAs || (o.authorId && S.names[o.authorId]) || "A family member"; }
+function ago(ts) {
+  if (!ts) return ""; const d = (Date.now() - ts) / 1000;
+  if (d < 60) return "just now"; if (d < 3600) return Math.floor(d / 60) + " min ago"; if (d < 86400) return Math.floor(d / 3600) + " h ago";
+  if (d < 86400 * 7) return Math.floor(d / 86400) + " d ago";
+  return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: d > 86400 * 300 ? "numeric" : undefined });
+}
+const KINDS = [
+  { k: "fix", label: "Fix a mistake", now: "What it should say" },
+  { k: "ingredient", label: "Change an ingredient", now: "What it should say" },
+  { k: "step", label: "Change a step", now: "What it should say" },
+  { k: "missing", label: "Add missing info", now: "What's missing" },
+  { k: "intro", label: "Write an introduction", now: "Your introduction" },
+  { k: "memory", label: "Share a memory", now: "Your memory or story" },
+  { k: "new", label: "Add a missing recipe", now: "Anything else we should know" },
+  { k: "other", label: "Something else", now: "Your suggestion" }
+];
+const KIND = Object.fromEntries(KINDS.map(k => [k.k, k]));
+function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600); }
+async function copy(text) { try { await navigator.clipboard.writeText(text); toast("Copied"); return true; } catch { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch {} ta.remove(); toast(ok ? "Copied" : "Couldn't copy. Select the text and copy it yourself."); return ok; } }
+
+/* ---------------- views ---------------- */
+function card(r) {
+  const fav = S.fav.has(r.id), n = suggFor(r.id).filter(s => s.status === "open").length, m = storiesFor(r.id).length;
+  return `<a class="rc" href="#r-${r.id}" style="${catStyle(r.cat)}">
+    <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
+    <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
+    <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}${r.notes.length ? `<span style="color:var(--amber)">needs a look</span>` : ""}</span></a>`;
+}
+function filtered() {
+  const q = S.q.trim().toLowerCase();
+  return RECIPES.filter(r => (S.cat === "All" || r.cat === S.cat) &&
+    (!q || q.split(/\s+/).every(w => r.search.includes(w))) &&
+    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && (r.notes.length || suggFor(r.id).some(s => s.status === "open"))) || (S.filter === "story" && storiesFor(r.id).length)));
+}
+function vHome() {
+  const open = S.sugg.filter(s => s.status === "open").length;
+  const list = filtered();
+  const recent = S.sugg.slice(0, 4), mems = S.stories.slice(0, 3);
+  return `
+  <section class="hero">
+    <div>
+      <div class="eyebrow">The family recipe box</div>
+      <h1>The Chambers Family Cookbook</h1>
+      <p class="ded">for Nancy Chambers</p>
+      <p class="lede">Food is more than just nourishment. It's a cherished connection to our past, present, and future. Each recipe here carries a piece of family heritage, passed down through generations. Cook from it, add your memories, and help us get every card right before it goes to print.</p>
+    </div>
+    <div class="hero-side">
+      <div class="stats">
+        <div class="stat"><b>${RECIPES.length}</b><span>recipes</span></div>
+        <div class="stat"><b>${open}</b><span>open suggestions</span></div>
+        <div class="stat"><b>${S.stories.length}</b><span>family memories</span></div>
+      </div>
+      <div class="hero-actions">
+        <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
+        <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
+        <button class="btn ghost" data-act="random">${ICON.dice} What should I cook?</button>
+      </div>
+    </div>
+  </section>
+  <div class="dividers" role="group" aria-label="Sections">
+    ${["All", ...CATS].map(c => `<button class="tab" style="${c === "All" ? "" : catStyle(c)}" data-cat="${esc(c)}" aria-pressed="${S.cat === c}">${c === "All" ? "" : "<i></i>"}${esc(c)} <small>${c === "All" ? RECIPES.length : RECIPES.filter(r => r.cat === c).length}</small></button>`).join("")}
+  </div>
+  <section class="drawer">
+    <div class="tools">
+      <div class="chips" role="group" aria-label="Filter">
+        ${[["all", "Everything"], ["fav", "My favourites"], ["crock", "Crockpot"], ["story", "Has memories"], ["review", "Needs review"]].map(([k, l]) => `<button class="chip" data-filter="${k}" aria-pressed="${S.filter === k}">${l}</button>`).join("")}
+      </div>
+      <span class="muted" style="font-size:.86rem">${list.length} of ${RECIPES.length} recipes${S.q ? ` matching “${esc(S.q)}”` : ""}</span>
+    </div>
+    ${list.length ? `<div class="grid">${list.map(card).join("")}</div>` :
+      `<div class="empty"><h3>No recipes match</h3><p>Try another word, or clear the filters.</p><button class="btn" data-act="clear">Clear search and filters</button></div>`}
+  </section>
+  <section class="feed">
+    <div class="panel">
+      <div class="panel-head"><h2>Latest suggestions</h2><a class="btn sm ghost" href="#suggestions">See all</a></div>
+      ${recent.length ? `<div class="stack">${recent.map(s => suggItem(s, true)).join("")}</div>` : emptyFeed("No suggestions yet", "Open any recipe and tap the pencil next to a line to propose a fix.")}
+    </div>
+    <div class="panel">
+      <div class="panel-head"><h2>From the family</h2></div>
+      ${mems.length ? `<div class="stack">${mems.map(m => `<div class="memory"><a href="#r-${esc(m.recipeId)}" class="eyebrow" style="text-decoration:none">${esc(BY[m.recipeId]?.name || "Recipe")}</a><p style="margin-top:6px">${esc(m.text)}</p><div class="by">${esc(who(m))}</div></div>`).join("")}</div>` : emptyFeed("No memories yet", "Who made Nannie's Bread every Sunday? Open a recipe and choose “Share a memory”.")}
+    </div>
+  </section>`;
+}
+function emptyFeed(h, p) { return `<div class="empty" style="padding:22px 8px"><h3 style="font-size:1.05rem">${h}</h3><p style="margin:0">${p}</p>${S.dbState === "loading" ? `<p class="muted" style="font-size:.8rem">Loading…</p>` : ""}</div>`; }
+
+function vRecipe(r) {
+  const f = S.factor, ck = S.checks[r.id] || {};
+  let ii = 0;
+  const ingHtml = r.ing.map(i => {
+    if (i.g) return `<li class="grp">${esc(i.g)}</li>`;
+    const k = "i" + (ii++), s = scaleLine(i.t, f);
+    return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark ${esc(i.t)} as gathered" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt">${s.html}</span><button class="edit" data-edit="ingredient" data-text="${esc(i.t)}" aria-label="Suggest a change to: ${esc(i.t)}" title="Suggest a change">${ICON.pencil}</button></li>`;
+  }).join("");
+  let n = 0;
+  const stepsHtml = r.steps.map(g => `<div class="sg">${g.h ? `<h3><span class="n">${String(r.steps.indexOf(g) + 1)}</span>${esc(g.h)}</h3>` : ""}<ul class="ing" style="font-family:var(--f-body)">${g.items.map(t => { const k = "s" + (n++); return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark step done" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt" style="font-family:var(--f-body)">${esc(t)}</span><button class="edit" data-edit="step" data-text="${esc(t)}" aria-label="Suggest a change to this step" title="Suggest a change">${ICON.pencil}</button></li>`; }).join("")}</ul></div>`).join("");
+  const sg = suggFor(r.id), mem = storiesFor(r.id);
+  const fav = S.fav.has(r.id);
+  const idx = RECIPES.indexOf(r), prev = RECIPES[idx - 1], next = RECIPES[idx + 1];
+  const anyChecked = Object.values(ck).some(Boolean);
+  return `
+  <nav class="crumbs" aria-label="Breadcrumb"><a href="#">All recipes</a><span>/</span><a href="#" data-cat-link="${esc(r.cat)}">${esc(r.cat)}</a></nav>
+  <div class="recipe">
+    <article class="card" style="${catStyle(r.cat)}">
+      <header class="card-top">
+        <div class="cat">${esc(r.cat)}</div>
+        <h1>${esc(r.name)}</h1>
+        ${r.intro ? `<p class="intro">${esc(r.intro)}</p>` : `<p class="intro muted">No introduction yet. <button class="btn sm" data-act="suggest-kind" data-kind="intro">Write one</button></p>`}
+        <div class="actions" style="margin-top:16px">
+          <button class="btn primary" data-act="cook">${ICON.pot} Cook mode</button>
+          <button class="btn" data-act="fav" aria-pressed="${fav}">${fav ? ICON.heart : ICON.heartO} ${fav ? "Favourite" : "Add to favourites"}</button>
+          <button class="btn" data-act="to-list">${ICON.cart} Add to shopping list</button>
+          <button class="btn" data-act="ask" ${sample === null ? "hidden" : ""}>${ICON.spark} Ask Claude</button>
+        </div>
+      </header>
+      <div class="card-body">
+        ${r.notes.map((nt, i) => { const done = S.desk[r.id + ":" + i]; return `<div class="ednote ${done ? "done" : ""}">${ICON.note}<div><p><b>Editor's note.</b> ${esc(nt)}</p>${done ? ` <span class="pill accepted">Resolved</span>` : `<button class="btn sm ghost" data-act="suggest-kind" data-kind="fix" data-text="${esc(nt)}">I know the answer</button>`}</div></div>`; }).join("")}
+        <div class="scaler">
+          <span class="eyebrow">Batch size</span>
+          <div class="seg" role="group" aria-label="Scale quantities">${[[.5, "½×"], [1, "1×"], [2, "2×"], [3, "3×"]].map(([v, l]) => `<button data-scale="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>
+          ${r.serves ? `<span class="serves">Serves ${esc(scaledText(r.serves, f))}</span>` : ""}
+          ${f !== 1 ? `<span class="muted" style="font-size:.8rem">Highlighted amounts are scaled. Step text and cooking times stay as written.</span>` : ""}
+        </div>
+        <section><div class="sec-h"><h2>Ingredients</h2><span class="muted">${anyChecked ? `<button class="btn sm ghost" data-act="uncheck">Clear ticks</button>` : "Tick as you gather"}</span></div><ul class="ing">${ingHtml}</ul></section>
+        <section><div class="sec-h"><h2>Method</h2><span class="muted">Tap the pencil to suggest an edit</span></div><div class="steps">${stepsHtml}</div></section>
+        ${r.outro ? `<p class="outro">${esc(r.outro)}</p>` : ""}
+        <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px">
+          ${prev ? `<a class="btn ghost sm" href="#r-${prev.id}">${ICON.left} ${esc(prev.name)}</a>` : "<span></span>"}
+          ${next ? `<a class="btn ghost sm" href="#r-${next.id}">${esc(next.name)} ${ICON.right}</a>` : ""}
+        </div>
+      </div>
+    </article>
+    <aside class="side">
+      <div class="panel">
+        <div class="panel-head"><h2>Improve this recipe</h2></div>
+        <div class="stack">
+          <button class="btn primary" data-act="suggest-kind" data-kind="fix">${ICON.pencil} Suggest a change</button>
+          <button class="btn" data-act="suggest-kind" data-kind="memory">${ICON.chat} Share a memory</button>
+        </div>
+        ${sg.length ? `<div class="stack" style="margin-top:16px">${sg.map(s => suggItem(s, false, true)).join("")}</div>` : `<p class="muted" style="font-size:.88rem;margin:14px 0 0">No suggestions for this recipe yet.</p>`}
+      </div>
+      <div class="panel">
+        <div class="panel-head"><h2>Family memories</h2><span class="muted" style="font-size:.85rem">${mem.length || ""}</span></div>
+        ${mem.length ? `<div class="stack">${mem.map(m => `<div class="memory"><p>${esc(m.text)}</p><div class="by">${esc(who(m))}</div><div class="muted" style="font-size:.75rem">${ago(m.createdAt)} ${canDelete(m) ? `· <button class="btn sm ghost" style="padding:2px 6px" data-del-story="${esc(m.id)}">Delete</button>` : ""}</div></div>`).join("")}</div>` : `<p class="muted" style="font-size:.88rem;margin:0">Who made this? When was it served? Add a memory and it will appear here.</p>`}
+      </div>
+    </aside>
+  </div>`;
+}
+function canDelete(o) { return S.me.canEdit || (S.me.id && o.authorId === S.me.id); }
+function suggItem(s, compact, inRecipe) {
+  const r = BY[s.recipeId];
+  const kind = KIND[s.kind]?.label || "Suggestion";
+  const title = s.kind === "new" ? (s.newRecipe?.name || "New recipe") : (r ? r.name : "General");
+  const body = s.kind === "new" ? `<div class="diff"><div class="now"><span class="lab">Ingredients</span>${esc(s.newRecipe?.ingredients || "")}</div><div class="now" style="font-family:var(--f-body)"><span class="lab">Steps</span>${esc(s.newRecipe?.steps || "")}</div></div>${s.proposed ? `<p class="why">${esc(s.proposed)}</p>` : ""}`
+    : `<div class="diff">${s.current ? `<div class="was"><span class="lab">Book says</span>${esc(s.current)}</div>` : ""}${s.proposed ? `<div class="now"><span class="lab">${s.kind === "memory" ? "Memory" : "Suggested"}</span>${esc(s.proposed)}</div>` : ""}</div>`;
+  const editor = S.me.canEdit && !compact;
+  return `<article class="sugg">
+    <div class="sugg-head"><div>${inRecipe ? "" : (s.kind === "new" ? `<span style="font-family:var(--f-display);font-size:1.1rem">${esc(title)}</span>` : `<a href="#r-${esc(s.recipeId)}">${esc(title)}</a>`)}<div class="kind">${esc(kind)}${s.kind === "new" && s.newRecipe?.cat ? " · " + esc(s.newRecipe.cat) : ""}</div></div><span class="pill ${esc(s.status)}">${esc(s.status)}</span></div>
+    ${compact ? `<div class="diff">${s.current ? `<div class="was">${esc(s.current.slice(0, 120))}</div>` : ""}<div class="now">${esc((s.proposed || s.newRecipe?.name || "").slice(0, 160))}</div></div>` : body}
+    ${!compact && s.reason ? `<p class="why"><b>Why:</b> ${esc(s.reason)}</p>` : ""}
+    ${!compact && s.resolution ? `<p class="resolution"><b>Editor:</b> ${esc(s.resolution)}</p>` : ""}
+    <div class="sugg-foot"><span><span class="by">${esc(who(s))}</span> · ${ago(s.createdAt)}</span>
+      ${editor || (!compact && canDelete(s)) ? `<span style="display:flex;gap:6px;flex-wrap:wrap">
+        ${editor && s.status !== "accepted" ? `<button class="btn sm" data-resolve="accepted" data-id="${esc(s.id)}">Accept</button>` : ""}
+        ${editor && s.status !== "declined" ? `<button class="btn sm ghost" data-resolve="declined" data-id="${esc(s.id)}">Decline</button>` : ""}
+        ${editor && s.status !== "open" ? `<button class="btn sm ghost" data-resolve="open" data-id="${esc(s.id)}">Reopen</button>` : ""}
+        ${canDelete(s) ? `<button class="btn sm ghost" data-del-sugg="${esc(s.id)}">Delete</button>` : ""}</span>` : ""}
+    </div></article>`;
+}
+function vSuggestions() {
+  const f = S.sFilter;
+  const list = S.sugg.filter(s => (f.status === "all" || s.status === f.status) && (!f.recipe || s.recipeId === f.recipe || (f.recipe === "__new" && s.kind === "new")));
+  const counts = st => S.sugg.filter(s => st === "all" || s.status === st).length;
+  const recipesWith = [...new Set(S.sugg.map(s => s.recipeId).filter(Boolean))].filter(id => BY[id]);
+  return `
+  <div class="ph"><div><div class="eyebrow">Review queue</div><h1>Suggested changes</h1><p>Corrections, missing details and new recipes sent in by the family. ${S.me.canEdit ? "As an editor you can accept or decline each one. Accepted changes are the to-do list for the print edition." : "Robert reviews each one before it goes into the print edition."}</p></div>
+    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>${S.sugg.length ? `<button class="btn" data-act="export">${ICON.down} Export CSV</button>` : ""}</div></div>
+  ${dbBanner()}
+  <div class="list-cols">
+    <div class="filters">
+      <div class="field"><span class="lbl">Status</span><div class="chips">${[["open", "Open"], ["accepted", "Accepted"], ["declined", "Declined"], ["all", "All"]].map(([k, l]) => `<button class="chip" data-sstatus="${k}" aria-pressed="${f.status === k}">${l} <span class="muted">${counts(k)}</span></button>`).join("")}</div></div>
+      <div class="field"><label for="s-recipe">Recipe</label><select id="s-recipe"><option value="">All recipes</option><option value="__new" ${f.recipe === "__new" ? "selected" : ""}>New recipe submissions</option>${recipesWith.map(id => `<option value="${id}" ${f.recipe === id ? "selected" : ""}>${esc(BY[id].name)}</option>`).join("")}</select></div>
+    </div>
+    <div class="stack">${list.length ? list.map(s => suggItem(s, false)).join("") : `<div class="panel empty"><h3>${S.dbState === "loading" ? "Loading suggestions…" : f.status === "open" ? "Nothing waiting for review" : "No suggestions here"}</h3><p>Open any recipe and tap the pencil beside an ingredient or step to propose a change.</p></div>`}</div>
+  </div>`;
+}
+function dbBanner() {
+  if (S.dbState === "off") return `<div class="notice" style="margin-bottom:16px">Shared suggestions aren't available in this view, so you'll only see your own device's data. You can still write a suggestion and copy it to send by email.</div>`;
+  if (S.me.readOnly) return `<div class="notice" style="margin-bottom:16px">You can read suggestions but not send them. Ask the cookbook's owner to give you Contributor access.</div>`;
+  return "";
+}
+function vList() {
+  const groups = S.list;
+  return `<div class="ph"><div><div class="eyebrow">For the grocery run</div><h1>Shopping list</h1><p>Ingredients from the recipes you've added, at the batch size you chose. Kept on this device.</p></div>
+    ${groups.length ? `<div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn" data-act="copy-list">${ICON.copy} Copy as text</button><button class="btn ghost" data-act="clear-done">Remove ticked</button><button class="btn ghost" data-act="clear-list">Clear list</button></div>` : ""}</div>
+  ${groups.length ? `<div class="shop">${groups.map((g, gi) => `<div class="panel" style="${catStyle(BY[g.id]?.cat)}"><div class="panel-head"><h3><a href="#r-${esc(g.id)}" style="text-decoration:none">${esc(g.name)}</a></h3><button class="btn sm ghost" data-rm-group="${gi}">Remove</button></div>${g.factor !== 1 ? `<div class="muted" style="font-size:.8rem;margin:-6px 0 6px">${g.factor}× batch</div>` : ""}<ul class="ing">${g.items.map((it, ii) => `<li class="line ${it.done ? "done" : ""}"><button class="tick" data-shop="${gi}:${ii}" aria-pressed="${!!it.done}" aria-label="Got ${esc(it.t)}">${ICON.check}</button><span class="txt">${esc(it.t)}</span></li>`).join("")}</ul></div>`).join("")}</div>`
+    : `<div class="panel empty"><h3>Your list is empty</h3><p>Open a recipe and choose “Add to shopping list”.</p><a class="btn" href="#">Browse recipes</a></div>`}`;
+}
+function vDesk() {
+  const items = RECIPES.flatMap(r => r.notes.map((n, i) => ({ r, n, k: r.id + ":" + i })));
+  const done = items.filter(x => S.desk[x.k]).length;
+  const accepted = S.sugg.filter(s => s.status === "accepted");
+  return `<div class="ph"><div><div class="eyebrow">Getting ready for print</div><h1>Editor's desk</h1><p>Things in the manuscript that need a decision or a family member's knowledge before the book is printed: missing amounts, duplicate recipes, leftover transcription text. Anyone can help answer them.</p></div>
+    <div class="stats" style="min-width:min(100%,360px)"><div class="stat"><b>${items.length - done}</b><span>to resolve</span></div><div class="stat"><b>${done}</b><span>resolved</span></div><div class="stat"><b>${accepted.length}</b><span>accepted edits</span></div></div></div>
+  <div class="stack">${items.map(x => { const d = S.desk[x.k]; return `<div class="panel" style="display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;${d ? "opacity:.65" : ""}">
+    <div style="min-width:0;flex:1 1 320px"><a href="#r-${x.r.id}" style="font-family:var(--f-display);font-size:1.1rem;text-decoration:none">${esc(x.r.name)}</a> <span class="muted" style="font-size:.82rem">· ${esc(x.r.cat)}</span><p style="margin:6px 0 0;${d ? "text-decoration:line-through" : ""}">${esc(x.n)}</p></div>
+    <div style="display:flex;gap:6px;flex-wrap:wrap">${d ? `<span class="pill accepted">Resolved</span>` : `<button class="btn sm" data-act="suggest-for" data-id="${x.r.id}" data-text="${esc(x.n)}">${ICON.pencil} I know the answer</button>`}
+    ${S.me.canEdit && S.dbState === "on" ? `<button class="btn sm ghost" data-desk="${esc(x.k)}">${d ? "Reopen" : "Mark resolved"}</button>` : ""}</div></div>`; }).join("")}</div>`;
+}
+
+/* ---------------- events ---------------- */
+$("#q").addEventListener("input", e => { S.q = e.target.value; if (route().v !== "home") location.hash = ""; render(); });
+document.addEventListener("click", async e => {
+  const t = e.target.closest("button,a"); if (!t) return;
+  const d = t.dataset, r = BY[route().id];
+  if (d.cat) { S.cat = d.cat; saveLocal(); render(); return; }
+  if (d.catLink) { e.preventDefault(); S.cat = d.catLink; saveLocal(); location.hash = ""; render(); return; }
+  if (d.filter) { S.filter = d.filter; render(); return; }
+  if (d.scale) { S.factor = +d.scale; render(); return; }
+  if (d.tick && r) { const c = S.checks[r.id] = S.checks[r.id] || {}; c[d.tick] = !c[d.tick]; saveLocal(); render(); return; }
+  if (d.shop) { const [g, i] = d.shop.split(":").map(Number); S.list[g].items[i].done = !S.list[g].items[i].done; saveLocal(); render(); return; }
+  if (d.rmGroup) { S.list.splice(+d.rmGroup, 1); saveLocal(); render(); return; }
+  if (d.edit && r) { openSuggest({ recipeId: r.id, kind: d.edit, current: d.text }); return; }
+  if (d.sstatus) { S.sFilter.status = d.sstatus; render(); return; }
+  if (d.resolve) { resolveSugg(d.id, d.resolve); return; }
+  if (d.delSugg) { if (t.dataset.armed) { delDoc("suggestions", d.delSugg); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
+  if (d.delStory) { if (t.dataset.armed) { delDoc("stories", d.delStory); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
+  if (d.desk) { toggleDesk(d.desk); return; }
+  if (d.close !== undefined) { t.closest("dialog").close(); return; }
+  switch (d.act) {
+    case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
+    case "new-recipe": openSuggest({ kind: "new" }); break;
+    case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
+    case "suggest-for": openSuggest({ recipeId: d.id, kind: "fix", why: "Re: editor's note: " + d.text }); break;
+    case "random": { const pool = filtered().length ? filtered() : RECIPES; location.hash = "r-" + pool[Math.floor(Math.random() * pool.length)].id; break; }
+    case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
+    case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
+    case "uncheck": delete S.checks[r.id]; saveLocal(); render(); break;
+    case "to-list": {
+      const items = r.ing.filter(i => i.t).map(i => ({ t: scaledText(i.t, S.factor), done: false }));
+      const ex = S.list.findIndex(g => g.id === r.id); const g = { id: r.id, name: r.name, factor: S.factor, items };
+      if (ex >= 0) S.list[ex] = g; else S.list.push(g);
+      saveLocal(); render(); toast(`${items.length} ingredients added to your shopping list`); break;
+    }
+    case "copy-list": copy(S.list.map(g => `${g.name}${g.factor !== 1 ? ` (${g.factor}×)` : ""}\n` + g.items.filter(i => !i.done).map(i => "☐ " + i.t).join("\n")).join("\n\n")); break;
+    case "clear-done": S.list.forEach(g => g.items = g.items.filter(i => !i.done)); S.list = S.list.filter(g => g.items.length); saveLocal(); render(); break;
+    case "clear-list": if (t.dataset.armed) { S.list = []; saveLocal(); render(); } else { t.dataset.armed = 1; t.textContent = "Tap again to clear"; } break;
+    case "cook": openCook(r); break;
+    case "ask": openAsk(r); break;
+    case "export": exportCsv(); break;
+  }
+});
+document.addEventListener("change", e => { if (e.target.id === "s-recipe") { S.sFilter.recipe = e.target.value; render(); } });
+
+/* ---------------- suggest dialog ---------------- */
+const dlg = $("#dlg-suggest"); let curKind = "fix";
+$("#f-recipe").innerHTML = `<option value="">General / whole book</option>` + CATS.map(c => `<optgroup label="${esc(c)}">${RECIPES.filter(r => r.cat === c).map(r => `<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`).join("");
+$("#f-ncat").innerHTML = CATS.map(c => `<option>${esc(c)}</option>`).join("");
+$("#f-kind").innerHTML = KINDS.map(k => `<button type="button" class="chip" data-kind-pick="${k.k}">${k.label}</button>`).join("");
+$("#f-kind").addEventListener("click", e => { const b = e.target.closest("[data-kind-pick]"); if (b) setKind(b.dataset.kindPick); });
+function setKind(k) {
+  curKind = k;
+  $$("#f-kind .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.kindPick === k));
+  const isNew = k === "new", isMem = k === "memory", isIntro = k === "intro";
+  $("#f-new").hidden = !isNew; $("#f-recipe-wrap").hidden = isNew;
+  $("#f-was-wrap").hidden = isNew || isMem || isIntro;
+  $("#f-why-wrap").hidden = isMem;
+  $("#f-now-label").textContent = KIND[k].now;
+  $("#f-now").classList.toggle("typed", !(isMem || isIntro || isNew));
+  $("#sg-eyebrow").textContent = isMem ? "Share a memory" : isNew ? "Add a missing recipe" : "Suggest a change";
+  $("#f-submit").textContent = S.dbState === "off" ? "Copy suggestion" : isMem ? "Share memory" : isNew ? "Send recipe" : "Send suggestion";
+  $("#f-now").placeholder = isMem ? "e.g. Nannie made this every Christmas Eve, and we'd sneak the first slice" : isIntro ? "A sentence or two about this dish and who made it" : "";
+}
+function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
+  $("#sg-form").reset();
+  $("#f-recipe").value = recipeId; $("#f-was").value = current || ""; $("#f-why").value = why || "";
+  $("#f-name").value = store.get("name", "");
+  $("#f-msg").textContent = ""; $("#f-offline").hidden = S.dbState !== "off";
+  setKind(kind);
+  const r = BY[recipeId];
+  $("#sg-title").textContent = kind === "new" ? "Add a missing recipe" : r ? r.name : "Help improve the book";
+  dlg.showModal();
+  setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
+}
+$("#f-recipe").addEventListener("change", e => { $("#sg-title").textContent = BY[e.target.value]?.name || "Help improve the book"; });
+$("#sg-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#f-name").value.trim(); store.set("name", name);
+  const doc = { kind: curKind, recipeId: curKind === "new" ? "" : $("#f-recipe").value, current: $("#f-was").value.trim(), proposed: $("#f-now").value.trim(), reason: $("#f-why").value.trim(), signedAs: name.slice(0, 60), status: "open", createdAt: Date.now() };
+  if (curKind === "new") doc.newRecipe = { name: $("#f-nname").value.trim(), cat: $("#f-ncat").value, ingredients: $("#f-ning").value.trim(), steps: $("#f-nsteps").value.trim() };
+  const msg = $("#f-msg");
+  if (curKind === "new" ? !doc.newRecipe.name || (!doc.newRecipe.ingredients && !doc.newRecipe.steps) : !doc.proposed) { msg.textContent = curKind === "new" ? "Add the recipe's name and at least its ingredients or steps." : `Fill in “${KIND[curKind].now}” so we know what to change.`; return; }
+  if (curKind === "memory" && !doc.recipeId) { msg.textContent = "Choose which recipe this memory belongs to."; return; }
+  if (S.dbState !== "on") {
+    const r = BY[doc.recipeId];
+    const txt = [`Cookbook suggestion: ${KIND[curKind].label}`, curKind === "new" ? `New recipe: ${doc.newRecipe.name} (${doc.newRecipe.cat})\nIngredients:\n${doc.newRecipe.ingredients}\nSteps:\n${doc.newRecipe.steps}` : `Recipe: ${r ? r.name : "General"}`, doc.current && `Book says: ${doc.current}`, doc.proposed && `Should say: ${doc.proposed}`, doc.reason && `Why: ${doc.reason}`, name && `From: ${name}`].filter(Boolean).join("\n");
+    if (await copy(txt)) dlg.close(); return;
+  }
+  doc.authorId = S.me.id || "";
+  const btn = $("#f-submit"); btn.disabled = true;
+  try {
+    if (curKind === "memory") await db.collection("stories").add({ recipeId: doc.recipeId, text: doc.proposed, signedAs: doc.signedAs, authorId: doc.authorId, createdAt: doc.createdAt });
+    else await db.collection("suggestions").add(doc);
+    dlg.close(); toast(curKind === "memory" ? "Memory shared. Thank you!" : "Suggestion sent. Thank you!");
+  } catch (err) {
+    if (err?.code === "invalid_argument") { S.me.readOnly = true; msg.textContent = "You have view-only access, so this couldn't be saved. Ask the cookbook's owner to give you Contributor access, or copy your text and send it to them."; }
+    else if (err?.code === "quota_exceeded") msg.textContent = "The suggestion box is full. Let the cookbook's owner know so they can clear out old suggestions.";
+    else msg.textContent = "That didn't save. Check your connection and try again.";
+  } finally { btn.disabled = false; }
+});
+
+/* ---------------- editor actions ---------------- */
+let pendingResolve = null;
+async function resolveSugg(id, status) {
+  if (status === "open") { try { await db.doc("suggestions/" + id).update({ status: "open", resolution: "" }); toast("Reopened"); } catch { toast("Couldn't update. Try again."); } return; }
+  pendingResolve = { id, status };
+  $("#rs-title").textContent = status === "accepted" ? "Accept suggestion" : "Decline suggestion";
+  $("#rs-go").textContent = status === "accepted" ? "Accept" : "Decline";
+  $("#rs-note").value = ""; $("#dlg-resolve").showModal();
+}
+$("#rs-form").addEventListener("submit", async e => {
+  e.preventDefault(); const p = pendingResolve; if (!p) return;
+  try { await db.doc("suggestions/" + p.id).update({ status: p.status, resolution: $("#rs-note").value.trim(), resolvedAt: Date.now() }); $("#dlg-resolve").close(); toast(p.status === "accepted" ? "Accepted" : "Declined"); }
+  catch { toast("Couldn't update. You may not have editor access."); }
+});
+async function delDoc(col, id) { try { await db.doc(col + "/" + id).delete(); toast("Deleted"); } catch { toast("Couldn't delete that."); } }
+async function toggleDesk(k) {
+  const next = { ...S.desk }; if (next[k]) delete next[k]; else next[k] = true;
+  try { await db.doc("desk/status").set(next); } catch { toast("Couldn't save. You may not have editor access."); }
+}
+async function exportCsv() {
+  const cols = ["status", "recipe", "kind", "book_says", "suggested", "why", "from", "date", "editor_note"];
+  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
+  const rows = S.sugg.map(s => [s.status, s.kind === "new" ? "NEW: " + (s.newRecipe?.name || "") : BY[s.recipeId]?.name || "General", KIND[s.kind]?.label || s.kind, s.current, s.kind === "new" ? `Ingredients:\n${s.newRecipe?.ingredients || ""}\n\nSteps:\n${s.newRecipe?.steps || ""}\n\n${s.proposed || ""}` : s.proposed, s.reason, who(s), s.createdAt ? new Date(s.createdAt).toISOString().slice(0, 10) : "", s.resolution].map(q).join(","));
+  const csv = [cols.join(","), ...rows].join("\n");
+  if (downloads) { try { await downloads.save({ filename: "chambers-cookbook-suggestions.csv", data: csv }); return; } catch (e) { if (e?.code === "declined" || e?.code === "cancelled") return; } }
+  copy(csv);
+}
+
+/* ---------------- cook mode ---------------- */
+let cook = null, wake = null;
+function openCook(r) {
+  const steps = r.steps.flatMap(g => g.items.map(t => ({ g: g.h, t })));
+  cook = { r, steps, i: 0, showIng: false }; drawCook(); $("#cook").hidden = false; document.body.style.overflow = "hidden";
+  try { navigator.wakeLock?.request("screen").then(w => wake = w).catch(() => {}); } catch {}
+}
+function closeCook() { $("#cook").hidden = true; document.body.style.overflow = ""; cook = null; try { wake?.release(); } catch {} wake = null; }
+function drawCook() {
+  const { r, steps, i } = cook, s = steps[i];
+  $("#cook").innerHTML = `
+  <div class="cook-top"><h2 id="cook-title">${esc(r.name)}</h2><div style="display:flex;gap:6px"><button class="btn sm" data-cook="ing">Ingredients</button><button class="btn sm ink" data-cook="close">Done cooking</button></div></div>
+  <div class="cook-main">
+    <div class="cook-step" aria-live="polite"><span class="grp">Step ${i + 1} of ${steps.length}${s.g ? " · " + esc(s.g) : ""}</span><p>${esc(s.t)}</p></div>
+    <div class="cook-ing ${cook.showIng ? "show" : ""}"><div class="eyebrow" style="margin-bottom:8px">Ingredients${S.factor !== 1 ? ` · ${S.factor}×` : ""}</div><ul class="ing">${r.ing.map(x => x.g ? `<li class="grp">${esc(x.g)}</li>` : `<li class="line"><span class="txt" style="font-size:.95rem">${scaleLine(x.t, S.factor).html}</span></li>`).join("")}</ul></div>
+  </div>
+  <div class="cook-nav"><button class="btn" data-cook="prev" ${i === 0 ? "disabled" : ""}>${ICON.left} Back</button><div class="progress" aria-hidden="true"><i style="width:${((i + 1) / steps.length) * 100}%"></i></div><button class="btn primary" data-cook="next">${i === steps.length - 1 ? "Finish" : "Next"} ${ICON.right}</button></div>`;
+}
+$("#cook").addEventListener("click", e => {
+  const b = e.target.closest("[data-cook]"); if (!b) return; const a = b.dataset.cook;
+  if (a === "close") closeCook();
+  else if (a === "ing") { cook.showIng = !cook.showIng; drawCook(); }
+  else if (a === "prev" && cook.i > 0) { cook.i--; drawCook(); }
+  else if (a === "next") { if (cook.i < cook.steps.length - 1) { cook.i++; drawCook(); } else { closeCook(); toast("Enjoy! Share a memory of this dish any time."); } }
+});
+document.addEventListener("keydown", e => {
+  if (!cook) return;
+  if (e.key === "ArrowRight" || e.key === " ") { e.preventDefault(); if (cook.i < cook.steps.length - 1) { cook.i++; drawCook(); } }
+  else if (e.key === "ArrowLeft") { if (cook.i > 0) { cook.i--; drawCook(); } }
+  else if (e.key === "Escape") closeCook();
+});
+
+/* ---------------- ask claude ---------------- */
+let askR = null, askCtl = null, lastAnswer = "";
+const recipeText = r => `${r.name} (${r.cat})${r.serves ? "\nServes: " + r.serves : ""}\n${r.intro}\nIngredients:\n${r.ing.map(i => i.g ? i.g + ":" : "- " + i.t).join("\n")}\nMethod:\n${r.steps.map(g => (g.h ? g.h + ":\n" : "") + g.items.map(t => "- " + t).join("\n")).join("\n")}`;
+function openAsk(r) {
+  askR = r; $("#ask-title").textContent = r.name; $("#ask-q").value = ""; $("#ask-a").textContent = ""; $("#ask-suggest").hidden = true;
+  $("#ask-chips").innerHTML = ["Convert this to metric", "Can I make it ahead?", "What can I substitute?", "What goes well with it?", "Is anything missing or unclear?"].map(q => `<button type="button" class="chip" data-q="${esc(q)}">${esc(q)}</button>`).join("");
+  $("#dlg-ask").showModal();
+}
+$("#ask-chips").addEventListener("click", e => { const b = e.target.closest("[data-q]"); if (b) { $("#ask-q").value = b.dataset.q; ask(); } });
+$("#ask-form").addEventListener("submit", e => { e.preventDefault(); ask(); });
+$("#dlg-ask").addEventListener("close", () => askCtl?.abort());
+async function ask() {
+  const q = $("#ask-q").value.trim(); if (!q || !sample) return;
+  askCtl?.abort(); askCtl = new AbortController();
+  const out = $("#ask-a"); out.textContent = "Thinking…"; $("#ask-go").disabled = true; $("#ask-suggest").hidden = true;
+  const prompt = `You are helping a family cook from their handed-down family cookbook. Answer the question about the recipe below in plain, warm, practical language. Keep it under 180 words. Use short lines or a simple list where it helps; no markdown headings, no bold. If the question reveals a likely error or gap in the written recipe, say so plainly.\n\nRECIPE\n${recipeText(askR)}\n\nQUESTION\n${q}`;
+  try {
+    const res = await sample(prompt, { signal: askCtl.signal, modelTier: "quick", onText: u => { out.textContent = u.text.replace(/\*\*/g, ""); } });
+    lastAnswer = res.text.replace(/\*\*/g, ""); out.textContent = lastAnswer; $("#ask-suggest").hidden = false;
+  } catch (err) {
+    if (err?.name === "AbortError" || err?.code === "aborted") return;
+    out.textContent = err?.code === "not_granted" ? "Claude isn't available in this view." : err?.code === "rate_limited" ? "Too many questions at once. Wait a minute and ask again." : "Claude couldn't answer just now. Try again in a moment.";
+  } finally { $("#ask-go").disabled = false; }
+}
+$("#ask-suggest").addEventListener("click", () => { const r = askR, q = $("#ask-q").value; $("#dlg-ask").close(); openSuggest({ recipeId: r.id, kind: "other", why: `From asking Claude “${q}”:\n${lastAnswer}`.slice(0, 1500) }); });
+
+/* ---------------- shared data ---------------- */
+async function resolveNames() {
+  if (!user) return;
+  const ids = [...new Set([...S.sugg, ...S.stories].filter(o => !o.signedAs && o.authorId).map(o => o.authorId))].filter(id => !(id in S.names));
+  if (!ids.length) return;
+  try { const ps = await user.profiles(ids); ids.forEach(id => S.names[id] = ps[id]?.name || ""); render(); } catch {}
+}
+async function boot() {
+  render();
+  const use = n => (window.claude && typeof window.claude.use === "function") ? window.claude.use(n).catch(() => null) : Promise.resolve(null);
+  use("sample").then(s => { sample = s; if (route().v === "recipe") render(); });
+  use("downloads").then(d => downloads = d);
+  [db, user] = await Promise.all([use("db"), use("user")]);
+  if (user) {
+    try { S.me.id = await user.id(); S.me.canEdit = await user.canEdit(); const w = await user.can("data.write"); S.me.canWrite = w; if (w === false) S.me.readOnly = true; } catch {}
+  }
+  if (!db) { S.dbState = "off"; render(); return; }
+  S.dbState = "on";
+  const onErr = () => { S.dbState = "off"; render(); };
+  db.collection("suggestions").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.sugg = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
+  db.collection("stories").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.stories = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
+  db.doc("desk/status").onSnapshot(d => { S.desk = d.exists ? { ...d.data() } : {}; render(); }, () => {});
+}
+boot();
+})();
+</script>
+</body></html>
