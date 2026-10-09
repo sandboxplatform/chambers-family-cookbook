@@ -1,0 +1,64 @@
+name: Generate AI recipe images
+
+# Run from the Actions tab. Needs a repository secret named OPENAI_API_KEY.
+# Only recipes without an image get one, unless "force" is set.
+on:
+  workflow_dispatch:
+    inputs:
+      only:
+        description: "Recipe ids to (re)generate, comma-separated (blank = all missing)"
+        required: false
+      force:
+        description: "Regenerate even if an image exists"
+        type: boolean
+        default: false
+      model:
+        description: "OpenAI image model"
+        default: gpt-image-1
+      quality:
+        description: "low, medium or high"
+        default: medium
+
+permissions:
+  contents: write
+  actions: write
+
+concurrency:
+  group: generate-images
+
+jobs:
+  generate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+      - name: Generate images
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          IMAGE_MODEL: ${{ inputs.model }}
+          IMAGE_QUALITY: ${{ inputs.quality }}
+          ONLY: ${{ inputs.only }}
+          FORCE: ${{ inputs.force }}
+        run: |
+          args=()
+          [ -n "$ONLY" ] && args+=("--only=$ONLY")
+          [ "$FORCE" = true ] && args+=("--force")
+          node scripts/generate-images.mjs "${args[@]}"
+      - name: Commit images
+        run: |
+          bash build.sh
+          git add images index.html
+          if git diff --cached --quiet; then echo "No new images."; exit 0; fi
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git commit -m "Add AI-generated recipe images"
+          git push
+          echo "deploy=1" >> "$GITHUB_ENV"
+      # Pushes made with GITHUB_TOKEN don't trigger other workflows, so start the deploy explicitly.
+      - name: Deploy site
+        if: env.deploy == '1'
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: gh workflow run pages.yml --ref main

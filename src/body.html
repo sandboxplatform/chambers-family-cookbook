@@ -112,5 +112,17 @@
   </form>
 </dialog>
 
+<!-- Real photo dialog -->
+<dialog id="dlg-photo" aria-labelledby="ph-title">
+  <div class="dlg">
+    <div class="dlg-h">
+      <div><div class="eyebrow" id="ph-eyebrow">Add a real photo</div><h2 id="ph-title">Recipe</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b" id="ph-body"></div>
+    <div class="dlg-f"><span class="muted" style="font-size:.82rem" id="ph-foot"></span><button type="button" class="btn ghost" data-close>Close</button></div>
+  </div>
+</dialog>
+
 <div class="cook" id="cook" hidden role="dialog" aria-modal="true" aria-labelledby="cook-title"></div>
 <div class="toast" id="toast" hidden role="status"></div>

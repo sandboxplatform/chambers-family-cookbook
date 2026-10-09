@@ -9,6 +9,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 - A pencil on every ingredient and step for suggesting corrections, plus forms for memories, introductions and missing recipes
 - A suggestions review queue (accept or decline, CSV export)
 - An editor's desk listing manuscript issues to settle before printing
+- A picture for every recipe: AI-generated stand-ins until the family adds real photos
 
 ## Files
 
@@ -18,7 +19,10 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 | `src/head.html` | Title, fonts and styles |
 | `src/body.html` | Page shell and dialogs |
 | `src/app.js` | App logic |
-| `build.sh` | Assembles `index.html` from `src/` |
+| `images/ai/` | AI-generated picture per recipe, `<recipe-id>.jpg` |
+| `photos/` | Real family photos, `<recipe-id>.jpg`; these replace the AI picture |
+| `scripts/generate-images.mjs` | Creates the AI pictures with OpenAI's image API |
+| `build.sh` | Assembles `index.html` from `src/` (and lists the images) |
 | `index.html` | The built, single-file site |
 
 ### Recipe format (`src/book.txt`)
@@ -37,6 +41,12 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 ```
 
 Edit the text file, then run `./build.sh`.
+
+## Pictures
+
+**AI pictures.** Add your OpenAI API key as a repository secret named `OPENAI_API_KEY` (Settings → Secrets and variables → Actions), then run **Generate AI recipe images** from the Actions tab. It only creates pictures for recipes that don't have one, commits them and redeploys the site. To redo one, run it with the recipe id in "only" and "force" ticked. Locally: `OPENAI_API_KEY=... node scripts/generate-images.mjs` (`--dry-run` prints the prompts without calling the API).
+
+**Real photos.** On any recipe, "Add a real photo" shows the photo on that device straight away and downloads it named `<recipe-id>.jpg`. Put that file in `photos/` (Add file → Upload files on GitHub) and it replaces the AI picture for everyone after the site redeploys.
 
 ## Shared features
 

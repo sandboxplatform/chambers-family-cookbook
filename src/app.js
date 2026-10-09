@@ -22,7 +22,9 @@ const ICON = {
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
-  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>'
+  right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
+  camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
+  ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
 
 /* ---------------- parse the book ---------------- */
@@ -52,6 +54,35 @@ const RECIPES = parseBook(document.getElementById("book").textContent);
 const BY = Object.fromEntries(RECIPES.map(r => [r.id, r]));
 const CATS = [...new Set(RECIPES.map(r => r.cat))];
 const catStyle = c => `--cat:var(${CAT_VAR[c] || "--ink-3"})`;
+
+/* ---------------- images ----------------
+   Precedence: a photo saved on this device > a real photo in photos/ > the AI image in images/ai/.
+   build.sh lists what's in the repo; device photos live in IndexedDB. */
+const REPO_URL = "https://github.com/sandboxplatform/chambers-family-cookbook";
+const IMAGES = (() => { try { return JSON.parse(document.getElementById("images")?.textContent || "{}"); } catch { return {}; } })();
+const LOCAL = {};
+function imgFor(id) {
+  if (LOCAL[id]) return { src: LOCAL[id].url, kind: "local" };
+  const m = IMAGES[id] || {};
+  if (m.photo) return { src: m.photo, kind: "photo" };
+  if (m.ai) return { src: m.ai, kind: "ai" };
+  return null;
+}
+const IMG_TAG = { ai: "AI picture", photo: "Family photo", local: "Your photo" };
+const imgAlt = (r, im) => im.kind === "ai" ? `AI-generated picture of ${r.name}` : `Photo of ${r.name}`;
+const imgGone = `onerror="this.closest('[data-img]').remove()"`;
+const idb = (() => {
+  let p;
+  const open = () => p ||= new Promise((res, rej) => { const q = indexedDB.open("ccb-photos", 1); q.onupgradeneeded = () => q.result.createObjectStore("photos"); q.onsuccess = () => res(q.result); q.onerror = () => rej(q.error); });
+  const tx = async (mode, fn) => { const d = await open(); return new Promise((res, rej) => { const t = d.transaction("photos", mode), out = fn(t.objectStore("photos")); t.oncomplete = () => res(out); t.onerror = t.onabort = () => rej(t.error); }); };
+  return {
+    async all() { const q = await tx("readonly", s => ({ k: s.getAllKeys(), v: s.getAll() })); return q.k.result.map((k, i) => [k, q.v.result[i]]); },
+    put: (k, v) => tx("readwrite", s => s.put(v, k)),
+    del: k => tx("readwrite", s => s.delete(k))
+  };
+})();
+function setLocal(id, rec) { if (LOCAL[id]) URL.revokeObjectURL(LOCAL[id].url); if (rec) LOCAL[id] = { ...rec, url: URL.createObjectURL(rec.blob) }; else delete LOCAL[id]; }
+async function loadLocalPhotos() { try { for (const [id, rec] of await idb.all()) if (BY[id] && rec?.blob) setLocal(id, rec); render(); } catch {} }
 
 /* ---------------- quantities ---------------- */
 const FR = { "½": .5, "⅓": 1 / 3, "⅔": 2 / 3, "¼": .25, "¾": .75, "⅛": .125 };
@@ -144,8 +175,9 @@ async function copy(text) { try { await navigator.clipboard.writeText(text); toa
 
 /* ---------------- views ---------------- */
 function card(r) {
-  const fav = S.fav.has(r.id), n = suggFor(r.id).filter(s => s.status === "open").length, m = storiesFor(r.id).length;
+  const fav = S.fav.has(r.id), n = suggFor(r.id).filter(s => s.status === "open").length, m = storiesFor(r.id).length, im = imgFor(r.id);
   return `<a class="rc" href="#r-${r.id}" style="${catStyle(r.cat)}">
+    ${im ? `<span class="rc-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" loading="lazy" decoding="async" ${imgGone}><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${IMG_TAG[im.kind]}</span></span>` : ""}
     <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
     <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
     <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}${r.notes.length ? `<span style="color:var(--amber)">needs a look</span>` : ""}</span></a>`;
@@ -225,6 +257,7 @@ function vRecipe(r) {
   <nav class="crumbs" aria-label="Breadcrumb"><a href="#">All recipes</a><span>/</span><a href="#" data-cat-link="${esc(r.cat)}">${esc(r.cat)}</a></nav>
   <div class="recipe">
     <article class="card" style="${catStyle(r.cat)}">
+      ${heroImg(r)}
       <header class="card-top">
         <div class="cat">${esc(r.cat)}</div>
         <h1>${esc(r.name)}</h1>
@@ -268,6 +301,13 @@ function vRecipe(r) {
       </div>
     </aside>
   </div>`;
+}
+function heroImg(r) {
+  const im = imgFor(r.id);
+  if (!im) return `<div class="add-photo"><span>No picture of this dish yet.</span><button class="btn sm" data-act="photo">${ICON.camera} Add a real photo</button></div>`;
+  const tag = im.kind === "ai" ? "AI-generated picture, not the family's dish" : im.kind === "local" ? "Your photo · only on this device so far" : "Family photo";
+  return `<figure class="hero-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" decoding="async" ${imgGone}>
+    <figcaption><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${tag}</span><button class="btn sm" data-act="photo">${ICON.camera} ${im.kind === "ai" ? "Add a real photo" : "Replace photo"}</button></figcaption></figure>`;
 }
 function canDelete(o) { return S.me.canEdit || (S.me.id && o.authorId === S.me.id); }
 function suggItem(s, compact, inRecipe) {
@@ -370,6 +410,7 @@ document.addEventListener("click", async e => {
     case "clear-list": if (t.dataset.armed) { S.list = []; saveLocal(); render(); } else { t.dataset.armed = 1; t.textContent = "Tap again to clear"; } break;
     case "cook": openCook(r); break;
     case "ask": openAsk(r); break;
+    case "photo": openPhoto(r); break;
     case "export": exportCsv(); break;
   }
 });
@@ -492,6 +533,57 @@ document.addEventListener("keydown", e => {
   else if (e.key === "Escape") closeCook();
 });
 
+/* ---------------- real photos ---------------- */
+let phR = null, phBusy = false, phErr = "";
+function openPhoto(r) { phR = r; phBusy = false; phErr = ""; drawPhoto(); $("#dlg-photo").showModal(); }
+function drawPhoto() {
+  const r = phR, mine = LOCAL[r.id], im = imgFor(r.id), file = r.id + ".jpg";
+  $("#ph-title").textContent = r.name;
+  $("#ph-eyebrow").textContent = mine ? "Your photo" : im && im.kind !== "ai" ? "Replace the photo" : "Add a real photo";
+  const picker = label => `<label class="ph-pick" style="position:relative">${ICON.camera}<b>${phBusy ? "Preparing photo…" : label}</b><span class="muted" style="font-size:.82rem">A landscape shot of the finished dish looks best. Large photos are shrunk before saving.</span><input type="file" accept="image/*" id="ph-file" ${phBusy ? "disabled" : ""}></label>`;
+  const err = phErr ? `<div class="formmsg" role="alert">${esc(phErr)}</div>` : "";
+  $("#ph-body").innerHTML = mine ? `
+    <div class="ph-preview"><img src="${esc(mine.url)}" alt="${esc(imgAlt(r, { kind: "local" }))}"></div>
+    <ol class="ph-steps">
+      <li><b>It's showing on this device now.</b> Nobody else can see it yet.</li>
+      <li>To put it in the cookbook for everyone, download it. It's already named <code>${esc(file)}</code> so it slots straight in.<br><button class="btn sm primary" data-ph="download">${ICON.down} Download ${esc(file)}</button></li>
+      <li>Send it to Robert by email or text. Or, if you have access to the cookbook on GitHub, upload it to the photos folder and it will appear for everyone in a minute or two.<br><a class="btn sm" href="${REPO_URL}/upload/main/photos" target="_blank" rel="noopener">${ICON.ext} Open the photos folder</a></li>
+    </ol>
+    ${err}${picker("Choose a different photo")}
+    <div><button class="btn sm ghost" data-ph="remove">Remove from this device</button></div>`
+    : `${im ? `<div class="ph-preview"><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}"></div><p class="muted" style="margin:0;font-size:.88rem">${im.kind === "ai" ? "This is an AI-generated stand-in, not the family's own dish. A real photo of the way you make it will replace it." : "This is the cookbook's current photo. Choose another to propose a replacement."}</p>` : ""}
+    ${err}${picker("Choose a photo")}`;
+  $("#ph-foot").textContent = mine ? `Saved ${ago(mine.at)}` : "Photos stay on your device until you send them.";
+}
+async function shrink(file, max = 2000) {
+  let src;
+  try { src = await createImageBitmap(file, { imageOrientation: "from-image" }); }
+  catch { src = new Image(); src.src = URL.createObjectURL(file); try { await src.decode(); } finally { URL.revokeObjectURL(src.src); } }
+  const w = src.width || src.naturalWidth, h = src.height || src.naturalHeight, k = Math.min(1, max / Math.max(w, h));
+  const c = document.createElement("canvas"); c.width = Math.round(w * k); c.height = Math.round(h * k);
+  c.getContext("2d").drawImage(src, 0, 0, c.width, c.height);
+  return new Promise((res, rej) => c.toBlob(b => b ? res(b) : rej(new Error("encode")), "image/jpeg", .85));
+}
+$("#dlg-photo").addEventListener("change", async e => {
+  if (e.target.id !== "ph-file" || !e.target.files[0]) return;
+  const f = e.target.files[0]; phBusy = true; phErr = ""; drawPhoto();
+  try {
+    const rec = { blob: await shrink(f), at: Date.now() };
+    try { await idb.put(phR.id, rec); } catch { phErr = "This browser won't keep the photo after you close the page, but you can still download it now."; }
+    setLocal(phR.id, rec); render(); toast("Photo added");
+  } catch { phErr = "Couldn't read that photo. Try a JPEG or PNG."; }
+  phBusy = false; drawPhoto();
+});
+$("#dlg-photo").addEventListener("click", async e => {
+  const b = e.target.closest("[data-ph]"); if (!b) return;
+  const mine = LOCAL[phR.id], file = phR.id + ".jpg";
+  if (b.dataset.ph === "download" && mine) {
+    if (downloads) { try { await downloads.save({ filename: file, data: mine.blob }); return; } catch (err) { if (err?.code === "declined" || err?.code === "cancelled") return; } }
+    const a = document.createElement("a"); a.href = mine.url; a.download = file; document.body.appendChild(a); a.click(); a.remove();
+  }
+  if (b.dataset.ph === "remove") { try { await idb.del(phR.id); } catch {} setLocal(phR.id, null); render(); drawPhoto(); toast("Removed from this device"); }
+});
+
 /* ---------------- ask claude ---------------- */
 let askR = null, askCtl = null, lastAnswer = "";
 const recipeText = r => `${r.name} (${r.cat})${r.serves ? "\nServes: " + r.serves : ""}\n${r.intro}\nIngredients:\n${r.ing.map(i => i.g ? i.g + ":" : "- " + i.t).join("\n")}\nMethod:\n${r.steps.map(g => (g.h ? g.h + ":\n" : "") + g.items.map(t => "- " + t).join("\n")).join("\n")}`;
@@ -527,6 +619,7 @@ async function resolveNames() {
 }
 async function boot() {
   render();
+  loadLocalPhotos();
   const use = n => (window.claude && typeof window.claude.use === "function") ? window.claude.use(n).catch(() => null) : Promise.resolve(null);
   use("sample").then(s => { sample = s; if (route().v === "recipe") render(); });
   use("downloads").then(d => downloads = d);
