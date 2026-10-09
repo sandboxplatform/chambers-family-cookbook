@@ -51,6 +51,9 @@ function parseBook(txt) {
 }
 const RECIPES = parseBook(document.getElementById("book").textContent);
 const BY = Object.fromEntries(RECIPES.map(r => [r.id, r]));
+// Renamed recipes: old id -> new id, so saved links, favourites and ticks still find them.
+const RENAMED = { "shrimp-tarragon": "tarragon-shrimp" };
+for (const [from, to] of Object.entries(RENAMED)) if (BY[to]) BY[from] = BY[to];
 const CATS = [...new Set(RECIPES.map(r => r.cat))];
 const catStyle = c => `--cat:var(${CAT_VAR[c] || "--ink-3"})`;
 
@@ -119,12 +122,17 @@ const S = {
   sFilter: { status: "open", recipe: "" }
 };
 let db = null, user = null, sample = null, downloads = null;
+for (const [from, to] of Object.entries(RENAMED)) {
+  if (S.fav.delete(from)) S.fav.add(to);
+  if (S.checks[from]) { S.checks[to] = S.checks[from]; delete S.checks[from]; }
+  S.list.forEach(g => { if (g.id === from) g.id = to; });
+}
 const saveLocal = () => { store.set("fav", [...S.fav]); store.set("checks", S.checks); store.set("list", S.list); store.set("cat", S.cat); };
 
 /* ---------------- routing ---------------- */
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
-  if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: h.slice(2) };
+  if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: BY[h.slice(2)].id };
   if (["suggestions", "list"].includes(h)) return { v: h };
   return { v: "home" };
 }
@@ -148,8 +156,8 @@ function render() {
 addEventListener("hashchange", render);
 
 /* ---------------- helpers ---------------- */
-const suggFor = id => S.sugg.filter(s => s.recipeId === id);
-const storiesFor = id => S.stories.filter(s => s.recipeId === id);
+const suggFor = id => S.sugg.filter(s => BY[s.recipeId]?.id === id);
+const storiesFor = id => S.stories.filter(s => BY[s.recipeId]?.id === id);
 function who(o) { return o.signedAs || (o.authorId && S.names[o.authorId]) || "A family member"; }
 function ago(ts) {
   if (!ts) return ""; const d = (Date.now() - ts) / 1000;
