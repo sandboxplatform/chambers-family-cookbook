@@ -48,6 +48,10 @@ Edit the text file, then run `./build.sh`.
 
 **Real photos.** On any recipe, "Add a real photo" shows the photo on that device straight away and downloads it named `<recipe-id>.jpg`. Put that file in `photos/` (Add file → Upload files on GitHub) and it replaces the AI picture for everyone after the site redeploys.
 
+## Adding a recipe from a photo
+
+"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. The site runs in the browser, so this uses a separate Gemini key that is visible in the page and locked to the site's address: in Google Cloud, restrict it to the website `https://sandboxplatform.github.io/chambers-family-cookbook/*` and to the Generative Language API, and set a low daily request quota. Save it as the repository secret `GEMINI_BROWSER_KEY`; the Pages deploy adds it to the page. Without it, the photo option is hidden. Never use the `GEMINI_API_KEY` used for pictures here.
+
 ## Shared features
 
 Suggestions, memories, Ask Claude and CSV download use the claude.ai artifact runtime. The live version with those features is the Claude artifact. Opened anywhere else (for example GitHub Pages), the site still works for browsing and cooking, and the suggestion form offers "Copy suggestion" so it can be sent by email or text instead.

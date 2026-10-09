@@ -39,6 +39,11 @@
         <select id="f-recipe"></select>
       </div>
       <div id="f-new" hidden class="stack">
+        <div class="scan" id="f-scan" hidden>
+          <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
+          <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
+          <div class="scan-msg" id="f-scan-msg" role="status"></div>
+        </div>
         <div class="two">
           <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
           <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>

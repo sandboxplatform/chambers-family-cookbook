@@ -439,12 +439,69 @@ function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
   $("#f-recipe").value = recipeId; $("#f-was").value = current || ""; $("#f-why").value = why || "";
   $("#f-name").value = store.get("name", "");
   $("#f-msg").textContent = ""; $("#f-offline").hidden = S.dbState !== "off";
+  $("#f-scan-msg").textContent = "";
   setKind(kind);
   const r = BY[recipeId];
   $("#sg-title").textContent = kind === "new" ? "Add a missing recipe" : r ? r.name : "Help improve the book";
   dlg.showModal();
   setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
 }
+/* ---------------- read a recipe from a photo ----------------
+   The key is a browser key restricted to this site's address (set at deploy by build.sh), so it is
+   public by design; without one the photo option stays hidden. */
+const CONFIG = (() => { try { return JSON.parse(document.getElementById("config")?.textContent || "{}"); } catch { return {}; } })();
+const SCAN_MODEL = "gemini-2.5-flash";
+$("#f-scan").hidden = !CONFIG.geminiKey;
+const blobB64 = b => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1]); fr.onerror = () => rej(fr.error); fr.readAsDataURL(b); });
+async function readRecipePhotos(files) {
+  const images = await Promise.all(files.map(async f => ({ inline_data: { mime_type: "image/jpeg", data: await blobB64(await shrink(f, 1600)) } })));
+  const text = `These photos show one family recipe (a handwritten card, a printed page, or several pages of the same recipe). Transcribe it exactly as written.
+- Keep the original wording, quantities and fractions (write ½, ¼, ⅓ etc. as the characters). Do not add, convert or guess amounts.
+- One ingredient per line, one method step per line, in order. Drop numbering and bullets.
+- If a word can't be read, write [illegible] in its place.
+- "section" is the best fit among: ${CATS.join(", ")}.
+- "notes" holds anything else on the card worth keeping (serving size, oven temperature, who it's from, tips). Empty if none.
+- If the photos don't show a recipe at all, set "isRecipe" to false.`;
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${SCAN_MODEL}:generateContent`, {
+    method: "POST",
+    referrerPolicy: "no-referrer-when-downgrade", // send the full page address so the key's website restriction can match it
+    headers: { "Content-Type": "application/json", "x-goog-api-key": CONFIG.geminiKey },
+    body: JSON.stringify({
+      contents: [{ parts: [...images, { text }] }],
+      generationConfig: {
+        temperature: 0,
+        responseMimeType: "application/json",
+        responseSchema: { type: "OBJECT", required: ["isRecipe", "name", "section", "ingredients", "steps", "notes"], properties: {
+          isRecipe: { type: "BOOLEAN" }, name: { type: "STRING" }, section: { type: "STRING", enum: CATS },
+          ingredients: { type: "ARRAY", items: { type: "STRING" } }, steps: { type: "ARRAY", items: { type: "STRING" } }, notes: { type: "STRING" } } }
+      }
+    })
+  });
+  if (!res.ok) { const err = new Error("http"); err.status = res.status; throw err; }
+  const part = (await res.json()).candidates?.[0]?.content?.parts?.find(p => p.text);
+  if (!part) throw new Error("empty");
+  return JSON.parse(part.text);
+}
+$("#f-scan-file").addEventListener("change", async e => {
+  const files = [...e.target.files].slice(0, 4); e.target.value = ""; if (!files.length) return;
+  const box = $("#f-scan"), msg = $("#f-scan-msg");
+  box.setAttribute("aria-busy", "true"); msg.className = "scan-msg"; msg.textContent = `Reading ${files.length > 1 ? "your photos" : "your photo"}… this takes a few seconds.`;
+  try {
+    const r = await readRecipePhotos(files);
+    if (!r.isRecipe || (!r.ingredients?.length && !r.steps?.length)) throw new Error("norecipe");
+    $("#f-nname").value = r.name || ""; if (CATS.includes(r.section)) $("#f-ncat").value = r.section;
+    $("#f-ning").value = (r.ingredients || []).join("\n"); $("#f-nsteps").value = (r.steps || []).join("\n");
+    if (r.notes && !$("#f-now").value.trim()) $("#f-now").value = r.notes;
+    msg.textContent = "Filled in from your photo. Check it over and fix anything it misread before sending.";
+  } catch (err) {
+    msg.className = "scan-msg err";
+    msg.textContent = err.message === "norecipe" ? "Couldn't find a recipe in that photo. Try a closer, well-lit shot, or type it in below."
+      : err.status === 429 ? "Too many photos read today. Try again tomorrow, or type the recipe in below."
+      : err.status === 400 || err.status === 403 ? "Photo reading isn't working on this copy of the site. Type the recipe in below instead."
+      : err.name === "TypeError" && !navigator.onLine ? "You're offline. Connect and try again."
+      : "Couldn't read that photo. Try again, or type the recipe in below.";
+  } finally { box.removeAttribute("aria-busy"); }
+});
 $("#f-recipe").addEventListener("change", e => { $("#sg-title").textContent = BY[e.target.value]?.name || "Help improve the book"; });
 $("#sg-form").addEventListener("submit", async e => {
   e.preventDefault();

@@ -291,6 +291,13 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 .ph-pick input{position:absolute;width:1px;height:1px;opacity:0}
 .ph-steps{margin:0;padding-left:20px;display:grid;gap:10px;color:var(--ink-2);font-size:.92rem}
 .ph-steps .btn{margin-top:6px}
+.scan{display:grid;gap:10px;padding:14px;border:1px dashed var(--line);border-radius:10px;background:var(--card-2);font-size:.9rem}
+.scan label.btn{position:relative;justify-self:start}
+.scan input{position:absolute;width:1px;height:1px;opacity:0}
+.scan[aria-busy="true"] label.btn{opacity:.6;pointer-events:none}
+.scan-msg:empty{display:none}
+.scan-msg{font-size:.86rem;color:var(--ink-2)}
+.scan-msg.err{color:var(--margin)}
 </style>
 </head><body>
 
@@ -334,6 +341,11 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
         <select id="f-recipe"></select>
       </div>
       <div id="f-new" hidden class="stack">
+        <div class="scan" id="f-scan" hidden>
+          <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
+          <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
+          <div class="scan-msg" id="f-scan-msg" role="status"></div>
+        </div>
         <div class="two">
           <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
           <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
@@ -1913,6 +1925,7 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 </script>
 <script type="application/json" id="images">
 {"almond-cheddar-appetizers":{"ai":"images/ai/almond-cheddar-appetizers.jpg?v=1007408677"},"basic-crepes":{"ai":"images/ai/basic-crepes.jpg?v=3454490001"},"basil-tomato-tart":{"ai":"images/ai/basil-tomato-tart.jpg?v=1495900456"},"black-bean-corn-salad":{"ai":"images/ai/black-bean-corn-salad.jpg?v=549485412"},"boston-cream-cake-nannies-cake":{"ai":"images/ai/boston-cream-cake-nannies-cake.jpg?v=2208278178"},"broccoli-casserole":{"ai":"images/ai/broccoli-casserole.jpg?v=842484280"},"christmas-pineapple-cake":{"ai":"images/ai/christmas-pineapple-cake.jpg?v=2091234319"},"christmas-shortbread":{"ai":"images/ai/christmas-shortbread.jpg?v=2398675648"},"classic-caesar-salad-la-casa-pepe-style":{"ai":"images/ai/classic-caesar-salad-la-casa-pepe-style.jpg?v=3279231303"},"classic-meatloaf":{"ai":"images/ai/classic-meatloaf.jpg?v=2068278126"},"crabmeat-dip":{"ai":"images/ai/crabmeat-dip.jpg?v=174483890"},"crepes-with-spinach-bacon-mushroom-filling":{"ai":"images/ai/crepes-with-spinach-bacon-mushroom-filling.jpg?v=976941576"},"curried-baby-pea-soup":{"ai":"images/ai/curried-baby-pea-soup.jpg?v=2247362930"},"dijon-chicken":{"ai":"images/ai/dijon-chicken.jpg?v=3307595392"},"fennel-apple-prosciutto-salad":{"ai":"images/ai/fennel-apple-prosciutto-salad.jpg?v=123468727"},"fennel-salad":{"ai":"images/ai/fennel-salad.jpg?v=1664207089"},"fleur-de-sel-lunenburg-mustard":{"ai":"images/ai/fleur-de-sel-lunenburg-mustard.jpg?v=3561002529"},"franks-crab-cakes":{"ai":"images/ai/franks-crab-cakes.jpg?v=1703069925"},"greek-salad-dressing":{"ai":"images/ai/greek-salad-dressing.jpg?v=2976985339"},"grilled-avocado-seafood-salsa":{"ai":"images/ai/grilled-avocado-seafood-salsa.jpg?v=1400457547"},"guacamole":{"ai":"images/ai/guacamole.jpg?v=2966000901"},"hersheys-chocolate-cake":{"ai":"images/ai/hersheys-chocolate-cake.jpg?v=2909830198"},"hunters-chicken":{"ai":"images/ai/hunters-chicken.jpg?v=2003501822"},"irish-scones":{"ai":"images/ai/irish-scones.jpg?v=1193098402"},"italian-pork-chops-crockpot-recipe":{"ai":"images/ai/italian-pork-chops-crockpot-recipe.jpg?v=3929448508"},"jam-tarts":{"ai":"images/ai/jam-tarts.jpg?v=1054531863"},"lemon-sorbet":{"ai":"images/ai/lemon-sorbet.jpg?v=1574670472"},"marinated-balsamic-grilled-vegetables":{"ai":"images/ai/marinated-balsamic-grilled-vegetables.jpg?v=1403189319"},"mediterranean-couscous-salad":{"ai":"images/ai/mediterranean-couscous-salad.jpg?v=2134505438"},"moms-classic-scones":{"ai":"images/ai/moms-classic-scones.jpg?v=3852476545"},"mushroom-braised-chicken":{"ai":"images/ai/mushroom-braised-chicken.jpg?v=2318665794"},"mushroom-braised-chicken-with-cream-noodles":{"ai":"images/ai/mushroom-braised-chicken-with-cream-noodles.jpg?v=992354121"},"nannies-1-egg-cake":{"ai":"images/ai/nannies-1-egg-cake.jpg?v=1005253591"},"nannies-bread":{"ai":"images/ai/nannies-bread.jpg?v=359793196"},"normas-meatballs":{"ai":"images/ai/normas-meatballs.jpg?v=2701171456"},"olive-chicken-curry-crepes":{"ai":"images/ai/olive-chicken-curry-crepes.jpg?v=2675828795"},"oriental-beef-noodles":{"ai":"images/ai/oriental-beef-noodles.jpg?v=367567106"},"oysters-bienville":{"ai":"images/ai/oysters-bienville.jpg?v=2282943169"},"pakistani-chicken-with-potato-and-spinach":{"ai":"images/ai/pakistani-chicken-with-potato-and-spinach.jpg?v=3353773240"},"pasta-sauce-with-pork-hocks":{"ai":"images/ai/pasta-sauce-with-pork-hocks.jpg?v=3184869547"},"penne-abigail":{"ai":"images/ai/penne-abigail.jpg?v=3662978291"},"plum-loaf":{"ai":"images/ai/plum-loaf.jpg?v=184183015"},"pork-cutlets-in-mustard-sauce":{"ai":"images/ai/pork-cutlets-in-mustard-sauce.jpg?v=1667330491"},"pot-roasted-pork-in-white-wine-with-fennel-and-rosemary":{"ai":"images/ai/pot-roasted-pork-in-white-wine-with-fennel-and-rosemary.jpg?v=3463021439"},"rice-pudding":{"ai":"images/ai/rice-pudding.jpg?v=2557027410"},"roasted-fennel-salad":{"ai":"images/ai/roasted-fennel-salad.jpg?v=322405399"},"scallop-lobster-mushroom-crepes":{"ai":"images/ai/scallop-lobster-mushroom-crepes.jpg?v=462465778"},"seafood-casserole":{"ai":"images/ai/seafood-casserole.jpg?v=1023138321"},"seafood-casserole-cys":{"ai":"images/ai/seafood-casserole-cys.jpg?v=1856585409"},"seafood-chowder-crockpot-version":{"ai":"images/ai/seafood-chowder-crockpot-version.jpg?v=3918889999"},"shrimp-tarragon":{"ai":"images/ai/shrimp-tarragon.jpg?v=4113520524"},"swiss-steak-crockpot-version":{"ai":"images/ai/swiss-steak-crockpot-version.jpg?v=3835597215"},"tabbouleh":{"ai":"images/ai/tabbouleh.jpg?v=888308513"},"tuna-noodle-casserole-crockpot-version":{"ai":"images/ai/tuna-noodle-casserole-crockpot-version.jpg?v=2526681521"},"vanilla-wafers":{"ai":"images/ai/vanilla-wafers.jpg?v=2908919849"},"veal-marsala":{"ai":"images/ai/veal-marsala.jpg?v=488193943"},"wandas-butter-tarts":{"ai":"images/ai/wandas-butter-tarts.jpg?v=2368448169"}}</script>
+<script type="application/json" id="config">{"geminiKey":""}</script>
 <script>
 (() => {
 "use strict";
@@ -2355,12 +2368,69 @@ function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
   $("#f-recipe").value = recipeId; $("#f-was").value = current || ""; $("#f-why").value = why || "";
   $("#f-name").value = store.get("name", "");
   $("#f-msg").textContent = ""; $("#f-offline").hidden = S.dbState !== "off";
+  $("#f-scan-msg").textContent = "";
   setKind(kind);
   const r = BY[recipeId];
   $("#sg-title").textContent = kind === "new" ? "Add a missing recipe" : r ? r.name : "Help improve the book";
   dlg.showModal();
   setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
 }
+/* ---------------- read a recipe from a photo ----------------
+   The key is a browser key restricted to this site's address (set at deploy by build.sh), so it is
+   public by design; without one the photo option stays hidden. */
+const CONFIG = (() => { try { return JSON.parse(document.getElementById("config")?.textContent || "{}"); } catch { return {}; } })();
+const SCAN_MODEL = "gemini-2.5-flash";
+$("#f-scan").hidden = !CONFIG.geminiKey;
+const blobB64 = b => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1]); fr.onerror = () => rej(fr.error); fr.readAsDataURL(b); });
+async function readRecipePhotos(files) {
+  const images = await Promise.all(files.map(async f => ({ inline_data: { mime_type: "image/jpeg", data: await blobB64(await shrink(f, 1600)) } })));
+  const text = `These photos show one family recipe (a handwritten card, a printed page, or several pages of the same recipe). Transcribe it exactly as written.
+- Keep the original wording, quantities and fractions (write ½, ¼, ⅓ etc. as the characters). Do not add, convert or guess amounts.
+- One ingredient per line, one method step per line, in order. Drop numbering and bullets.
+- If a word can't be read, write [illegible] in its place.
+- "section" is the best fit among: ${CATS.join(", ")}.
+- "notes" holds anything else on the card worth keeping (serving size, oven temperature, who it's from, tips). Empty if none.
+- If the photos don't show a recipe at all, set "isRecipe" to false.`;
+  const res = await fetch(`https://generativelanguage.googleapis.com/v1beta/models/${SCAN_MODEL}:generateContent`, {
+    method: "POST",
+    referrerPolicy: "no-referrer-when-downgrade", // send the full page address so the key's website restriction can match it
+    headers: { "Content-Type": "application/json", "x-goog-api-key": CONFIG.geminiKey },
+    body: JSON.stringify({
+      contents: [{ parts: [...images, { text }] }],
+      generationConfig: {
+        temperature: 0,
+        responseMimeType: "application/json",
+        responseSchema: { type: "OBJECT", required: ["isRecipe", "name", "section", "ingredients", "steps", "notes"], properties: {
+          isRecipe: { type: "BOOLEAN" }, name: { type: "STRING" }, section: { type: "STRING", enum: CATS },
+          ingredients: { type: "ARRAY", items: { type: "STRING" } }, steps: { type: "ARRAY", items: { type: "STRING" } }, notes: { type: "STRING" } } }
+      }
+    })
+  });
+  if (!res.ok) { const err = new Error("http"); err.status = res.status; throw err; }
+  const part = (await res.json()).candidates?.[0]?.content?.parts?.find(p => p.text);
+  if (!part) throw new Error("empty");
+  return JSON.parse(part.text);
+}
+$("#f-scan-file").addEventListener("change", async e => {
+  const files = [...e.target.files].slice(0, 4); e.target.value = ""; if (!files.length) return;
+  const box = $("#f-scan"), msg = $("#f-scan-msg");
+  box.setAttribute("aria-busy", "true"); msg.className = "scan-msg"; msg.textContent = `Reading ${files.length > 1 ? "your photos" : "your photo"}… this takes a few seconds.`;
+  try {
+    const r = await readRecipePhotos(files);
+    if (!r.isRecipe || (!r.ingredients?.length && !r.steps?.length)) throw new Error("norecipe");
+    $("#f-nname").value = r.name || ""; if (CATS.includes(r.section)) $("#f-ncat").value = r.section;
+    $("#f-ning").value = (r.ingredients || []).join("\n"); $("#f-nsteps").value = (r.steps || []).join("\n");
+    if (r.notes && !$("#f-now").value.trim()) $("#f-now").value = r.notes;
+    msg.textContent = "Filled in from your photo. Check it over and fix anything it misread before sending.";
+  } catch (err) {
+    msg.className = "scan-msg err";
+    msg.textContent = err.message === "norecipe" ? "Couldn't find a recipe in that photo. Try a closer, well-lit shot, or type it in below."
+      : err.status === 429 ? "Too many photos read today. Try again tomorrow, or type the recipe in below."
+      : err.status === 400 || err.status === 403 ? "Photo reading isn't working on this copy of the site. Type the recipe in below instead."
+      : err.name === "TypeError" && !navigator.onLine ? "You're offline. Connect and try again."
+      : "Couldn't read that photo. Try again, or type the recipe in below.";
+  } finally { box.removeAttribute("aria-busy"); }
+});
 $("#f-recipe").addEventListener("change", e => { $("#sg-title").textContent = BY[e.target.value]?.name || "Help improve the book"; });
 $("#sg-form").addEventListener("submit", async e => {
   e.preventDefault();

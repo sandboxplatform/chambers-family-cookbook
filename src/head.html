@@ -290,4 +290,11 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 .ph-pick input{position:absolute;width:1px;height:1px;opacity:0}
 .ph-steps{margin:0;padding-left:20px;display:grid;gap:10px;color:var(--ink-2);font-size:.92rem}
 .ph-steps .btn{margin-top:6px}
+.scan{display:grid;gap:10px;padding:14px;border:1px dashed var(--line);border-radius:10px;background:var(--card-2);font-size:.9rem}
+.scan label.btn{position:relative;justify-self:start}
+.scan input{position:absolute;width:1px;height:1px;opacity:0}
+.scan[aria-busy="true"] label.btn{opacity:.6;pointer-events:none}
+.scan-msg:empty{display:none}
+.scan-msg{font-size:.86rem;color:var(--ink-2)}
+.scan-msg.err{color:var(--margin)}
 </style>
