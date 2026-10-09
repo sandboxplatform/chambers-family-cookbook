@@ -3,6 +3,7 @@
 <link rel="icon" href="icons/icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
 <meta name="theme-color" content="#1c2540">
+<script>try { const t = localStorage.getItem("ccb:theme"); if (t === '"light"' || t === '"dark"') document.documentElement.dataset.theme = JSON.parse(t); } catch {}</script>
 <meta name="apple-mobile-web-app-title" content="Cookbook">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -61,6 +62,9 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0
 .bar{position:sticky;top:env(safe-area-inset-top,0px);z-index:20;background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:saturate(1.4) blur(10px);-webkit-backdrop-filter:saturate(1.4) blur(10px);border-bottom:1px solid var(--line)}
 .bar-in{display:flex;align-items:center;gap:14px;padding-block:10px;flex-wrap:wrap}
 .nav{display:flex;gap:4px;margin-left:auto;flex-wrap:wrap}
+.theme-btn{flex:none;display:inline-grid;place-items:center;width:36px;height:36px;border-radius:999px;border:1px solid var(--line);background:var(--card);color:var(--ink-2);cursor:pointer}
+.theme-btn:hover{border-color:var(--ink-3);color:var(--ink)}
+.theme-btn svg{width:18px;height:18px}
 .nav a{display:inline-flex;align-items:center;gap:6px;text-decoration:none;font-weight:500;font-size:.92rem;padding:7px 11px;border-radius:999px;color:var(--ink-2)}
 .nav a:hover{background:var(--card)}
 .nav a[aria-current="page"]{background:var(--ink);color:var(--paper)}
@@ -69,7 +73,7 @@ h1,h2,h3{font-family:var(--f-display);font-weight:400;text-wrap:balance;margin:0
 .search{flex:1 1 220px;max-width:340px;position:relative}
 .search input{width:100%;padding:9px 12px 9px 34px;border-radius:999px;border:1px solid var(--line);background:var(--card)}
 .search svg{position:absolute;left:12px;top:50%;transform:translateY(-50%);width:16px;height:16px;color:var(--ink-3)}
-@media (max-width:860px){.search{flex-basis:100%;max-width:none}.nav{margin-left:0}.bar-in{gap:8px}}
+@media (max-width:860px){.search{flex-basis:calc(100% - 50px);max-width:none}.nav{margin-left:0}.bar-in{gap:8px}}
 @media (max-width:520px){.nav a{padding:6px 9px;font-size:.86rem}}
 
 /* ---------- buttons, chips ---------- */

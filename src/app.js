@@ -606,6 +606,28 @@ $("#dlg-photo").addEventListener("click", async e => {
   if (b.dataset.ph === "remove") { try { await idb.del(phR.id); } catch {} setLocal(phR.id, null); render(); drawPhoto(); toast("Removed from this device"); }
 });
 
+/* ---------------- light / dark ----------------
+   Follows the device's setting unless someone picks the other one here; picking the same as the
+   device clears the choice, so it goes back to following the device. */
+const darkMQ = matchMedia("(prefers-color-scheme: dark)");
+const isDark = () => (document.documentElement.dataset.theme || (darkMQ.matches ? "dark" : "light")) === "dark";
+const SUN = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2M12 20v2M4.9 4.9l1.4 1.4M17.7 17.7l1.4 1.4M2 12h2M20 12h2M4.9 19.1l1.4-1.4M17.7 6.3l1.4-1.4"/></svg>';
+const MOON = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M20 14.5A8 8 0 1 1 9.5 4a6.5 6.5 0 0 0 10.5 10.5Z"/></svg>';
+function drawTheme() {
+  const dark = isDark(), b = $("#theme-btn");
+  b.innerHTML = dark ? SUN : MOON;
+  b.setAttribute("aria-label", dark ? "Switch to light mode" : "Switch to dark mode"); b.title = b.getAttribute("aria-label");
+  document.querySelector('meta[name="theme-color"]')?.setAttribute("content", dark ? "#11151f" : "#1c2540");
+}
+$("#theme-btn").addEventListener("click", () => {
+  const want = isDark() ? "light" : "dark", system = darkMQ.matches ? "dark" : "light";
+  if (want === system) { delete document.documentElement.dataset.theme; store.set("theme", null); }
+  else { document.documentElement.dataset.theme = want; store.set("theme", want); }
+  drawTheme();
+});
+darkMQ.addEventListener?.("change", drawTheme);
+drawTheme();
+
 /* ---------------- install as an app ---------------- */
 // Chrome/Edge/Samsung offer a real install prompt; iPhone and others get step-by-step instructions.
 let installEvt = null, installed = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
