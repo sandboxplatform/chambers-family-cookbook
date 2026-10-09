@@ -6,8 +6,9 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 
 - 56 family recipes in 7 sections, searchable by name or ingredient
 - Ingredient and step check-offs, ½×–3× batch scaling, favourites, a shopping list and a step-by-step cook mode
-- A pencil on every ingredient and step for suggesting corrections, plus forms for memories, introductions and new recipes
-- A suggestions review queue (accept or decline, CSV export)
+- Anyone can edit: a pencil on the name, introduction, every ingredient, step and step heading, and a + to add ingredients, steps and sub-steps. Changes are saved straight into the book for everyone
+- "Add a recipe", typed in or read from a photo of the card
+- Family memories and comments on every recipe
 - A picture for every recipe: AI-generated stand-ins until the family adds real photos
 
 ## Files
@@ -29,6 +30,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 ```
 # Section name
 @ Recipe name
+~ old-recipe-id   (added automatically when a recipe is renamed, so old links still work)
 ^ serves
 > Introduction
 -: Ingredient group heading
@@ -38,7 +40,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 . Closing note
 ```
 
-Edit the text file, then run `./build.sh`.
+Edit the text file and run `./build.sh`, or just edit on the website.
 
 ## Pictures
 
@@ -46,13 +48,20 @@ Edit the text file, then run `./build.sh`.
 
 **Real photos.** On any recipe, "Add a real photo" shows the photo on that device straight away and downloads it named `<recipe-id>.jpg`. Put that file in `photos/` (Add file → Upload files on GitHub) and it replaces the AI picture for everyone after the site redeploys.
 
-## Adding a recipe from a photo
+## Editing on the website, memories and comments
 
-"Add a recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. Photos go to a small relay (`relay/`, a Cloudflare Worker at https://cookbook-relay.chambers-cookbook.workers.dev) that holds the Gemini key as a Worker secret, so the key never appears in the page. The relay only answers requests from the cookbook site, fixes the model and prompt, and limits reads to 10 a minute per person and 200 a day in total (`DAILY_LIMIT` in `relay/wrangler.toml`).
+The site runs in the browser, so anything that needs a secret or shared storage goes through a small relay (`relay/`, a Cloudflare Worker at https://cookbook-relay.chambers-cookbook.workers.dev):
 
-- Change the key: `npx wrangler@4 secret put GEMINI_API_KEY --name cookbook-relay`
-- Redeploy after editing `relay/`: `cd relay && npx wrangler@4 deploy`
+- **Edits** (pencils, the + menu, "Add a recipe") are sent as small, specific changes. The relay applies each one to `src/book.txt` and commits it to GitHub with a message saying what changed and who made it, then the site redeploys. Visitors also get the latest book from the relay on load, so changes show straight away. Every change is in the repository history, so any edit can be reverted there. If two people change the same line at once, the second is told to check and try again.
+- **Memories and comments** are stored by the relay (Cloudflare KV), per recipe. People can delete their own from the device they posted on.
+- **Reading a recipe photo** sends it to Gemini, using a fixed model and prompt.
 
-## Shared features
+The relay only answers the cookbook site and limits each person to 10 of each a minute, with daily caps (`DAILY_LIMIT`, `DAILY_EDITS`, `DAILY_NOTES` in `relay/wrangler.toml`).
 
-Suggestions, memories, Ask Claude and CSV download use the claude.ai artifact runtime. The live version with those features is the Claude artifact. Opened anywhere else (for example GitHub Pages), the site still works for browsing and cooking, and the suggestion form offers "Copy suggestion" so it can be sent by email or text instead.
+Secrets (set with `npx wrangler@4 secret put <NAME> --name cookbook-relay`; on Windows PowerShell use `npx.cmd`):
+- `GEMINI_API_KEY`: Google AI Studio key for reading photos
+- `GITHUB_TOKEN`: fine-grained GitHub token with Contents read/write on this repository only
+
+Redeploy after editing `relay/`: `cd relay && npx wrangler@4 deploy`.
+
+Ask Claude only works in the Claude artifact version of the cookbook.

@@ -7,7 +7,6 @@
     </label>
     <nav class="nav" aria-label="Sections">
       <a href="#" data-nav="home">Recipes</a>
-      <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
       <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
     </nav>
     <button type="button" class="icon-btn" id="install-btn" data-act="install" aria-label="Get the app" title="Get the app" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></button>
@@ -17,62 +16,61 @@
 
 <main class="wrap" id="view" tabindex="-1"></main>
 
-<footer><div class="wrap">Made for the Chambers family. Spotted something to fix? Every ingredient and step has a pencil. Tap it to suggest a change.</div></footer>
+<footer><div class="wrap">Made for the Chambers family. Spotted something to fix? Tap the pencil next to any line, or the + on a recipe to add one.</div></footer>
 
-<!-- Suggest / memory dialog -->
-<dialog id="dlg-suggest" aria-labelledby="sg-title">
-  <form class="dlg" id="sg-form" novalidate>
+<!-- Add a recipe -->
+<dialog id="dlg-new" aria-labelledby="nw-title">
+  <form class="dlg" id="nw-form" novalidate>
     <div class="dlg-h">
-      <div><div class="eyebrow" id="sg-eyebrow">Suggest a change</div><h2 id="sg-title">Help improve the book</h2></div>
+      <div><div class="eyebrow">New recipe</div><h2 id="nw-title">Add a recipe</h2></div>
       <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="dlg-b">
-      <div class="field" id="f-kind-wrap">
-        <span class="lbl">What kind of change?</span>
-        <div class="chips" id="f-kind" role="group" aria-label="Kind of change"></div>
+      <div class="scan" id="f-scan" hidden>
+        <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
+        <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
+        <div class="scan-msg" id="f-scan-msg" role="status"></div>
       </div>
-      <div class="field" id="f-recipe-wrap">
-        <label for="f-recipe">Recipe</label>
-        <select id="f-recipe"></select>
+      <div class="two">
+        <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
+        <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
       </div>
-      <div id="f-new" hidden class="stack">
-        <div class="scan" id="f-scan" hidden>
-          <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
-          <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
-          <div class="scan-msg" id="f-scan-msg" role="status"></div>
-        </div>
-        <div class="two">
-          <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
-          <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
-        </div>
-        <div class="field"><label for="f-ning">Ingredients</label><textarea id="f-ning" class="typed" placeholder="One per line"></textarea></div>
-        <div class="field"><label for="f-nsteps">Steps</label><textarea id="f-nsteps" placeholder="One per line"></textarea></div>
-      </div>
-      <div class="field" id="f-was-wrap">
-        <label for="f-was">What the book says now</label>
-        <textarea id="f-was" class="typed" rows="2" placeholder="Tap the pencil next to a line to fill this in, or paste it here"></textarea>
-      </div>
-      <div class="field" id="f-now-wrap">
-        <label for="f-now" id="f-now-label">What it should say</label>
-        <textarea id="f-now" class="typed" rows="3"></textarea>
-      </div>
-      <div class="field" id="f-why-wrap">
-        <label for="f-why">Why? <span class="muted">(optional)</span></label>
-        <textarea id="f-why" rows="2" placeholder="e.g. Mom always used 2 cups, it's on her original card"></textarea>
-      </div>
-      <div class="field">
-        <label for="f-name">Your name, as the family knows you</label>
-        <input id="f-name" placeholder="e.g. Aunt Carol" autocomplete="nickname">
-        <span class="hint">Shown next to your suggestion. Remembered on this device.</span>
-      </div>
-      <div class="notice" id="f-offline" hidden>Suggestions can't be saved from this view. Use "Copy suggestion" and send it to Robert by email or text.</div>
+      <div class="field"><label for="f-nintro">Introduction <span class="muted">(optional)</span></label><textarea id="f-nintro" rows="2" placeholder="A sentence or two about the dish and who made it"></textarea></div>
+      <div class="field"><label for="f-ning">Ingredients</label><textarea id="f-ning" class="typed" placeholder="One per line"></textarea></div>
+      <div class="field"><label for="f-nsteps">Method</label><textarea id="f-nsteps" placeholder="One step per line"></textarea></div>
+      <div class="field"><label for="f-nnotes">Notes <span class="muted">(optional)</span></label><textarea id="f-nnotes" rows="2" placeholder="Serving size, oven temperature, tips"></textarea></div>
+      <div class="field"><label for="f-name">Your name, as the family knows you</label><input id="f-name" class="who" placeholder="e.g. Aunt Carol" autocomplete="nickname"></div>
       <div class="formmsg" id="f-msg" role="alert"></div>
     </div>
     <div class="dlg-f">
-      <span class="muted" style="font-size:.82rem">Everyone with access to this page can see suggestions.</span>
+      <span class="muted" style="font-size:.82rem">Added to the cookbook for everyone.</span>
       <div style="display:flex;gap:8px">
         <button type="button" class="btn ghost" data-close>Cancel</button>
-        <button type="submit" class="btn primary" id="f-submit">Send suggestion</button>
+        <button type="submit" class="btn primary" id="f-submit">Add recipe</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- Edit a line, the name or the introduction; add an ingredient or step -->
+<dialog id="dlg-edit" aria-labelledby="ed-title">
+  <form class="dlg" id="ed-form" novalidate>
+    <div class="dlg-h">
+      <div><div class="eyebrow" id="ed-eyebrow">Edit</div><h2 id="ed-title">Recipe</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b">
+      <div class="field" id="ed-after-wrap" hidden><label for="ed-after">Where does it go?</label><select id="ed-after"></select></div>
+      <div class="field" id="ed-head-wrap" hidden><label for="ed-head">Step heading</label><input id="ed-head" placeholder="e.g. Rest the Meat"></div>
+      <div class="field"><label for="ed-text" id="ed-label">Text</label><textarea id="ed-text" class="typed" rows="3"></textarea></div>
+      <div class="field"><label for="ed-name">Your name, as the family knows you</label><input id="ed-name" class="who" placeholder="e.g. Aunt Carol" autocomplete="nickname"><span class="hint">Saved with the change so the family knows who made it.</span></div>
+      <div class="formmsg" id="ed-msg" role="alert"></div>
+    </div>
+    <div class="dlg-f">
+      <button type="button" class="btn ghost" id="ed-delete" hidden>Remove</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button type="button" class="btn ghost" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="ed-save">Save</button>
       </div>
     </div>
   </form>
@@ -89,28 +87,14 @@
       <div class="chips" id="ask-chips"></div>
       <div class="field"><label for="ask-q">Your question</label><textarea id="ask-q" rows="2" placeholder="e.g. Can I make this the day before?"></textarea></div>
       <div class="answer" id="ask-a" aria-live="polite"></div>
-      <span class="muted" style="font-size:.8rem">Answers are general cooking advice. The family recipe stays as written unless someone suggests a change.</span>
+      <span class="muted" style="font-size:.8rem">Answers are general cooking advice. The family recipe stays as written unless someone edits it.</span>
     </div>
     <div class="dlg-f">
-      <button type="button" class="btn sm ghost" id="ask-suggest" hidden>Turn this into a suggestion</button>
       <div style="display:flex;gap:8px;margin-left:auto">
         <button type="button" class="btn ghost" data-close>Close</button>
         <button type="submit" class="btn ink" id="ask-go">Ask</button>
       </div>
     </div>
-  </form>
-</dialog>
-
-<!-- Resolve dialog (editors) -->
-<dialog id="dlg-resolve" aria-labelledby="rs-title">
-  <form class="dlg" id="rs-form">
-    <div class="dlg-h"><div><div class="eyebrow">Editor</div><h2 id="rs-title">Accept suggestion</h2></div>
-      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-    <div class="dlg-b">
-      <div class="field"><label for="rs-note">Note to the family <span class="muted">(optional)</span></label>
-        <textarea id="rs-note" rows="3" placeholder="e.g. Thanks! Fixed in the print edition."></textarea></div>
-    </div>
-    <div class="dlg-f"><span></span><div style="display:flex;gap:8px"><button type="button" class="btn ghost" data-close>Cancel</button><button type="submit" class="btn primary" id="rs-go">Accept</button></div></div>
   </form>
 </dialog>
 

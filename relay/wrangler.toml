@@ -1,5 +1,5 @@
-# Cloudflare Worker that reads recipe photos with Gemini for the cookbook site.
-# The Gemini key is a Worker secret (wrangler secret put GEMINI_API_KEY), never in the page.
+# The cookbook site's private relay: reads recipe photos, saves edits to the book, stores memories and comments.
+# Secrets (wrangler secret put ...): GEMINI_API_KEY for photos, GITHUB_TOKEN to save edits to the book.
 name = "cookbook-relay"
 main = "worker.js"
 compatibility_date = "2026-10-01"
@@ -7,8 +7,13 @@ compatibility_date = "2026-10-01"
 [vars]
 ALLOWED_ORIGINS = "https://sandboxplatform.github.io"
 DAILY_LIMIT = "200"
+DAILY_EDITS = "500"
+DAILY_NOTES = "300"
+GITHUB_REPO = "sandboxplatform/chambers-family-cookbook"
+BOOK_PATH = "src/book.txt"
+BRANCH = "main"
 
-# Per-visitor burst limit: 10 photo reads a minute.
+# Per-visitor burst limit: 10 a minute each for photo reads, edits and new memories/comments.
 [[ratelimits]]
 name = "PER_IP"
 namespace_id = "1001"
@@ -18,3 +23,8 @@ simple = { limit = 10, period = 60 }
 [[kv_namespaces]]
 binding = "COUNTS"
 id = "2d22f1e330b6425db4736bdbf6d0f4b7"
+
+# Family memories and comments, per recipe.
+[[kv_namespaces]]
+binding = "NOTES"
+id = "f35a1e2572ce4f9fa728c34021fa7279"

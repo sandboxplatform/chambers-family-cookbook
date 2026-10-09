@@ -153,7 +153,13 @@ main{padding-block:28px 80px}
 .card::before{content:"";position:absolute;top:0;bottom:0;left:44px;width:1.5px;background:var(--margin);opacity:.85}
 .card-top::before{content:"";position:absolute;left:0;right:0;top:0;height:6px;background:var(--cat)}
 .card-top .cat{font:600 .72rem/1 var(--f-body);letter-spacing:.12em;text-transform:uppercase;color:var(--cat)}
-.card-top h1{font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.1;margin:10px 0 0}
+.add-line{position:absolute;top:18px;right:18px;z-index:2}
+.add-menu{position:absolute;right:0;top:calc(100% + 6px);min-width:200px;display:grid;padding:6px;background:var(--card);border:1px solid var(--line);border-radius:12px;box-shadow:var(--shadow)}
+.add-menu[hidden]{display:none}
+.add-menu button{border:0;background:none;text-align:left;padding:9px 12px;border-radius:8px;font:500 .92rem/1.2 var(--f-body);color:var(--ink);cursor:pointer}
+.add-menu button:hover,.add-menu button:focus-visible{background:var(--card-2)}
+.card-top .cat{padding-right:48px}
+.card-top h1{padding-right:40px;font-size:clamp(1.8rem,3.6vw,2.6rem);line-height:1.1;margin:10px 0 0}
 .intro{color:var(--ink-2);max-width:62ch;margin:14px 0 0;font-size:1.02rem}
 .card-body{padding:6px 28px 28px 64px;display:grid;gap:26px}
 @media (max-width:620px){.card::before{left:22px}.card-top{padding:24px 18px 16px 36px}.card-body{padding:4px 18px 22px 36px}}
@@ -182,6 +188,15 @@ main{padding-block:28px 80px}
 .line:hover .edit,.edit:focus-visible{opacity:1}
 .edit:hover{color:var(--margin);background:var(--margin-soft)}
 @media (hover:none){.edit{opacity:.55}}
+.card-top h1 .edit,.intro .edit,.sg h3 .edit{display:inline-grid;vertical-align:middle;margin-left:6px;opacity:.55}
+.card-top h1 .edit svg{width:18px;height:18px}
+.card-top h1 .edit:hover,.intro .edit:hover,.sg h3 .edit:hover{opacity:1}
+.sg h3 .edit{align-self:center}
+.note-form{display:grid;gap:8px;margin-top:14px;padding-top:12px;border-top:1px dashed var(--line)}
+.note-form textarea,.note-form input{width:100%;border:1px solid var(--line);background:var(--card-2);border-radius:8px;padding:8px 10px;font:inherit;color:inherit}
+.note-form textarea{resize:vertical;min-height:58px}
+.note-row{display:flex;gap:8px;align-items:center}
+.note-row input{flex:1;min-width:0}
 .steps{display:grid;gap:18px;counter-reset:st}
 .sg h3{font:600 1rem/1.3 var(--f-body);margin-bottom:4px;display:flex;align-items:baseline;gap:10px}
 .sg h3 .n{font:400 .95rem var(--f-display);color:var(--margin);font-variant-numeric:tabular-nums}
@@ -308,7 +323,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
     </label>
     <nav class="nav" aria-label="Sections">
       <a href="#" data-nav="home">Recipes</a>
-      <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
       <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
     </nav>
     <button type="button" class="icon-btn" id="install-btn" data-act="install" aria-label="Get the app" title="Get the app" hidden><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg></button>
@@ -318,62 +332,61 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 
 <main class="wrap" id="view" tabindex="-1"></main>
 
-<footer><div class="wrap">Made for the Chambers family. Spotted something to fix? Every ingredient and step has a pencil. Tap it to suggest a change.</div></footer>
+<footer><div class="wrap">Made for the Chambers family. Spotted something to fix? Tap the pencil next to any line, or the + on a recipe to add one.</div></footer>
 
-<!-- Suggest / memory dialog -->
-<dialog id="dlg-suggest" aria-labelledby="sg-title">
-  <form class="dlg" id="sg-form" novalidate>
+<!-- Add a recipe -->
+<dialog id="dlg-new" aria-labelledby="nw-title">
+  <form class="dlg" id="nw-form" novalidate>
     <div class="dlg-h">
-      <div><div class="eyebrow" id="sg-eyebrow">Suggest a change</div><h2 id="sg-title">Help improve the book</h2></div>
+      <div><div class="eyebrow">New recipe</div><h2 id="nw-title">Add a recipe</h2></div>
       <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
     </div>
     <div class="dlg-b">
-      <div class="field" id="f-kind-wrap">
-        <span class="lbl">What kind of change?</span>
-        <div class="chips" id="f-kind" role="group" aria-label="Kind of change"></div>
+      <div class="scan" id="f-scan" hidden>
+        <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
+        <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
+        <div class="scan-msg" id="f-scan-msg" role="status"></div>
       </div>
-      <div class="field" id="f-recipe-wrap">
-        <label for="f-recipe">Recipe</label>
-        <select id="f-recipe"></select>
+      <div class="two">
+        <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
+        <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
       </div>
-      <div id="f-new" hidden class="stack">
-        <div class="scan" id="f-scan" hidden>
-          <div><b>Have it on paper?</b> <span class="muted">Take a photo of the recipe card or page and we'll fill this in for you. Two pages? Choose both photos.</span></div>
-          <label class="btn" id="f-scan-btn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg> <span>Take or choose a photo</span><input type="file" accept="image/*" multiple id="f-scan-file"></label>
-          <div class="scan-msg" id="f-scan-msg" role="status"></div>
-        </div>
-        <div class="two">
-          <div class="field"><label for="f-nname">Recipe name</label><input id="f-nname" placeholder="e.g. Aunt Wanda's Fish Cakes"></div>
-          <div class="field"><label for="f-ncat">Section</label><select id="f-ncat"></select></div>
-        </div>
-        <div class="field"><label for="f-ning">Ingredients</label><textarea id="f-ning" class="typed" placeholder="One per line"></textarea></div>
-        <div class="field"><label for="f-nsteps">Steps</label><textarea id="f-nsteps" placeholder="One per line"></textarea></div>
-      </div>
-      <div class="field" id="f-was-wrap">
-        <label for="f-was">What the book says now</label>
-        <textarea id="f-was" class="typed" rows="2" placeholder="Tap the pencil next to a line to fill this in, or paste it here"></textarea>
-      </div>
-      <div class="field" id="f-now-wrap">
-        <label for="f-now" id="f-now-label">What it should say</label>
-        <textarea id="f-now" class="typed" rows="3"></textarea>
-      </div>
-      <div class="field" id="f-why-wrap">
-        <label for="f-why">Why? <span class="muted">(optional)</span></label>
-        <textarea id="f-why" rows="2" placeholder="e.g. Mom always used 2 cups, it's on her original card"></textarea>
-      </div>
-      <div class="field">
-        <label for="f-name">Your name, as the family knows you</label>
-        <input id="f-name" placeholder="e.g. Aunt Carol" autocomplete="nickname">
-        <span class="hint">Shown next to your suggestion. Remembered on this device.</span>
-      </div>
-      <div class="notice" id="f-offline" hidden>Suggestions can't be saved from this view. Use "Copy suggestion" and send it to Robert by email or text.</div>
+      <div class="field"><label for="f-nintro">Introduction <span class="muted">(optional)</span></label><textarea id="f-nintro" rows="2" placeholder="A sentence or two about the dish and who made it"></textarea></div>
+      <div class="field"><label for="f-ning">Ingredients</label><textarea id="f-ning" class="typed" placeholder="One per line"></textarea></div>
+      <div class="field"><label for="f-nsteps">Method</label><textarea id="f-nsteps" placeholder="One step per line"></textarea></div>
+      <div class="field"><label for="f-nnotes">Notes <span class="muted">(optional)</span></label><textarea id="f-nnotes" rows="2" placeholder="Serving size, oven temperature, tips"></textarea></div>
+      <div class="field"><label for="f-name">Your name, as the family knows you</label><input id="f-name" class="who" placeholder="e.g. Aunt Carol" autocomplete="nickname"></div>
       <div class="formmsg" id="f-msg" role="alert"></div>
     </div>
     <div class="dlg-f">
-      <span class="muted" style="font-size:.82rem">Everyone with access to this page can see suggestions.</span>
+      <span class="muted" style="font-size:.82rem">Added to the cookbook for everyone.</span>
       <div style="display:flex;gap:8px">
         <button type="button" class="btn ghost" data-close>Cancel</button>
-        <button type="submit" class="btn primary" id="f-submit">Send suggestion</button>
+        <button type="submit" class="btn primary" id="f-submit">Add recipe</button>
+      </div>
+    </div>
+  </form>
+</dialog>
+
+<!-- Edit a line, the name or the introduction; add an ingredient or step -->
+<dialog id="dlg-edit" aria-labelledby="ed-title">
+  <form class="dlg" id="ed-form" novalidate>
+    <div class="dlg-h">
+      <div><div class="eyebrow" id="ed-eyebrow">Edit</div><h2 id="ed-title">Recipe</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b">
+      <div class="field" id="ed-after-wrap" hidden><label for="ed-after">Where does it go?</label><select id="ed-after"></select></div>
+      <div class="field" id="ed-head-wrap" hidden><label for="ed-head">Step heading</label><input id="ed-head" placeholder="e.g. Rest the Meat"></div>
+      <div class="field"><label for="ed-text" id="ed-label">Text</label><textarea id="ed-text" class="typed" rows="3"></textarea></div>
+      <div class="field"><label for="ed-name">Your name, as the family knows you</label><input id="ed-name" class="who" placeholder="e.g. Aunt Carol" autocomplete="nickname"><span class="hint">Saved with the change so the family knows who made it.</span></div>
+      <div class="formmsg" id="ed-msg" role="alert"></div>
+    </div>
+    <div class="dlg-f">
+      <button type="button" class="btn ghost" id="ed-delete" hidden>Remove</button>
+      <div style="display:flex;gap:8px;margin-left:auto">
+        <button type="button" class="btn ghost" data-close>Cancel</button>
+        <button type="submit" class="btn primary" id="ed-save">Save</button>
       </div>
     </div>
   </form>
@@ -390,28 +403,14 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
       <div class="chips" id="ask-chips"></div>
       <div class="field"><label for="ask-q">Your question</label><textarea id="ask-q" rows="2" placeholder="e.g. Can I make this the day before?"></textarea></div>
       <div class="answer" id="ask-a" aria-live="polite"></div>
-      <span class="muted" style="font-size:.8rem">Answers are general cooking advice. The family recipe stays as written unless someone suggests a change.</span>
+      <span class="muted" style="font-size:.8rem">Answers are general cooking advice. The family recipe stays as written unless someone edits it.</span>
     </div>
     <div class="dlg-f">
-      <button type="button" class="btn sm ghost" id="ask-suggest" hidden>Turn this into a suggestion</button>
       <div style="display:flex;gap:8px;margin-left:auto">
         <button type="button" class="btn ghost" data-close>Close</button>
         <button type="submit" class="btn ink" id="ask-go">Ask</button>
       </div>
     </div>
-  </form>
-</dialog>
-
-<!-- Resolve dialog (editors) -->
-<dialog id="dlg-resolve" aria-labelledby="rs-title">
-  <form class="dlg" id="rs-form">
-    <div class="dlg-h"><div><div class="eyebrow">Editor</div><h2 id="rs-title">Accept suggestion</h2></div>
-      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button></div>
-    <div class="dlg-b">
-      <div class="field"><label for="rs-note">Note to the family <span class="muted">(optional)</span></label>
-        <textarea id="rs-note" rows="3" placeholder="e.g. Thanks! Fixed in the print edition."></textarea></div>
-    </div>
-    <div class="dlg-f"><span></span><div style="display:flex;gap:8px"><button type="button" class="btn ghost" data-close>Cancel</button><button type="submit" class="btn primary" id="rs-go">Accept</button></div></div>
   </form>
 </dialog>
 
@@ -510,6 +509,7 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 . This delicious crabmeat dip is a perfect addition to any appetizer spread!
 
 @ Tarragon Shrimp
+~ shrimp-tarragon
 > This elegant shrimp dish features a rich, creamy tarragon sauce with a touch of cognac for a bold and flavorful finish. Perfect for a special dinner, it pairs beautifully with rice or crusty bread.
 - 4 tablespoons butter
 - 36 medium-sized shrimp, peeled and deveined
@@ -1915,7 +1915,6 @@ const ICON = {
   cart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M3 4h2l2.4 11h10.2L20 7H6.2"/><circle cx="9" cy="19.5" r="1.3"/><circle cx="17" cy="19.5" r="1.3"/></svg>',
   pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6Z"/><path d="M2 10h20M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/></svg>',
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
-  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
@@ -1929,15 +1928,17 @@ const ICON = {
 /* ---------------- parse the book ---------------- */
 const CAT_VAR = { "Appetizers": "--c-app", "Salads": "--c-sal", "Soups & Chowders": "--c-soup", "Main Courses": "--c-main", "Bread & Baking": "--c-bread", "Desserts": "--c-des", "Condiments": "--c-cond" };
 const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+// "~ old-id" lines keep a renamed recipe's old id, so links, pictures and saved favourites still find it.
 function parseBook(txt) {
   const out = []; let cat = "", r = null, grp = null;
   for (const raw of txt.split("\n")) {
     const l = raw.trim(); if (!l) continue;
-    const body = l.replace(/^(-:|[#@^>\-=*.!])\s?/, "");
+    const body = l.replace(/^(-:|[#@^>\-=*.!~])\s?/, "");
     if (l.startsWith("# ")) { cat = body; continue; }
-    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "" }; out.push(r); grp = null; continue; }
+    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, aliases: [], serves: "", intro: "", ing: [], steps: [], outro: "" }; out.push(r); grp = null; continue; }
     if (!r) continue;
-    if (l.startsWith("^ ")) r.serves = body;
+    if (l.startsWith("~ ")) r.aliases.push(body);
+    else if (l.startsWith("^ ")) r.serves = body;
     else if (l.startsWith("> ")) r.intro = body;
     else if (l.startsWith("-:")) r.ing.push({ g: body });
     else if (l.startsWith("- ")) r.ing.push({ t: body });
@@ -1948,12 +1949,18 @@ function parseBook(txt) {
   out.forEach(r => { r.search = (r.name + " " + r.cat + " " + r.ing.map(i => i.t || "").join(" ")).toLowerCase(); r.nIng = r.ing.filter(i => i.t).length; r.nSteps = r.steps.reduce((a, g) => a + g.items.length, 0); });
   return out;
 }
-const RECIPES = parseBook(document.getElementById("book").textContent);
-const BY = Object.fromEntries(RECIPES.map(r => [r.id, r]));
-// Renamed recipes: old id -> new id, so saved links, favourites and ticks still find them.
-const RENAMED = { "shrimp-tarragon": "tarragon-shrimp" };
-for (const [from, to] of Object.entries(RENAMED)) if (BY[to]) BY[from] = BY[to];
-const CATS = [...new Set(RECIPES.map(r => r.cat))];
+// The book is built into the page, then refreshed from the relay so edits show before the site redeploys.
+const RECIPES = [], BY = {}, CATS = [];
+let bookText = document.getElementById("book").textContent;
+function useBook(txt) {
+  const list = parseBook(txt);
+  RECIPES.splice(0, RECIPES.length, ...list);
+  for (const k of Object.keys(BY)) delete BY[k];
+  list.forEach(r => r.aliases.forEach(a => BY[a] = r));
+  list.forEach(r => BY[r.id] = r);
+  CATS.splice(0, CATS.length, ...new Set(list.map(r => r.cat)));
+}
+useBook(bookText);
 const catStyle = c => `--cat:var(${CAT_VAR[c] || "--ink-3"})`;
 
 /* ---------------- images ----------------
@@ -1963,10 +1970,10 @@ const REPO_URL = "https://github.com/sandboxplatform/chambers-family-cookbook";
 const IMAGES = (() => { try { return JSON.parse(document.getElementById("images")?.textContent || "{}"); } catch { return {}; } })();
 const LOCAL = {};
 function imgFor(id) {
-  if (LOCAL[id]) return { src: LOCAL[id].url, kind: "local" };
-  const m = IMAGES[id] || {};
-  if (m.photo) return { src: m.photo, kind: "photo" };
-  if (m.ai) return { src: m.ai, kind: "ai" };
+  const keys = [id, ...(BY[id]?.aliases || [])];
+  for (const k of keys) if (LOCAL[k]) return { src: LOCAL[k].url, kind: "local" };
+  for (const k of keys) if (IMAGES[k]?.photo) return { src: IMAGES[k].photo, kind: "photo" };
+  for (const k of keys) if (IMAGES[k]?.ai) return { src: IMAGES[k].ai, kind: "ai" };
   return null;
 }
 const IMG_TAG = { ai: "AI picture", photo: "Family photo", local: "Your photo" };
@@ -2016,75 +2023,64 @@ const scaledText = (t, f) => { const s = scaleLine(t, f); return s.scaled ? s.te
 const S = {
   q: "", cat: store.get("cat", "All"), filter: "all", factor: 1,
   fav: new Set(store.get("fav", [])), review: new Set(store.get("review", [])), checks: store.get("checks", {}), list: store.get("list", []),
-  sugg: [], stories: [], dbState: "loading",
-  me: { id: null, canEdit: false, canWrite: null, readOnly: false }, names: {},
-  sFilter: { status: "open", recipe: "" }
+  notes: {}, drafts: {}, myNotes: store.get("mynotes", {})
 };
-let db = null, user = null, sample = null, downloads = null;
-for (const [from, to] of Object.entries(RENAMED)) {
-  if (S.fav.delete(from)) S.fav.add(to);
-  if (S.review.delete(from)) S.review.add(to);
-  if (S.checks[from]) { S.checks[to] = S.checks[from]; delete S.checks[from]; }
-  S.list.forEach(g => { if (g.id === from) g.id = to; });
-}
+let sample = null, downloads = null;
 const saveLocal = () => { store.set("fav", [...S.fav]); store.set("review", [...S.review]); store.set("checks", S.checks); store.set("list", S.list); store.set("cat", S.cat); };
+// Move favourites, ticks and shopping-list entries saved under a recipe's old id to its current one.
+function migrateIds() {
+  let moved = false;
+  for (const r of RECIPES) for (const a of r.aliases) {
+    if (S.fav.delete(a)) { S.fav.add(r.id); moved = true; }
+    if (S.review.delete(a)) { S.review.add(r.id); moved = true; }
+    if (S.checks[a]) { S.checks[r.id] = S.checks[a]; delete S.checks[a]; moved = true; }
+    S.list.forEach(g => { if (g.id === a) { g.id = r.id; moved = true; } });
+  }
+  if (moved) saveLocal();
+}
+migrateIds();
 
 /* ---------------- routing ---------------- */
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
   if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: BY[h.slice(2)].id };
-  if (["suggestions", "list"].includes(h)) return { v: h };
+  if (h === "list") return { v: h };
   return { v: "home" };
 }
 let lastRoute = "";
 function render() {
   const r = route(), key = r.v + (r.id || "");
   const changed = key !== lastRoute;
+  if (r.v === "recipe") loadNotes(r.id);
   if (changed && r.v === "recipe") S.factor = 1;
   const view = $("#view");
   if (r.v === "recipe") view.innerHTML = vRecipe(BY[r.id]);
-  else if (r.v === "suggestions") view.innerHTML = vSuggestions();
   else if (r.v === "list") view.innerHTML = vList();
   else view.innerHTML = vHome();
   const navKey = r.v === "recipe" ? "home" : r.v;
   $$(".nav a").forEach(a => a.dataset.nav === navKey ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
-  const open = S.sugg.filter(s => s.status === "open").length;
-  const no = $("#nav-open"); no.hidden = !open; no.textContent = open;
   const nl = $("#nav-list"); const listN = S.list.reduce((a, x) => a + x.items.filter(i => !i.done).length, 0); nl.hidden = !listN; nl.textContent = listN;
   if (changed) { lastRoute = key; window.scrollTo(0, 0); document.title = r.v === "recipe" ? BY[r.id].name + " · The Chambers Family Cookbook" : "The Chambers Family Cookbook"; }
 }
 addEventListener("hashchange", render);
 
 /* ---------------- helpers ---------------- */
-const suggFor = id => S.sugg.filter(s => BY[s.recipeId]?.id === id);
-const storiesFor = id => S.stories.filter(s => BY[s.recipeId]?.id === id);
-function who(o) { return o.signedAs || (o.authorId && S.names[o.authorId]) || "A family member"; }
 function ago(ts) {
   if (!ts) return ""; const d = (Date.now() - ts) / 1000;
   if (d < 60) return "just now"; if (d < 3600) return Math.floor(d / 60) + " min ago"; if (d < 86400) return Math.floor(d / 3600) + " h ago";
   if (d < 86400 * 7) return Math.floor(d / 86400) + " d ago";
   return new Date(ts).toLocaleDateString(undefined, { month: "short", day: "numeric", year: d > 86400 * 300 ? "numeric" : undefined });
 }
-const KINDS = [
-  { k: "fix", label: "Fix a mistake", now: "What it should say" },
-  { k: "ingredient", label: "Change an ingredient", now: "What it should say" },
-  { k: "step", label: "Change a step", now: "What it should say" },
-  { k: "missing", label: "Add missing info", now: "What's missing" },
-  { k: "intro", label: "Write an introduction", now: "Your introduction" },
-  { k: "memory", label: "Share a memory", now: "Your memory or story" },
-  { k: "new", label: "Add a recipe", now: "Anything else we should know" },
-  { k: "other", label: "Something else", now: "Your suggestion" }
-];
-const KIND = Object.fromEntries(KINDS.map(k => [k.k, k]));
 function toast(msg) { const t = $("#toast"); t.textContent = msg; t.hidden = false; clearTimeout(toast.t); toast.t = setTimeout(() => t.hidden = true, 2600); }
 async function copy(text) { try { await navigator.clipboard.writeText(text); toast("Copied"); return true; } catch { const ta = document.createElement("textarea"); ta.value = text; document.body.appendChild(ta); ta.select(); let ok = false; try { ok = document.execCommand("copy"); } catch {} ta.remove(); toast(ok ? "Copied" : "Couldn't copy. Select the text and copy it yourself."); return ok; } }
+const myName = () => store.get("name", "");
 
 /* ---------------- views ---------------- */
 function card(r) {
-  const fav = S.fav.has(r.id), n = suggFor(r.id).filter(s => s.status === "open").length, m = storiesFor(r.id).length, im = imgFor(r.id);
+  const fav = S.fav.has(r.id), im = imgFor(r.id);
   return `<a class="rc" href="#r-${r.id}" style="${catStyle(r.cat)}">
     ${im ? `<span class="rc-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" loading="lazy" decoding="async" ${imgGone}><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${IMG_TAG[im.kind]}</span></span>` : ""}
-    <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${S.review.has(r.id) ? `<span class="dot review" title="Needs review">${ICON.flag}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
+    <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${S.review.has(r.id) ? `<span class="dot review" title="Needs review">${ICON.flag}</span>` : ""}</span>
     <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
     <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}</span></a>`;
 }
@@ -2092,28 +2088,24 @@ function filtered() {
   const q = S.q.trim().toLowerCase();
   return RECIPES.filter(r => (S.cat === "All" || r.cat === S.cat) &&
     (!q || q.split(/\s+/).every(w => r.search.includes(w))) &&
-    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && (S.review.has(r.id) || suggFor(r.id).some(s => s.status === "open"))) || (S.filter === "story" && storiesFor(r.id).length)));
+    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && S.review.has(r.id))));
 }
 function vHome() {
-  const open = S.sugg.filter(s => s.status === "open").length;
   const list = filtered();
-  const recent = S.sugg.slice(0, 4), mems = S.stories.slice(0, 3);
   return `
   <section class="hero">
     <div>
       <h1>The Chambers Family Cookbook</h1>
       <p class="ded">for Nancy Chambers</p>
-      <p class="lede">Food is more than just nourishment. It's a cherished connection to our past, present, and future. Each recipe here carries a piece of family heritage, passed down through generations. Cook from it, add your memories, and help us get every card right before it goes to print.</p>
+      <p class="lede">Food is more than just nourishment. It's a cherished connection to our past, present, and future. Each recipe here carries a piece of family heritage, passed down through generations. Cook from it, share your memories, and fix anything that isn't quite right before it goes to print.</p>
     </div>
     <div class="hero-side">
       <div class="stats">
         <div class="stat"><b>${RECIPES.length}</b><span>recipes</span></div>
-        <div class="stat"><b>${open}</b><span>open suggestions</span></div>
-        <div class="stat"><b>${S.stories.length}</b><span>family memories</span></div>
+        <div class="stat"><b>${CATS.length}</b><span>sections</span></div>
       </div>
       <div class="hero-actions">
-        <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
-        <button class="btn" data-act="new-recipe">${ICON.plus} Add a recipe</button>
+        <button class="btn primary" data-act="new-recipe">${ICON.plus} Add a recipe</button>
       </div>
     </div>
   </section>
@@ -2123,37 +2115,26 @@ function vHome() {
   <section class="drawer">
     <div class="tools">
       <div class="chips" role="group" aria-label="Filter">
-        ${[["all", "Everything"], ["fav", "My favourites"], ["crock", "Crockpot"], ["story", "Has memories"], ["review", "Needs review"]].map(([k, l]) => `<button class="chip" data-filter="${k}" aria-pressed="${S.filter === k}">${l}</button>`).join("")}
+        ${[["all", "Everything"], ["fav", "My favourites"], ["crock", "Crockpot"], ["review", "Needs review"]].map(([k, l]) => `<button class="chip" data-filter="${k}" aria-pressed="${S.filter === k}">${l}</button>`).join("")}
       </div>
       <span class="muted" style="font-size:.86rem">${list.length} of ${RECIPES.length} recipes${S.q ? ` matching “${esc(S.q)}”` : ""}</span>
     </div>
     ${list.length ? `<div class="grid">${list.map(card).join("")}</div>` :
       `<div class="empty"><h3>No recipes match</h3><p>Try another word, or clear the filters.</p><button class="btn" data-act="clear">Clear search and filters</button></div>`}
-  </section>
-  <section class="feed">
-    <div class="panel">
-      <div class="panel-head"><h2>Latest suggestions</h2><a class="btn sm ghost" href="#suggestions">See all</a></div>
-      ${recent.length ? `<div class="stack">${recent.map(s => suggItem(s, true)).join("")}</div>` : emptyFeed("No suggestions yet", "Open any recipe and tap the pencil next to a line to propose a fix.")}
-    </div>
-    <div class="panel">
-      <div class="panel-head"><h2>From the family</h2></div>
-      ${mems.length ? `<div class="stack">${mems.map(m => `<div class="memory"><a href="#r-${esc(m.recipeId)}" class="eyebrow" style="text-decoration:none">${esc(BY[m.recipeId]?.name || "Recipe")}</a><p style="margin-top:6px">${esc(m.text)}</p><div class="by">${esc(who(m))}</div></div>`).join("")}</div>` : emptyFeed("No memories yet", "Who made Nannie's Bread every Sunday? Open a recipe and choose “Share a memory”.")}
-    </div>
   </section>`;
 }
-function emptyFeed(h, p) { return `<div class="empty" style="padding:22px 8px"><h3 style="font-size:1.05rem">${h}</h3><p style="margin:0">${p}</p>${S.dbState === "loading" ? `<p class="muted" style="font-size:.8rem">Loading…</p>` : ""}</div>`; }
 
+const pencil = (attrs, label) => `<button class="edit" ${attrs} aria-label="${esc(label)}" title="${esc(label)}">${ICON.pencil}</button>`;
 function vRecipe(r) {
   const f = S.factor, ck = S.checks[r.id] || {};
   let ii = 0;
   const ingHtml = r.ing.map(i => {
     if (i.g) return `<li class="grp">${esc(i.g)}</li>`;
-    const k = "i" + (ii++), s = scaleLine(i.t, f);
-    return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark ${esc(i.t)} as gathered" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt">${s.html}</span><button class="edit" data-edit="ingredient" data-text="${esc(i.t)}" aria-label="Suggest a change to: ${esc(i.t)}" title="Suggest a change">${ICON.pencil}</button></li>`;
+    const n = ii++, k = "i" + n, s = scaleLine(i.t, f);
+    return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark ${esc(i.t)} as gathered" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt">${s.html}</span>${pencil(`data-edit-ing="${n}"`, "Edit: " + i.t)}</li>`;
   }).join("");
   let n = 0;
-  const stepsHtml = r.steps.map(g => `<div class="sg">${g.h ? `<h3><span class="n">${String(r.steps.indexOf(g) + 1)}</span>${esc(g.h)}</h3>` : ""}<ul class="ing" style="font-family:var(--f-body)">${g.items.map(t => { const k = "s" + (n++); return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark step done" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt" style="font-family:var(--f-body)">${esc(t)}</span><button class="edit" data-edit="step" data-text="${esc(t)}" aria-label="Suggest a change to this step" title="Suggest a change">${ICON.pencil}</button></li>`; }).join("")}</ul></div>`).join("");
-  const sg = suggFor(r.id), mem = storiesFor(r.id);
+  const stepsHtml = r.steps.map((g, gi) => `<div class="sg">${g.h ? `<h3><span class="n">${gi + 1}</span>${esc(g.h)}${pencil(`data-edit-head="${gi}"`, "Edit step heading")}</h3>` : ""}<ul class="ing" style="font-family:var(--f-body)">${g.items.map((t, j) => { const k = "s" + (n++); return `<li class="line ${ck[k] ? "done" : ""}"><button class="tick" data-tick="${k}" aria-label="Mark step done" aria-pressed="${!!ck[k]}">${ICON.check}</button><span class="txt" style="font-family:var(--f-body)">${esc(t)}</span>${pencil(`data-edit-step="${gi}:${j}"`, "Edit this step")}</li>`; }).join("")}</ul></div>`).join("");
   const fav = S.fav.has(r.id);
   const idx = RECIPES.indexOf(r), prev = RECIPES[idx - 1], next = RECIPES[idx + 1];
   const anyChecked = Object.values(ck).some(Boolean);
@@ -2163,9 +2144,17 @@ function vRecipe(r) {
     <article class="card" style="${catStyle(r.cat)}">
       ${heroImg(r)}
       <header class="card-top">
+        <div class="add-line">
+          <button class="icon-btn" data-act="add-menu" aria-haspopup="menu" aria-expanded="false" aria-label="Add an ingredient or step" title="Add an ingredient or step">${ICON.plus}</button>
+          <div class="add-menu" role="menu" hidden>
+            <button role="menuitem" data-act="add-line" data-kind="ingredient">Add an ingredient</button>
+            <button role="menuitem" data-act="add-line" data-kind="step">Add a method step</button>
+            ${r.steps.some(g => g.h) ? `<button role="menuitem" data-act="add-line" data-kind="substep">Add a sub-step</button>` : ""}
+          </div>
+        </div>
         <div class="cat">${esc(r.cat)}</div>
-        <h1>${esc(r.name)}</h1>
-        ${r.intro ? `<p class="intro">${esc(r.intro)}</p>` : `<p class="intro muted">No introduction yet. <button class="btn sm" data-act="suggest-kind" data-kind="intro">Write one</button></p>`}
+        <h1>${esc(r.name)}${pencil("data-edit-name", "Rename this recipe")}</h1>
+        ${r.intro ? `<p class="intro">${esc(r.intro)}${pencil("data-edit-intro", "Edit the introduction")}</p>` : `<p class="intro muted">No introduction yet. <button class="btn sm" data-edit-intro>Write one</button></p>`}
         <div class="actions" style="margin-top:16px">
           <button class="btn primary" data-act="cook">${ICON.pot} Cook mode</button>
           <button class="btn" data-act="fav" aria-pressed="${fav}">${fav ? ICON.heart : ICON.heartO} ${fav ? "Favourite" : "Add to favourites"}</button>
@@ -2182,7 +2171,7 @@ function vRecipe(r) {
           ${f !== 1 ? `<span class="muted" style="font-size:.8rem">Highlighted amounts are scaled. Step text and cooking times stay as written.</span>` : ""}
         </div>
         <section><div class="sec-h"><h2>Ingredients</h2><span class="muted">${anyChecked ? `<button class="btn sm ghost" data-act="uncheck">Clear ticks</button>` : "Tick as you gather"}</span></div><ul class="ing">${ingHtml}</ul></section>
-        <section><div class="sec-h"><h2>Method</h2><span class="muted">Tap the pencil to suggest an edit</span></div><div class="steps">${stepsHtml}</div></section>
+        <section><div class="sec-h"><h2>Method</h2><span class="muted">Tap a pencil to edit</span></div><div class="steps">${stepsHtml}</div></section>
         ${r.outro ? `<p class="outro">${esc(r.outro)}</p>` : ""}
         <div style="display:flex;justify-content:space-between;gap:10px;flex-wrap:wrap;border-top:1px solid var(--line);padding-top:16px">
           ${prev ? `<a class="btn ghost sm" href="#r-${prev.id}">${ICON.left} ${esc(prev.name)}</a>` : "<span></span>"}
@@ -2191,19 +2180,28 @@ function vRecipe(r) {
       </div>
     </article>
     <aside class="side">
-      <div class="panel">
-        <div class="panel-head"><h2>Improve this recipe</h2></div>
-        <div class="stack">
-          <button class="btn primary" data-act="suggest-kind" data-kind="fix">${ICON.pencil} Suggest a change</button>
-          <button class="btn" data-act="suggest-kind" data-kind="memory">${ICON.chat} Share a memory</button>
-        </div>
-        ${sg.length ? `<div class="stack" style="margin-top:16px">${sg.map(s => suggItem(s, false, true)).join("")}</div>` : `<p class="muted" style="font-size:.88rem;margin:14px 0 0">No suggestions for this recipe yet.</p>`}
-      </div>
-      <div class="panel">
-        <div class="panel-head"><h2>Family memories</h2><span class="muted" style="font-size:.85rem">${mem.length || ""}</span></div>
-        ${mem.length ? `<div class="stack">${mem.map(m => `<div class="memory"><p>${esc(m.text)}</p><div class="by">${esc(who(m))}</div><div class="muted" style="font-size:.75rem">${ago(m.createdAt)} ${canDelete(m) ? `· <button class="btn sm ghost" style="padding:2px 6px" data-del-story="${esc(m.id)}">Delete</button>` : ""}</div></div>`).join("")}</div>` : `<p class="muted" style="font-size:.88rem;margin:0">Who made this? When was it served? Add a memory and it will appear here.</p>`}
-      </div>
+      ${notesPanel(r, "memory")}
+      ${notesPanel(r, "comment")}
     </aside>
+  </div>`;
+}
+const NOTE_KIND = {
+  memory: { title: "Family memories", empty: "Who made this? When was it served? Add a memory and it will appear here.", ph: "e.g. Nannie made this every Christmas Eve", button: "Share memory" },
+  comment: { title: "Comments", empty: "Tips, questions or how it turned out. Anything about this recipe.", ph: "e.g. I added a little more garlic and it was great", button: "Post comment" }
+};
+function notesPanel(r, kind) {
+  const K = NOTE_KIND[kind], all = S.notes[r.id], list = Array.isArray(all) ? all.filter(n => n.kind === kind) : [];
+  const items = all === undefined ? `<p class="muted" style="font-size:.88rem;margin:0">Loading…</p>`
+    : all === "error" ? `<p class="muted" style="font-size:.88rem;margin:0">Couldn't load these just now. They show on the cookbook's website when you're online.</p>`
+    : list.length ? `<div class="stack">${list.map(m => `<div class="memory"><p>${esc(m.text)}</p><div class="by">${esc(m.by || "A family member")}</div><div class="muted" style="font-size:.75rem">${ago(m.at)}${S.myNotes[m.id] ? ` · <button class="btn sm ghost" style="padding:2px 6px" data-del-note="${esc(m.id)}" data-rid="${esc(m.recipeId)}">Delete</button>` : ""}</div></div>`).join("")}</div>`
+    : `<p class="muted" style="font-size:.88rem;margin:0">${K.empty}</p>`;
+  return `<div class="panel">
+    <div class="panel-head"><h2>${K.title}</h2><span class="muted" style="font-size:.85rem">${list.length || ""}</span></div>
+    ${items}
+    ${all === "error" ? "" : `<form class="note-form" data-note="${kind}">
+      <textarea name="text" rows="2" placeholder="${esc(K.ph)}" aria-label="${esc(K.button)}">${esc(S.drafts[r.id + kind] || "")}</textarea>
+      <div class="note-row"><input name="by" class="who" placeholder="Your name" aria-label="Your name" value="${esc(myName())}" autocomplete="nickname"><button class="btn sm primary" type="submit">${K.button}</button></div>
+    </form>`}
   </div>`;
 }
 function heroImg(r) {
@@ -2212,49 +2210,6 @@ function heroImg(r) {
   const tag = im.kind === "ai" ? "AI-generated picture, not the family's dish" : im.kind === "local" ? "Your photo · only on this device so far" : "Family photo";
   return `<figure class="hero-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" decoding="async" ${imgGone}>
     <figcaption><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${tag}</span><button class="btn sm" data-act="photo">${ICON.camera} ${im.kind === "ai" ? "Add a real photo" : "Replace photo"}</button></figcaption></figure>`;
-}
-function canDelete(o) { return S.me.canEdit || (S.me.id && o.authorId === S.me.id); }
-function suggItem(s, compact, inRecipe) {
-  const r = BY[s.recipeId];
-  const kind = KIND[s.kind]?.label || "Suggestion";
-  const title = s.kind === "new" ? (s.newRecipe?.name || "New recipe") : (r ? r.name : "General");
-  const body = s.kind === "new" ? `<div class="diff"><div class="now"><span class="lab">Ingredients</span>${esc(s.newRecipe?.ingredients || "")}</div><div class="now" style="font-family:var(--f-body)"><span class="lab">Steps</span>${esc(s.newRecipe?.steps || "")}</div></div>${s.proposed ? `<p class="why">${esc(s.proposed)}</p>` : ""}`
-    : `<div class="diff">${s.current ? `<div class="was"><span class="lab">Book says</span>${esc(s.current)}</div>` : ""}${s.proposed ? `<div class="now"><span class="lab">${s.kind === "memory" ? "Memory" : "Suggested"}</span>${esc(s.proposed)}</div>` : ""}</div>`;
-  const editor = S.me.canEdit && !compact;
-  return `<article class="sugg">
-    <div class="sugg-head"><div>${inRecipe ? "" : (s.kind === "new" ? `<span style="font-family:var(--f-display);font-size:1.1rem">${esc(title)}</span>` : `<a href="#r-${esc(s.recipeId)}">${esc(title)}</a>`)}<div class="kind">${esc(kind)}${s.kind === "new" && s.newRecipe?.cat ? " · " + esc(s.newRecipe.cat) : ""}</div></div><span class="pill ${esc(s.status)}">${esc(s.status)}</span></div>
-    ${compact ? `<div class="diff">${s.current ? `<div class="was">${esc(s.current.slice(0, 120))}</div>` : ""}<div class="now">${esc((s.proposed || s.newRecipe?.name || "").slice(0, 160))}</div></div>` : body}
-    ${!compact && s.reason ? `<p class="why"><b>Why:</b> ${esc(s.reason)}</p>` : ""}
-    ${!compact && s.resolution ? `<p class="resolution"><b>Editor:</b> ${esc(s.resolution)}</p>` : ""}
-    <div class="sugg-foot"><span><span class="by">${esc(who(s))}</span> · ${ago(s.createdAt)}</span>
-      ${editor || (!compact && canDelete(s)) ? `<span style="display:flex;gap:6px;flex-wrap:wrap">
-        ${editor && s.status !== "accepted" ? `<button class="btn sm" data-resolve="accepted" data-id="${esc(s.id)}">Accept</button>` : ""}
-        ${editor && s.status !== "declined" ? `<button class="btn sm ghost" data-resolve="declined" data-id="${esc(s.id)}">Decline</button>` : ""}
-        ${editor && s.status !== "open" ? `<button class="btn sm ghost" data-resolve="open" data-id="${esc(s.id)}">Reopen</button>` : ""}
-        ${canDelete(s) ? `<button class="btn sm ghost" data-del-sugg="${esc(s.id)}">Delete</button>` : ""}</span>` : ""}
-    </div></article>`;
-}
-function vSuggestions() {
-  const f = S.sFilter;
-  const list = S.sugg.filter(s => (f.status === "all" || s.status === f.status) && (!f.recipe || s.recipeId === f.recipe || (f.recipe === "__new" && s.kind === "new")));
-  const counts = st => S.sugg.filter(s => st === "all" || s.status === st).length;
-  const recipesWith = [...new Set(S.sugg.map(s => s.recipeId).filter(Boolean))].filter(id => BY[id]);
-  return `
-  <div class="ph"><div><div class="eyebrow">Review queue</div><h1>Suggested changes</h1><p>Corrections, missing details and new recipes sent in by the family. ${S.me.canEdit ? "As an editor you can accept or decline each one. Accepted changes are the to-do list for the print edition." : "Robert reviews each one before it goes into the print edition."}</p></div>
-    <div style="display:flex;gap:8px;flex-wrap:wrap"><button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>${S.sugg.length ? `<button class="btn" data-act="export">${ICON.down} Export CSV</button>` : ""}</div></div>
-  ${dbBanner()}
-  <div class="list-cols">
-    <div class="filters">
-      <div class="field"><span class="lbl">Status</span><div class="chips">${[["open", "Open"], ["accepted", "Accepted"], ["declined", "Declined"], ["all", "All"]].map(([k, l]) => `<button class="chip" data-sstatus="${k}" aria-pressed="${f.status === k}">${l} <span class="muted">${counts(k)}</span></button>`).join("")}</div></div>
-      <div class="field"><label for="s-recipe">Recipe</label><select id="s-recipe"><option value="">All recipes</option><option value="__new" ${f.recipe === "__new" ? "selected" : ""}>New recipe submissions</option>${recipesWith.map(id => `<option value="${id}" ${f.recipe === id ? "selected" : ""}>${esc(BY[id].name)}</option>`).join("")}</select></div>
-    </div>
-    <div class="stack">${list.length ? list.map(s => suggItem(s, false)).join("") : `<div class="panel empty"><h3>${S.dbState === "loading" ? "Loading suggestions…" : f.status === "open" ? "Nothing waiting for review" : "No suggestions here"}</h3><p>Open any recipe and tap the pencil beside an ingredient or step to propose a change.</p></div>`}</div>
-  </div>`;
-}
-function dbBanner() {
-  if (S.dbState === "off") return `<div class="notice" style="margin-bottom:16px">Shared suggestions aren't available in this view, so you'll only see your own device's data. You can still write a suggestion and copy it to send by email.</div>`;
-  if (S.me.readOnly) return `<div class="notice" style="margin-bottom:16px">You can read suggestions but not send them. Ask the cookbook's owner to give you Contributor access.</div>`;
-  return "";
 }
 function vList() {
   const groups = S.list;
@@ -2266,7 +2221,10 @@ function vList() {
 
 /* ---------------- events ---------------- */
 $("#q").addEventListener("input", e => { S.q = e.target.value; if (route().v !== "home") location.hash = ""; render(); });
+const closeAddMenus = () => $$(".add-menu").forEach(m => { m.hidden = true; m.previousElementSibling.setAttribute("aria-expanded", "false"); });
+document.addEventListener("keydown", e => { if (e.key === "Escape") closeAddMenus(); });
 document.addEventListener("click", async e => {
+  if (!e.target.closest(".add-line")) closeAddMenus();
   const t = e.target.closest("button,a"); if (!t) return;
   const d = t.dataset, r = BY[route().id];
   if (d.cat) { S.cat = d.cat; saveLocal(); render(); return; }
@@ -2276,16 +2234,15 @@ document.addEventListener("click", async e => {
   if (d.tick && r) { const c = S.checks[r.id] = S.checks[r.id] || {}; c[d.tick] = !c[d.tick]; saveLocal(); render(); return; }
   if (d.shop) { const [g, i] = d.shop.split(":").map(Number); S.list[g].items[i].done = !S.list[g].items[i].done; saveLocal(); render(); return; }
   if (d.rmGroup) { S.list.splice(+d.rmGroup, 1); saveLocal(); render(); return; }
-  if (d.edit && r) { openSuggest({ recipeId: r.id, kind: d.edit, current: d.text }); return; }
-  if (d.sstatus) { S.sFilter.status = d.sstatus; render(); return; }
-  if (d.resolve) { resolveSugg(d.id, d.resolve); return; }
-  if (d.delSugg) { if (t.dataset.armed) { delDoc("suggestions", d.delSugg); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
-  if (d.delStory) { if (t.dataset.armed) { delDoc("stories", d.delStory); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
+  if (r && "editName" in d) { editName(r); return; }
+  if (r && "editIntro" in d) { editIntro(r); return; }
+  if (r && d.editIng !== undefined) { editIng(r, +d.editIng); return; }
+  if (r && d.editStep) { const [g, j] = d.editStep.split(":").map(Number); editStep(r, g, j); return; }
+  if (r && d.editHead !== undefined) { editHead(r, +d.editHead); return; }
+  if (d.delNote) { if (t.dataset.armed) deleteNote(d.rid, d.delNote); else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
   if (d.close !== undefined) { t.closest("dialog").close(); return; }
   switch (d.act) {
-    case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
-    case "new-recipe": openSuggest({ kind: "new" }); break;
-    case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
+    case "new-recipe": openNew(); break;
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
     case "review": S.review.has(r.id) ? S.review.delete(r.id) : S.review.add(r.id); saveLocal(); render(); toast(S.review.has(r.id) ? "Marked for review. Find it under the Needs review filter." : "Review mark removed"); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
@@ -2302,52 +2259,135 @@ document.addEventListener("click", async e => {
     case "cook": openCook(r); break;
     case "ask": openAsk(r); break;
     case "photo": openPhoto(r); break;
+    case "add-menu": { const m = t.nextElementSibling, open = m.hidden; closeAddMenus(); m.hidden = !open; t.setAttribute("aria-expanded", String(open)); if (open) m.querySelector("button").focus(); break; }
+    case "add-line": closeAddMenus(); addLine(r, d.kind); break;
     case "install": install(); break;
-    case "export": exportCsv(); break;
   }
 });
-document.addEventListener("change", e => { if (e.target.id === "s-recipe") { S.sFilter.recipe = e.target.value; render(); } });
+// "Your name" fields share one remembered value; note drafts survive re-renders.
+document.addEventListener("input", e => {
+  if (e.target.classList.contains("who")) store.set("name", e.target.value.trim().slice(0, 60));
+  const f = e.target.closest(".note-form"); const r = BY[route().id];
+  if (f && r && e.target.name === "text") S.drafts[r.id + f.dataset.note] = e.target.value;
+});
+document.addEventListener("submit", e => { const f = e.target.closest(".note-form"); if (f) { e.preventDefault(); postNote(f); } });
 
-/* ---------------- suggest dialog ---------------- */
-const dlg = $("#dlg-suggest"); let curKind = "fix";
-$("#f-recipe").innerHTML = `<option value="">General / whole book</option>` + CATS.map(c => `<optgroup label="${esc(c)}">${RECIPES.filter(r => r.cat === c).map(r => `<option value="${r.id}">${esc(r.name)}</option>`).join("")}</optgroup>`).join("");
-$("#f-ncat").innerHTML = CATS.map(c => `<option>${esc(c)}</option>`).join("");
-$("#f-kind").innerHTML = KINDS.map(k => `<button type="button" class="chip" data-kind-pick="${k.k}">${k.label}</button>`).join("");
-$("#f-kind").addEventListener("click", e => { const b = e.target.closest("[data-kind-pick]"); if (b) setKind(b.dataset.kindPick); });
-function setKind(k) {
-  curKind = k;
-  $$("#f-kind .chip").forEach(c => c.setAttribute("aria-pressed", c.dataset.kindPick === k));
-  const isNew = k === "new", isMem = k === "memory", isIntro = k === "intro";
-  $("#f-new").hidden = !isNew; $("#f-recipe-wrap").hidden = isNew;
-  $("#f-was-wrap").hidden = isNew || isMem || isIntro;
-  $("#f-why-wrap").hidden = isMem;
-  $("#f-now-label").textContent = KIND[k].now;
-  $("#f-now").classList.toggle("typed", !(isMem || isIntro || isNew));
-  $("#sg-eyebrow").textContent = isMem ? "Share a memory" : isNew ? "Add a recipe" : "Suggest a change";
-  $("#f-submit").textContent = S.dbState === "off" ? "Copy suggestion" : isMem ? "Share memory" : isNew ? "Send recipe" : "Send suggestion";
-  $("#f-now").placeholder = isMem ? "e.g. Nannie made this every Christmas Eve, and we'd sneak the first slice" : isIntro ? "A sentence or two about this dish and who made it" : "";
+/* ---------------- saving changes ----------------
+   Edits go to the cookbook's relay (relay/ in this repo, a Cloudflare Worker), which commits them to
+   src/book.txt on GitHub and returns the new book; memories and comments are stored by the relay. */
+const RELAY = "https://cookbook-relay.chambers-cookbook.workers.dev";
+const onWeb = /^https?:$/.test(location.protocol);
+function applyBookText(txt) {
+  if (typeof txt !== "string" || txt.trim() === bookText.trim()) return;
+  bookText = txt; useBook(txt); migrateIds(); fillSections(); render();
 }
-function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
-  $("#sg-form").reset();
-  $("#f-recipe").value = recipeId; $("#f-was").value = current || ""; $("#f-why").value = why || "";
-  $("#f-name").value = store.get("name", "");
-  $("#f-msg").textContent = ""; $("#f-offline").hidden = S.dbState !== "off";
-  $("#f-scan-msg").textContent = "";
-  setKind(kind);
-  const r = BY[recipeId];
-  $("#sg-title").textContent = kind === "new" ? "Add a recipe" : r ? r.name : "Help improve the book";
-  dlg.showModal();
-  setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
+const EDIT_ERRORS = {
+  changed: "Someone changed this recipe a moment ago. The page has been refreshed. Check it and try again.",
+  name_taken: "There's already a recipe with that name.",
+  empty: "Type something first, or use Remove.",
+  recipe_missing: "This recipe has been renamed or removed. The page has been refreshed.",
+  rate_limited: "That's a lot of changes at once. Wait a minute and try again.",
+  daily_limit: "The cookbook has had a lot of changes today. Try again tomorrow.",
+  not_configured: "Saving changes isn't switched on yet.",
+  forbidden: "Changes can only be saved from the cookbook's own website."
+};
+async function saveEdit(op, msgEl, btn) {
+  op.by = myName(); msgEl.textContent = ""; btn.disabled = true;
+  try {
+    const res = await fetch(RELAY + "/edit", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify(op) });
+    const j = await res.json().catch(() => ({}));
+    if (j.text) applyBookText(j.text);
+    if (!res.ok) { msgEl.textContent = EDIT_ERRORS[j.error] || "That didn't save. Try again in a moment."; return null; }
+    return j;
+  } catch { msgEl.textContent = navigator.onLine ? "Couldn't reach the cookbook. Try again in a moment." : "You're offline. Connect and try again."; return null; }
+  finally { btn.disabled = false; }
 }
+
+/* ---------------- edit dialog ---------------- */
+let ed = null; // { build(text) -> op, del?: op }
+function openEdit(cfg) {
+  ed = cfg;
+  $("#ed-eyebrow").textContent = cfg.eyebrow; $("#ed-title").textContent = cfg.title; $("#ed-label").textContent = cfg.label;
+  const ta = $("#ed-text"); ta.value = cfg.text || ""; ta.rows = cfg.rows || 3; ta.placeholder = cfg.placeholder || ""; ta.classList.toggle("typed", !!cfg.typed);
+  $("#ed-after-wrap").hidden = !cfg.places; $("#ed-after").innerHTML = cfg.places || "";
+  if (cfg.places) $("#ed-after").selectedIndex = $("#ed-after").options.length - 1;
+  $("#ed-head-wrap").hidden = !cfg.heading; $("#ed-head").value = "";
+  const del = $("#ed-delete"); del.hidden = !cfg.del; del.textContent = cfg.delLabel || "Remove"; delete del.dataset.armed;
+  $("#ed-name").value = myName(); $("#ed-msg").textContent = "";
+  $("#dlg-edit").showModal(); setTimeout(() => { ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length); }, 30);
+}
+$("#ed-form").addEventListener("submit", async e => {
+  e.preventDefault(); if (!ed) return;
+  const text = $("#ed-text").value.trim();
+  if (!text && !ed.allowEmpty) { $("#ed-msg").textContent = EDIT_ERRORS.empty; return; }
+  if (!$("#ed-head-wrap").hidden && !$("#ed-head").value.trim()) { $("#ed-msg").textContent = "Give the new step a heading."; return; }
+  if (ed.unchanged !== undefined && text === ed.unchanged) { $("#dlg-edit").close(); return; }
+  const pos = $("#ed-after-wrap").hidden ? {} : JSON.parse($("#ed-after").value || "{}");
+  const j = await saveEdit(ed.build(text, pos, $("#ed-head").value.trim()), $("#ed-msg"), $("#ed-save"));
+  if (!j) return;
+  $("#dlg-edit").close(); toast("Saved for everyone");
+  if (j.recipeId && location.hash !== "#r-" + j.recipeId) history.replaceState(null, "", "#r-" + j.recipeId); // renamed
+});
+$("#ed-delete").addEventListener("click", async e => {
+  const b = e.currentTarget; if (!ed?.del) return;
+  if (!b.dataset.armed) { b.dataset.armed = 1; b.textContent = "Tap again to remove"; return; }
+  if (await saveEdit(ed.del, $("#ed-msg"), b)) { $("#dlg-edit").close(); toast("Removed"); }
+});
+const ingAt = (r, i) => r.ing.filter(x => x.t)[i]?.t;
+function editName(r) { openEdit({ eyebrow: "Rename", title: r.name, label: "Recipe name", text: r.name, unchanged: r.name, rows: 1, build: text => ({ op: "set-name", id: r.id, expect: r.name, text }) }); }
+function editIntro(r) { openEdit({ eyebrow: r.intro ? "Edit the introduction" : "Write an introduction", title: r.name, label: "Introduction", text: r.intro, unchanged: r.intro, rows: 4, placeholder: "A sentence or two about this dish and who made it", del: r.intro ? { op: "set-intro", id: r.id, expect: r.intro, text: "" } : null, build: text => ({ op: "set-intro", id: r.id, expect: r.intro, text }) }); }
+function editIng(r, i) { const t = ingAt(r, i); openEdit({ eyebrow: "Edit ingredient", title: r.name, label: "Ingredient", text: t, unchanged: t, rows: 2, typed: true, del: { op: "delete-ing", id: r.id, i, expect: t }, delLabel: "Remove ingredient", build: text => ({ op: "edit-ing", id: r.id, i, expect: t, text }) }); }
+function editStep(r, g, j) { const t = r.steps[g].items[j]; openEdit({ eyebrow: "Edit step", title: r.name, label: "Step", text: t, unchanged: t, rows: 4, del: { op: "delete-step", id: r.id, g, j, expect: t }, delLabel: "Remove step", build: text => ({ op: "edit-step", id: r.id, g, j, expect: t, text }) }); }
+function editHead(r, g) { const t = r.steps[g].h; openEdit({ eyebrow: "Edit step heading", title: r.name, label: `Heading for step ${g + 1}`, text: t, unchanged: t, rows: 1, build: text => ({ op: "edit-heading", id: r.id, g, expect: t, text }) }); }
+// "+" menu: placement choices follow the recipe's own groups.
+function addLine(r, kind) {
+  const cut = t => t.length > 60 ? t.slice(0, 57) + "…" : t;
+  const opt = (pos, label) => `<option value="${esc(JSON.stringify(pos))}">${esc(label)}</option>`;
+  const flat = !r.steps.some(g => g.h);
+  if (kind === "ingredient") {
+    let html = opt({ after: "top" }, "At the top of the list"), open = false, n = 0;
+    r.ing.forEach((x, k) => {
+      if (x.g) { if (open) html += "</optgroup>"; open = true; html += `<optgroup label="${esc(x.g)}">` + opt({ group: r.ing.slice(0, k).filter(y => y.g).length }, "At the start of this group"); }
+      else { html += opt({ after: n, expect: x.t }, "After: " + cut(x.t)); n++; }
+    });
+    if (open) html += "</optgroup>";
+    return openEdit({ eyebrow: "Add an ingredient", title: r.name, label: "The new ingredient", rows: 2, typed: true, places: html, placeholder: "e.g. 1 tsp vanilla", build: (text, pos) => ({ op: "add-ing", id: r.id, ...pos, text }) });
+  }
+  if (kind === "substep" || flat) {
+    const html = flat
+      ? opt({ g: 0, after: -1 }, "At the start") + (r.steps[0]?.items || []).map((t, j) => opt({ g: 0, after: j, expect: t }, `After ${j + 1}. ${cut(t)}`)).join("")
+      : r.steps.map((g, gi) => `<optgroup label="${esc(`${gi + 1}. ${g.h || "Step " + (gi + 1)}`)}">` + opt({ g: gi, after: -1 }, "At the start of this step") + g.items.map((t, j) => opt({ g: gi, after: j, expect: t }, "After: " + cut(t))).join("") + "</optgroup>").join("");
+    return openEdit({ eyebrow: flat ? "Add a method step" : "Add a sub-step", title: r.name, label: flat ? "The new step" : "The new sub-step", rows: 3, places: html, build: (text, pos) => ({ op: "add-substep", id: r.id, ...pos, text }) });
+  }
+  const html = opt({ after: -1 }, `Before step 1: ${cut(r.steps[0]?.h || "")}`) + r.steps.map((g, gi) => opt({ after: gi }, `After step ${gi + 1}: ${cut(g.h)}`)).join("");
+  openEdit({ eyebrow: "Add a method step", title: r.name, label: "What to do (one sub-step per line)", rows: 4, places: html, heading: true, build: (text, pos, heading) => ({ op: "add-step", id: r.id, ...pos, heading, items: text.split("\n") }) });
+}
+
+/* ---------------- add a recipe ---------------- */
+function fillSections() { const v = $("#f-ncat").value; $("#f-ncat").innerHTML = CATS.map(c => `<option>${esc(c)}</option>`).join(""); if (CATS.includes(v)) $("#f-ncat").value = v; }
+fillSections();
+function openNew() {
+  $("#nw-form").reset(); $("#f-name").value = myName(); $("#f-msg").textContent = ""; $("#f-scan-msg").textContent = "";
+  $("#dlg-new").showModal(); setTimeout(() => $("#f-nname").focus(), 30);
+}
+const lines = id => $(id).value.split("\n").map(x => x.trim()).filter(Boolean);
+$("#nw-form").addEventListener("submit", async e => {
+  e.preventDefault();
+  const name = $("#f-nname").value.trim(), ingredients = lines("#f-ning"), steps = lines("#f-nsteps");
+  if (!name || (!ingredients.length && !steps.length)) { $("#f-msg").textContent = "Add the recipe's name and at least its ingredients or method."; return; }
+  const j = await saveEdit({ op: "add-recipe", section: $("#f-ncat").value, name, intro: $("#f-nintro").value.trim(), ingredients, steps, notes: $("#f-nnotes").value.trim() }, $("#f-msg"), $("#f-submit"));
+  if (!j) return;
+  $("#dlg-new").close(); toast("Recipe added for everyone");
+  if (j.recipeId) location.hash = "r-" + j.recipeId;
+});
+
 /* ---------------- read a recipe from a photo ----------------
-   Photos go to the cookbook's relay (relay/ in this repo, a Cloudflare Worker), which holds the
-   Gemini key and only answers this site. */
-const SCAN_URL = "https://cookbook-relay.chambers-cookbook.workers.dev";
-$("#f-scan").hidden = !/^https?:$/.test(location.protocol);
+   The relay holds the Gemini key and only answers this site. */
+$("#f-scan").hidden = !onWeb;
 const blobB64 = b => new Promise((res, rej) => { const fr = new FileReader(); fr.onload = () => res(String(fr.result).split(",")[1]); fr.onerror = () => rej(fr.error); fr.readAsDataURL(b); });
 async function readRecipePhotos(files) {
   const images = await Promise.all(files.map(async f => blobB64(await shrink(f, 1600))));
-  const res = await fetch(SCAN_URL, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ images, sections: CATS }) });
+  const res = await fetch(RELAY, { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ images, sections: CATS }) });
   if (!res.ok) { const err = new Error("http"); err.status = res.status; throw err; }
   return res.json();
 }
@@ -2360,8 +2400,8 @@ $("#f-scan-file").addEventListener("change", async e => {
     if (!r.isRecipe || (!r.ingredients?.length && !r.steps?.length)) throw new Error("norecipe");
     $("#f-nname").value = r.name || ""; if (CATS.includes(r.section)) $("#f-ncat").value = r.section;
     $("#f-ning").value = (r.ingredients || []).join("\n"); $("#f-nsteps").value = (r.steps || []).join("\n");
-    if (r.notes && !$("#f-now").value.trim()) $("#f-now").value = r.notes;
-    msg.textContent = "Filled in from your photo. Check it over and fix anything it misread before sending.";
+    if (r.notes && !$("#f-nnotes").value.trim()) $("#f-nnotes").value = r.notes;
+    msg.textContent = "Filled in from your photo. Check it over and fix anything it misread before adding it.";
   } catch (err) {
     msg.className = "scan-msg err";
     msg.textContent = err.message === "norecipe" ? "Couldn't find a recipe in that photo. Try a closer, well-lit shot, or type it in below."
@@ -2371,56 +2411,6 @@ $("#f-scan-file").addEventListener("change", async e => {
       : "Couldn't read that photo. Try again, or type the recipe in below.";
   } finally { box.removeAttribute("aria-busy"); }
 });
-$("#f-recipe").addEventListener("change", e => { $("#sg-title").textContent = BY[e.target.value]?.name || "Help improve the book"; });
-$("#sg-form").addEventListener("submit", async e => {
-  e.preventDefault();
-  const name = $("#f-name").value.trim(); store.set("name", name);
-  const doc = { kind: curKind, recipeId: curKind === "new" ? "" : $("#f-recipe").value, current: $("#f-was").value.trim(), proposed: $("#f-now").value.trim(), reason: $("#f-why").value.trim(), signedAs: name.slice(0, 60), status: "open", createdAt: Date.now() };
-  if (curKind === "new") doc.newRecipe = { name: $("#f-nname").value.trim(), cat: $("#f-ncat").value, ingredients: $("#f-ning").value.trim(), steps: $("#f-nsteps").value.trim() };
-  const msg = $("#f-msg");
-  if (curKind === "new" ? !doc.newRecipe.name || (!doc.newRecipe.ingredients && !doc.newRecipe.steps) : !doc.proposed) { msg.textContent = curKind === "new" ? "Add the recipe's name and at least its ingredients or steps." : `Fill in “${KIND[curKind].now}” so we know what to change.`; return; }
-  if (curKind === "memory" && !doc.recipeId) { msg.textContent = "Choose which recipe this memory belongs to."; return; }
-  if (S.dbState !== "on") {
-    const r = BY[doc.recipeId];
-    const txt = [`Cookbook suggestion: ${KIND[curKind].label}`, curKind === "new" ? `New recipe: ${doc.newRecipe.name} (${doc.newRecipe.cat})\nIngredients:\n${doc.newRecipe.ingredients}\nSteps:\n${doc.newRecipe.steps}` : `Recipe: ${r ? r.name : "General"}`, doc.current && `Book says: ${doc.current}`, doc.proposed && `Should say: ${doc.proposed}`, doc.reason && `Why: ${doc.reason}`, name && `From: ${name}`].filter(Boolean).join("\n");
-    if (await copy(txt)) dlg.close(); return;
-  }
-  doc.authorId = S.me.id || "";
-  const btn = $("#f-submit"); btn.disabled = true;
-  try {
-    if (curKind === "memory") await db.collection("stories").add({ recipeId: doc.recipeId, text: doc.proposed, signedAs: doc.signedAs, authorId: doc.authorId, createdAt: doc.createdAt });
-    else await db.collection("suggestions").add(doc);
-    dlg.close(); toast(curKind === "memory" ? "Memory shared. Thank you!" : "Suggestion sent. Thank you!");
-  } catch (err) {
-    if (err?.code === "invalid_argument") { S.me.readOnly = true; msg.textContent = "You have view-only access, so this couldn't be saved. Ask the cookbook's owner to give you Contributor access, or copy your text and send it to them."; }
-    else if (err?.code === "quota_exceeded") msg.textContent = "The suggestion box is full. Let the cookbook's owner know so they can clear out old suggestions.";
-    else msg.textContent = "That didn't save. Check your connection and try again.";
-  } finally { btn.disabled = false; }
-});
-
-/* ---------------- editor actions ---------------- */
-let pendingResolve = null;
-async function resolveSugg(id, status) {
-  if (status === "open") { try { await db.doc("suggestions/" + id).update({ status: "open", resolution: "" }); toast("Reopened"); } catch { toast("Couldn't update. Try again."); } return; }
-  pendingResolve = { id, status };
-  $("#rs-title").textContent = status === "accepted" ? "Accept suggestion" : "Decline suggestion";
-  $("#rs-go").textContent = status === "accepted" ? "Accept" : "Decline";
-  $("#rs-note").value = ""; $("#dlg-resolve").showModal();
-}
-$("#rs-form").addEventListener("submit", async e => {
-  e.preventDefault(); const p = pendingResolve; if (!p) return;
-  try { await db.doc("suggestions/" + p.id).update({ status: p.status, resolution: $("#rs-note").value.trim(), resolvedAt: Date.now() }); $("#dlg-resolve").close(); toast(p.status === "accepted" ? "Accepted" : "Declined"); }
-  catch { toast("Couldn't update. You may not have editor access."); }
-});
-async function delDoc(col, id) { try { await db.doc(col + "/" + id).delete(); toast("Deleted"); } catch { toast("Couldn't delete that."); } }
-async function exportCsv() {
-  const cols = ["status", "recipe", "kind", "book_says", "suggested", "why", "from", "date", "editor_note"];
-  const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
-  const rows = S.sugg.map(s => [s.status, s.kind === "new" ? "NEW: " + (s.newRecipe?.name || "") : BY[s.recipeId]?.name || "General", KIND[s.kind]?.label || s.kind, s.current, s.kind === "new" ? `Ingredients:\n${s.newRecipe?.ingredients || ""}\n\nSteps:\n${s.newRecipe?.steps || ""}\n\n${s.proposed || ""}` : s.proposed, s.reason, who(s), s.createdAt ? new Date(s.createdAt).toISOString().slice(0, 10) : "", s.resolution].map(q).join(","));
-  const csv = [cols.join(","), ...rows].join("\n");
-  if (downloads) { try { await downloads.save({ filename: "chambers-cookbook-suggestions.csv", data: csv }); return; } catch (e) { if (e?.code === "declined" || e?.code === "cancelled") return; } }
-  copy(csv);
-}
 
 /* ---------------- cook mode ---------------- */
 let cook = null, wake = null;
@@ -2559,7 +2549,7 @@ async function install() {
 let askR = null, askCtl = null, lastAnswer = "";
 const recipeText = r => `${r.name} (${r.cat})${r.serves ? "\nServes: " + r.serves : ""}\n${r.intro}\nIngredients:\n${r.ing.map(i => i.g ? i.g + ":" : "- " + i.t).join("\n")}\nMethod:\n${r.steps.map(g => (g.h ? g.h + ":\n" : "") + g.items.map(t => "- " + t).join("\n")).join("\n")}`;
 function openAsk(r) {
-  askR = r; $("#ask-title").textContent = r.name; $("#ask-q").value = ""; $("#ask-a").textContent = ""; $("#ask-suggest").hidden = true;
+  askR = r; $("#ask-title").textContent = r.name; $("#ask-q").value = ""; $("#ask-a").textContent = "";
   $("#ask-chips").innerHTML = ["Convert this to metric", "Can I make it ahead?", "What can I substitute?", "What goes well with it?", "Is anything missing or unclear?"].map(q => `<button type="button" class="chip" data-q="${esc(q)}">${esc(q)}</button>`).join("");
   $("#dlg-ask").showModal();
 }
@@ -2569,42 +2559,67 @@ $("#dlg-ask").addEventListener("close", () => askCtl?.abort());
 async function ask() {
   const q = $("#ask-q").value.trim(); if (!q || !sample) return;
   askCtl?.abort(); askCtl = new AbortController();
-  const out = $("#ask-a"); out.textContent = "Thinking…"; $("#ask-go").disabled = true; $("#ask-suggest").hidden = true;
+  const out = $("#ask-a"); out.textContent = "Thinking…"; $("#ask-go").disabled = true;
   const prompt = `You are helping a family cook from their handed-down family cookbook. Answer the question about the recipe below in plain, warm, practical language. Keep it under 180 words. Use short lines or a simple list where it helps; no markdown headings, no bold. If the question reveals a likely error or gap in the written recipe, say so plainly.\n\nRECIPE\n${recipeText(askR)}\n\nQUESTION\n${q}`;
   try {
     const res = await sample(prompt, { signal: askCtl.signal, modelTier: "quick", onText: u => { out.textContent = u.text.replace(/\*\*/g, ""); } });
-    lastAnswer = res.text.replace(/\*\*/g, ""); out.textContent = lastAnswer; $("#ask-suggest").hidden = false;
+    lastAnswer = res.text.replace(/\*\*/g, ""); out.textContent = lastAnswer;
   } catch (err) {
     if (err?.name === "AbortError" || err?.code === "aborted") return;
     out.textContent = err?.code === "not_granted" ? "Claude isn't available in this view." : err?.code === "rate_limited" ? "Too many questions at once. Wait a minute and ask again." : "Claude couldn't answer just now. Try again in a moment.";
   } finally { $("#ask-go").disabled = false; }
 }
-$("#ask-suggest").addEventListener("click", () => { const r = askR, q = $("#ask-q").value; $("#dlg-ask").close(); openSuggest({ recipeId: r.id, kind: "other", why: `From asking Claude “${q}”:\n${lastAnswer}`.slice(0, 1500) }); });
 
-/* ---------------- shared data ---------------- */
-async function resolveNames() {
-  if (!user) return;
-  const ids = [...new Set([...S.sugg, ...S.stories].filter(o => !o.signedAs && o.authorId).map(o => o.authorId))].filter(id => !(id in S.names));
-  if (!ids.length) return;
-  try { const ps = await user.profiles(ids); ids.forEach(id => S.names[id] = ps[id]?.name || ""); render(); } catch {}
+/* ---------------- memories and comments ---------------- */
+const notesLoading = new Set();
+async function loadNotes(id, force) {
+  if (!onWeb) { S.notes[id] = "error"; return; }
+  if ((!force && S.notes[id] !== undefined) || notesLoading.has(id)) return;
+  notesLoading.add(id);
+  try {
+    const r = BY[id], res = await fetch(`${RELAY}/notes?ids=${encodeURIComponent([id, ...r.aliases].join(","))}`);
+    if (!res.ok) throw 0;
+    S.notes[id] = (await res.json()).notes;
+  } catch { S.notes[id] = "error"; }
+  notesLoading.delete(id);
+  if (route().id === id) render();
 }
+async function postNote(form) {
+  const r = BY[route().id], kind = form.dataset.note, text = form.text.value.trim(), btn = form.querySelector("[type=submit]");
+  if (!r || !text) { form.text.focus(); return; }
+  btn.disabled = true;
+  try {
+    const res = await fetch(RELAY + "/notes", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ recipeId: r.id, kind, text, by: myName() }) });
+    const j = await res.json().catch(() => ({}));
+    if (!res.ok) throw new Error(j.error);
+    S.myNotes[j.note.id] = j.key; store.set("mynotes", S.myNotes);
+    S.notes[r.id] = [j.note, ...(Array.isArray(S.notes[r.id]) ? S.notes[r.id] : [])];
+    delete S.drafts[r.id + kind]; render(); toast(kind === "memory" ? "Memory shared. Thank you!" : "Comment posted");
+  } catch (e) {
+    btn.disabled = false;
+    toast(e.message === "rate_limited" || e.message === "daily_limit" ? "That's a lot of posts at once. Try again a little later." : "That didn't post. Check your connection and try again.");
+  }
+}
+async function deleteNote(recipeId, id) {
+  try {
+    const res = await fetch(RELAY + "/notes/delete", { method: "POST", headers: { "Content-Type": "application/json" }, body: JSON.stringify({ recipeId, id, key: S.myNotes[id] }) });
+    if (!res.ok) throw 0;
+    delete S.myNotes[id]; store.set("mynotes", S.myNotes);
+    for (const k of Object.keys(S.notes)) if (Array.isArray(S.notes[k])) S.notes[k] = S.notes[k].filter(n => n.id !== id);
+    render(); toast("Deleted");
+  } catch { toast("Couldn't delete that. Try again."); }
+}
+
 async function boot() {
   render();
   loadLocalPhotos();
   const use = n => (window.claude && typeof window.claude.use === "function") ? window.claude.use(n).catch(() => null) : Promise.resolve(null);
   use("sample").then(s => { sample = s; if (route().v === "recipe") render(); });
   use("downloads").then(d => downloads = d);
-  [db, user] = await Promise.all([use("db"), use("user")]);
-  if (user) {
-    try { S.me.id = await user.id(); S.me.canEdit = await user.canEdit(); const w = await user.can("data.write"); S.me.canWrite = w; if (w === false) S.me.readOnly = true; } catch {}
-  }
-  if (!db) { S.dbState = "off"; render(); return; }
-  S.dbState = "on";
-  const onErr = () => { S.dbState = "off"; render(); };
-  db.collection("suggestions").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.sugg = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
-  db.collection("stories").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.stories = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
+  if (onWeb) try { const res = await fetch(RELAY + "/book"); if (res.ok) applyBookText((await res.json()).text); } catch {}
 }
 boot();
 })();
+
 </script>
 </body></html>
