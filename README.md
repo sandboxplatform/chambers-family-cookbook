@@ -9,6 +9,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 - Anyone can edit: a pencil on the name, introduction, every ingredient, step and step heading, and a + to add ingredients, steps and sub-steps. Changes are saved straight into the book for everyone
 - "Add a recipe", typed in or read from a photo of the card
 - Family memories and comments on every recipe
+- A page-turning book edition (`book.html`) with a photo-and-title spread for every recipe, which prints to PDF at 8 × 10 in
 - A picture for every recipe: AI-generated stand-ins until the family adds real photos
 
 ## Files
@@ -24,6 +25,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 | `scripts/generate-images.mjs` | Creates the AI pictures with Google Gemini (or OpenAI) |
 | `build.sh` | Assembles `index.html` from `src/` (and lists the images) |
 | `index.html` | The built, single-file site |
+| `src/book.html` → `book.html` | The page-turning book (same recipes and pictures), printable at 8 × 10 in |
 
 ### Recipe format (`src/book.txt`)
 

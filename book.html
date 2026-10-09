@@ -1,0 +1,1874 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>The Chambers Family Cookbook · The Book</title>
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;1,8..60,400&family=Caveat:wght@500;700&display=swap">
+<style>
+/* The book is designed at its print trim, 8 × 10 in = 768 × 960 CSS px. On screen each sheet is
+   scaled into the page-turning viewer; in print every sheet is one PDF page. */
+:root{
+  --paper:#fbf8f1; --paper-2:#f3eee3; --ink:#1c2540; --ink-2:#47506b; --ink-3:#6b7287; --rule:#d9d2c3; --ruled:#c7d7ea; --red:#cf4237;
+  --night:#141a2c; --cream:#f4eee2; --cream-2:#d8d2c4; --warm:#f0c9a0;
+  --f-display:"Young Serif",Georgia,serif; --f-serif:"Source Serif 4",Georgia,serif; --f-body:"Figtree",system-ui,sans-serif; --f-hand:"Caveat",cursive;
+  --c-app:#a8741c; --c-sal:#4c7a2e; --c-soup:#2f6495; --c-main:#9a3d2e; --c-bread:#8f6330; --c-des:#9c3f68; --c-cond:#6f6214;
+}
+*{box-sizing:border-box}
+html,body{margin:0}
+body{background:#1b1d24;color:var(--cream);font-family:var(--f-body);-webkit-font-smoothing:antialiased}
+button{font:inherit}
+
+/* ---------- reader chrome ---------- */
+.bar{position:fixed;inset:0 0 auto 0;z-index:5;display:flex;align-items:center;gap:8px;padding:10px 16px;padding-top:max(10px,env(safe-area-inset-top));background:#1b1d24}
+.bar a,.bar button{display:inline-flex;align-items:center;gap:6px;min-height:40px;padding:8px 12px;border-radius:999px;border:1px solid #3a3d4a;background:#23262f;color:var(--cream);text-decoration:none;font-size:.88rem;font-weight:500;cursor:pointer}
+.bar a:hover,.bar button:hover{border-color:#6a6f82}
+.bar svg{width:16px;height:16px;flex:none}
+.bar .title{font-family:var(--f-display);font-size:1.05rem;margin:0 auto 0 8px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.bar .pos{font-size:.85rem;color:#b9b4a8;min-width:7.5em;text-align:center;font-variant-numeric:tabular-nums}
+.bar .icon{padding:8px;width:40px;justify-content:center}
+@media (max-width:640px){.bar .title,.bar .label{display:none}.bar{gap:6px}.bar .pos{min-width:auto;margin-left:auto}}
+#stage{position:fixed;inset:60px 0 0 0;display:grid;place-items:center;padding:12px 16px 20px}
+#flip{width:min(96vw,calc((100vh - 100px) * 1.6));max-width:1600px}
+@media (max-width:820px){#flip{width:min(94vw,calc((100vh - 100px) * .8))}}
+#flip .page{background:var(--paper);overflow:hidden}
+#flip .sheet{transform:scale(var(--k,1));transform-origin:0 0}
+.loading{position:fixed;inset:0;display:grid;place-items:center;color:#b9b4a8;font-size:.95rem;z-index:4;background:#1b1d24}
+.loading[hidden]{display:none}
+.hint{position:fixed;bottom:10px;left:0;right:0;text-align:center;font-size:.8rem;color:#8b8779;pointer-events:none}
+
+/* the measuring room: sheets are laid out here at full size, then copied into the viewer */
+#print{position:absolute;left:-30000px;top:0}
+#print .page{width:768px;height:960px;overflow:hidden;background:var(--paper);margin-bottom:40px}
+
+/* ---------- the sheet ---------- */
+.sheet{width:768px;height:960px;position:relative;overflow:hidden;background:var(--paper);color:var(--ink);font-family:var(--f-body)}
+.folio{position:absolute;bottom:40px;font:500 12px/1 var(--f-body);letter-spacing:.12em;color:var(--ink-3)}
+.left .folio{left:64px}.right .folio{right:64px}
+.eyebrow{font:600 11.5px/1.2 var(--f-body);letter-spacing:.24em;text-transform:uppercase}
+.running{position:absolute;top:44px;left:64px;right:64px;display:flex;justify-content:space-between;gap:16px;font:600 11px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-3);padding-bottom:12px;border-bottom:1px solid var(--rule)}
+.running b{color:var(--sec);font-weight:600;white-space:nowrap}
+.running span{white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+
+/* cover */
+.cover{background:var(--night);color:var(--cream);display:flex;flex-direction:column}
+.cover .photo{position:relative;height:596px;flex:none;overflow:hidden;background:#2a2f40}
+.cover .photo img{width:100%;height:100%;object-fit:cover;object-position:50% 42%;display:block}
+.cover .tag{position:absolute;left:48px;top:44px;background:var(--cream);color:var(--night);padding:10px 14px;font:600 11px/1 var(--f-body);letter-spacing:.22em;text-transform:uppercase}
+.cover .band{height:6px;background:#d9533f;flex:none}
+.cover .words{flex:1;display:flex;flex-direction:column;justify-content:center;gap:18px;padding:40px 56px 48px}
+.cover h1{margin:0;font:400 66px/1.02 var(--f-display);letter-spacing:-.01em;color:var(--cream)}
+.cover .sub{font:600 12px/1.2 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:#c9c2b4}
+.ded{display:flex;align-items:center;gap:18px}
+.ded i{width:56px;height:3px;background:#d9533f;display:block}
+.ded span{font:700 36px/1 var(--f-hand);color:var(--warm)}
+.back{background:var(--night);color:var(--cream);padding:96px 80px 72px;display:flex;flex-direction:column;gap:44px}
+.back .lead{margin:0;font:400 34px/1.32 var(--f-display);text-wrap:balance}
+.back p{margin:0;font-size:19px;line-height:1.6;color:var(--cream-2);max-width:560px}
+.back .secs{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:14px 32px;border-top:1px solid #3a4260;padding-top:30px;font-size:16px;font-weight:500}
+.back .foot{margin-top:auto;display:flex;justify-content:space-between;align-items:flex-end}
+
+/* endpapers, title, introduction */
+.mosaic{background:var(--night);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));grid-template-rows:repeat(3,minmax(0,1fr));gap:6px}
+.mosaic img{width:100%;height:100%;object-fit:cover;display:block}
+.mosaic .ded-card{background:var(--cream);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:16px;padding:24px;text-align:center}
+.mosaic .ded-card small{font:600 10px/1 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:#5b5a52}
+.mosaic .ded-card b{font:700 44px/.95 var(--f-hand);color:var(--red)}
+.mosaic .ded-card i{width:40px;height:3px;background:var(--red);display:block}
+.mosaic .ded-card span{font:400 15px/1.35 var(--f-display);color:var(--ink)}
+.titlepage{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:26px;padding:96px}
+.titlepage h1{margin:0;font:400 64px/1.05 var(--f-display);color:var(--ink)}
+.titlepage .orn{width:72px;height:3px;background:var(--red)}
+.titlepage p{margin:0;font:italic 400 20px/1.5 var(--f-serif);color:var(--ink-2)}
+.intro-pg{padding:96px 96px 0}
+.intro-pg h2{margin:0 0 28px;font:400 40px/1.1 var(--f-display)}
+.intro-pg p{margin:0 0 18px;font:400 18px/1.65 var(--f-serif);color:var(--ink);max-width:560px}
+.intro-pg p.first::first-letter{font:400 64px/.8 var(--f-display);float:left;margin:8px 10px 0 0;color:var(--red)}
+.intro-pg .plate{position:absolute;left:0;right:0;bottom:0;height:400px;overflow:hidden;background:var(--paper-2)}
+.intro-pg .plate img{width:100%;height:100%;object-fit:cover;display:block}
+.intro-pg .plate .credit{position:absolute;right:16px;bottom:14px;padding:6px 9px;background:rgba(20,26,44,.72);color:#f4eee2;font:600 10px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.intro-pg .note{margin-top:36px;padding-top:18px;border-top:1px solid var(--rule);font:400 13px/1.55 var(--f-body);color:var(--ink-3)}
+
+/* contents */
+.contents{padding:96px 80px 96px}
+.contents h2{margin:0 0 32px;font:400 44px/1 var(--f-display)}
+.toc{display:flex;flex-direction:column}
+.toc .sec{display:flex;align-items:baseline;gap:14px;margin:18px 0 6px;font:600 12px/1.2 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--sec)}
+.toc .sec:first-child{margin-top:0}
+.toc .sec em{font:400 22px/1 var(--f-display);font-style:normal;letter-spacing:0}
+.toc a,.dlist a{display:flex;align-items:baseline;gap:8px;padding:5px 0;color:var(--ink);text-decoration:none;font:400 16px/1.35 var(--f-serif)}
+.toc a::after,.dlist a::after{content:"";order:1;flex:1;border-bottom:1px dotted #b9b2a3;transform:translateY(-4px)}
+.toc a b,.dlist a b{order:2;font:500 13px/1 var(--f-body);color:var(--ink-3);font-variant-numeric:tabular-nums}
+#flip .toc a:hover,#flip .dlist a:hover{color:var(--red)}
+
+/* section dividers */
+.div-l{background:var(--sec);color:var(--cream);padding:72px}
+.div-l .num{position:absolute;left:56px;top:40px;font:400 340px/1 var(--f-display);color:rgba(255,255,255,.16)}
+.div-l h2{position:absolute;left:72px;right:72px;bottom:120px;margin:0;font:400 64px/1.02 var(--f-display);color:var(--cream)}
+.div-l .eyebrow{position:absolute;left:72px;bottom:84px;color:rgba(255,255,255,.85)}
+.div-r{padding:120px 80px 96px}
+.div-r .eyebrow{color:var(--sec);margin-bottom:18px}
+.div-r h3{margin:0 0 36px;font:400 34px/1.15 var(--f-display);color:var(--ink)}
+.dlist{display:flex;flex-direction:column}
+
+/* recipe opener (left) */
+.opener .photo{position:relative;height:var(--ph,560px);overflow:hidden;background:var(--paper-2)}
+.opener .photo img{width:100%;height:100%;object-fit:cover;display:block}
+.opener .credit{position:absolute;right:16px;bottom:14px;padding:6px 9px;background:rgba(20,26,44,.72);color:#f4eee2;font:600 10px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.opener .words{padding:40px 64px 0}
+.opener .eyebrow{color:var(--sec)}
+.opener h2{margin:12px 0 0;font:400 var(--tsize,48px)/1.06 var(--f-display);color:var(--ink);text-wrap:balance}
+.opener .intro{margin:20px 0 0;font:italic 400 18px/1.55 var(--f-serif);color:var(--ink-2);max-width:600px;text-wrap:pretty}
+.opener .serves{display:inline-flex;margin-top:22px;gap:10px;align-items:center;font:600 11.5px/1 var(--f-body);letter-spacing:.2em;text-transform:uppercase;color:var(--ink-2)}
+.opener .serves i{width:28px;height:2px;background:var(--sec);display:block}
+.opener.nophoto .words{padding-top:220px}
+.opener.nophoto::before{content:"";position:absolute;left:64px;top:150px;width:72px;height:4px;background:var(--sec)}
+
+/* recipe method (right, plus continuations) */
+.method{padding:96px 64px 88px}
+.method .cols{position:absolute;top:96px;bottom:88px;left:64px;right:64px;display:grid;grid-template-columns:220px minmax(0,1fr);gap:40px}
+.method.cont .cols{top:96px}
+.col{overflow:hidden;min-height:0}
+.col h3{margin:0 0 calc(14px * var(--fs,1));font:400 calc(22px * var(--fs,1))/1.1 var(--f-display);color:var(--ink)}
+.ingr ul{list-style:none;margin:0;padding:0}
+.ingr li{padding:calc(6px * var(--fs,1)) 0;border-bottom:1px solid var(--rule);font:400 calc(14.5px * var(--fs,1))/1.38 var(--f-body);color:var(--ink)}
+.ingr li.grp{border-bottom:0;padding:calc(16px * var(--fs,1)) 0 4px;font:600 calc(11px * var(--fs,1))/1.2 var(--f-body);letter-spacing:.18em;text-transform:uppercase;color:var(--sec)}
+.ingr li.grp:first-child{padding-top:2px}
+.meth h4{display:flex;align-items:baseline;gap:12px;margin:calc(15px * var(--fs,1)) 0 calc(5px * var(--fs,1));font:600 calc(15px * var(--fs,1))/1.3 var(--f-body);color:var(--ink)}
+.meth h4:first-of-type{margin-top:2px}
+.meth h4 em{font:400 calc(26px * var(--fs,1))/1 var(--f-display);font-style:normal;color:var(--sec);min-width:22px}
+.meth p{margin:0 0 calc(8px * var(--fs,1));font:400 calc(14.75px * var(--fs,1))/1.52 var(--f-body);color:var(--ink);text-wrap:pretty}
+.meth.flat{counter-reset:st}
+.meth.flat p{position:relative;padding-left:34px;margin-bottom:calc(12px * var(--fs,1))}
+.meth.flat p::before{counter-increment:st;content:counter(st);position:absolute;left:0;top:-3px;font:400 calc(22px * var(--fs,1))/1 var(--f-display);color:var(--sec)}
+.meth p.outro{margin-top:calc(18px * var(--fs,1));padding-top:14px;border-top:1px solid var(--rule);padding-left:0;font:italic 400 calc(15.5px * var(--fs,1))/1.55 var(--f-serif);color:var(--ink-2)}
+.meth p.outro::before{content:none}
+
+/* close-up of the dish under a short method */
+.detail{position:absolute;left:0;right:0;bottom:0;overflow:hidden}
+.detail img{width:100%;height:100%;object-fit:cover;transform:scale(1.9);transform-origin:52% 58%;display:block}
+.has-detail .folio{color:#f4eee2;z-index:1;text-shadow:0 1px 2px rgba(0,0,0,.5)}
+
+/* fillers that keep every recipe opening on a left page */
+.bleed img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;transform:scale(1.18);transform-origin:var(--fx,50%) 55%}
+.bleed .credit{position:absolute;right:16px;bottom:14px;padding:6px 9px;background:rgba(20,26,44,.72);color:#f4eee2;font:600 10px/1 var(--f-body);letter-spacing:.14em;text-transform:uppercase}
+.quote{display:flex;flex-direction:column;justify-content:center;padding:96px 96px 120px}
+.quote::before{content:"";width:72px;height:4px;background:var(--sec);margin-bottom:36px}
+.quote p{margin:0;font:400 36px/1.3 var(--f-display);color:var(--ink);text-wrap:balance}
+.quote small{margin-top:28px;font:600 11.5px/1.2 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--sec)}
+.colophon{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:20px;padding:96px}
+.colophon span{font:700 52px/1 var(--f-hand);color:var(--red)}
+.colophon small{font:600 11px/1.6 var(--f-body);letter-spacing:.24em;text-transform:uppercase;color:var(--ink-3)}
+
+/* ---------- print: one sheet per page at trim size ---------- */
+@page{size:8in 10in;margin:0}
+@media print{
+  html,body{background:#fff}
+  .bar,#stage,.loading,.hint{display:none!important}
+  #print{position:static;left:auto}
+  #print .page{margin:0;break-after:page;page-break-after:always}
+  #print .page:last-child{break-after:auto;page-break-after:auto}
+  *{-webkit-print-color-adjust:exact;print-color-adjust:exact}
+}
+</style>
+</head>
+<body>
+<header class="bar">
+  <a href="./" aria-label="Back to the cookbook website"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg><span class="label">Website</span></a>
+  <span class="title">The Chambers Family Cookbook</span>
+  <button type="button" id="b-toc"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 6h16M4 12h16M4 18h10"/></svg><span class="label">Contents</span></button>
+  <button type="button" class="icon" id="b-prev" aria-label="Previous page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg></button>
+  <span class="pos" id="pos" aria-live="polite"></span>
+  <button type="button" class="icon" id="b-next" aria-label="Next page"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg></button>
+  <button type="button" id="b-print"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M7 9V3h10v6M7 17H4v-7h16v7h-3M7 14h10v7H7z"/></svg><span class="label">Print / PDF</span></button>
+  <button type="button" class="icon" id="b-full" aria-label="Full screen"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 9V4h5M20 9V4h-5M4 15v5h5M20 15v5h-5"/></svg></button>
+</header>
+<main id="stage"><div id="flip"></div></main>
+<div class="loading" id="loading">Setting the type…</div>
+<div class="hint" id="hint">Drag a page corner, use the arrow keys, or tap the edges to turn pages</div>
+<div id="print" aria-hidden="true"></div>
+<script type="text/plain" id="book">
+# Appetizers
+@ Almond Cheddar Appetizers
+> These warm, cheesy bites are perfect for parties or gatherings. The combination of crispy almonds, bacon, and cheddar on toasted baguette slices makes for a delightful appetizer that's both savory and satisfying.
+- 1 cup mayonnaise (not Miracle Whip)
+- 1 cup shredded cheddar cheese
+- 1 medium onion, chopped
+- ¾ cup slivered almonds
+- 6 strips bacon, crumbled
+- 1 baguette
+= Preheat the Oven
+* Set the oven to 400°F.
+= Prepare the Mixture
+* In a mixing bowl, combine the mayonnaise, cheddar cheese, chopped onion, slivered almonds, and crumbled bacon. Mix well.
+= Assemble the Appetizers
+* Slice the baguette into ½-inch thick rounds.
+* Spread a generous amount of the mixture onto each slice.
+= Bake
+* Place the topped baguette slices on a baking sheet.
+* Bake at 400°F for 8 minutes, or until the cheese is bubbly and slightly golden.
+= Serve
+* Let cool slightly before serving. Enjoy these crispy, cheesy bites warm!
+. Perfect for entertaining, these appetizers will disappear fast!
+
+@ Guacamole
+> This fresh and flavorful guacamole is perfect for dipping, spreading on toast, or serving as a topping for tacos and burritos. Made with ripe avocados, juicy tomatoes, and a hint of spice, it's a simple yet delicious dish that can be customized to taste.
+- 4 ripe avocados
+- 1 small amount of jalapeño (about ¼ diced)
+- ½ medium onion, chopped
+- 2 fresh tomatoes, chopped
+- Salt to taste
+- (Optional) 2 tablespoons of oil
+= Prepare the Ingredients
+* Cut the avocados in half, remove the pits, and scoop the flesh into a bowl.
+* Dice the jalapeño finely (use more or less depending on spice preference).
+* Chop the onion and tomatoes into small chunks.
+= Mix Everything Together
+* Lightly mash the avocados with a fork, keeping some chunks for texture.
+* Add the jalapeño, onion, and tomatoes.
+* Sprinkle with salt to taste and mix well.
+= Final Touches
+* If desired, add 2 tablespoons of oil for a smoother texture.
+* Serve immediately with tortilla chips, tacos, or as a topping for your favorite dishes.
+. Enjoy your homemade guacamole!
+
+@ Crabmeat Dip
+> This creamy and flavorful crabmeat dip is perfect for parties, gatherings, or as a delicious appetizer. The combination of cream cheese, crab, and a touch of sherry creates a rich and satisfying dip.
+- 8 oz cream cheese
+- 1 teaspoon sherry
+- 6 ½ oz crabmeat
+- 2 tablespoons chopped onion
+- ½ teaspoon horseradish
+- ¼ teaspoon salt
+- Pepper (to taste)
+- Slivered almonds (for topping)
+= Prepare the Mixture
+* In a saucepan over low heat, blend the cream cheese, sherry, crabmeat, onion, horseradish, salt, and pepper.
+* Stir continuously until smooth and well combined.
+= Bake the Dip
+* Preheat the oven to 375°F (190°C).
+* Transfer the mixture to a casserole dish.
+* Sprinkle slivered almonds on top.
+= Final Baking
+* Bake for 15 minutes until warm and bubbly.
+= Serve & Enjoy
+* Serve hot with crackers, toasted bread, or fresh vegetables for dipping.
+. This delicious crabmeat dip is a perfect addition to any appetizer spread!
+
+@ Tarragon Shrimp
+~ shrimp-tarragon
+> This elegant shrimp dish features a rich, creamy tarragon sauce with a touch of cognac for a bold and flavorful finish. Perfect for a special dinner, it pairs beautifully with rice or crusty bread.
+- 4 tablespoons butter
+- 36 medium-sized shrimp, peeled and deveined
+- Salt (to taste)
+- 2 tablespoons finely minced shallots
+- ½ teaspoon tarragon
+- Black pepper (to taste)
+- 1 teaspoon lemon juice
+- 3 tablespoons warm cognac
+- ¾ cup heavy cream, heated
+- 1 tablespoon flour
+= Sauté the Shrimp
+* Melt 4 tablespoons of butter in a pan over medium heat.
+* Add the shrimp in a single layer and sprinkle with salt.
+* Cook for about 4 minutes, stirring occasionally, until shrimp are pink and opaque.
+= Add Flavor
+* Sprinkle the shrimp with lemon juice, shallots, tarragon, and black pepper.
+* Stir to combine.
+= Flambé with Cognac
+* Sprinkle the warm cognac over the shrimp and carefully ignite.
+* Let the flames burn off while spooning the sauce over the shrimp.
+= Make the Cream Sauce
+* Pour in the heated heavy cream and bring the mixture to a gentle boil.
+* Whisk in the flour to thicken the sauce, stirring continuously.
+= Serve & Enjoy
+* Remove from heat and serve immediately over rice, pasta, or with crusty bread.
+. This Tarragon Shrimp is a luxurious dish perfect for impressing guests or treating yourself to a gourmet meal at home!
+
+@ Norma's Meatballs
+> These tender and flavorful meatballs are baked to perfection and coated in a sweet and tangy sauce. A family favorite, they make a great appetizer or main dish.
+-: For the Meatballs
+- 4 lbs lean ground beef
+- 1 cup fine bread crumbs
+- 1 cup milk
+- 4 eggs
+- Lots of fresh parsley, chopped
+- ⅓ cup onion, finely chopped
+- 2 teaspoons dry mustard
+- 1 ½ teaspoons salt
+-: For the Sauce
+- 1 jar grape jelly
+- 1 jar chili sauce
+- Juice of 1 lemon
+- A splash of sherry
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Meatballs
+* In a large bowl, combine the ground beef, bread crumbs, milk, eggs, parsley, onion, dry mustard, and salt.
+* Mix well until evenly incorporated.
+* Shape the mixture into small meatballs and place them on a baking sheet.
+= Bake
+* Bake the meatballs for 25 minutes or until fully cooked and lightly browned.
+= Prepare the Sauce
+* In a saucepan, mix the grape jelly, chili sauce, lemon juice, and sherry.
+* Heat over medium-low heat, stirring until the sauce is smooth and well combined.
+= Combine and Serve
+* Transfer the baked meatballs into a large pot or slow cooker.
+* Pour the warm sauce over the meatballs and stir gently to coat.
+* Simmer on low heat for a few minutes before serving.
+. Enjoy these as a delicious appetizer or over rice for a hearty meal!
+
+@ Basil Tomato Tart
+> This savory basil tomato tart features juicy tomatoes, fresh basil, and a rich cheese filling in a flaky pie crust. It's perfect as a light lunch, appetizer, or side dish.
+- 1 9-inch pie shell, pre-baked
+- ½ cup shredded mozzarella
+- 4–5 medium tomatoes
+- 10 loosely packed basil leaves
+- 4 cloves garlic
+- ½ cup mayonnaise
+- ¼ cup grated parmesan
+- ⅛ teaspoon ground white pepper
+- ½ teaspoon olive oil
+- Extra shredded mozzarella for the topping
+= Preheat & Prepare Crust
+* Preheat oven to 375°F (190°C).
+* Pre-bake the pie crust according to package or recipe instructions.
+* While still warm, sprinkle ½ cup mozzarella over the bottom and let it melt.
+= Prepare the Tomatoes
+* Slice tomatoes into wedges and drain on paper towels to remove excess moisture.
+* Arrange the tomato slices over the melted cheese in the pie shell.
+= Make the Basil Mixture
+* In a food processor, combine basil, garlic, and ½ teaspoon olive oil until coarsely chopped.
+* Sprinkle this mixture over the tomatoes.
+= Prepare the Cheese Topping
+* In a mixing bowl, combine some extra mozzarella, the mayonnaise, parmesan, and white pepper.
+* Spoon the cheese mixture evenly over the tart.
+= Bake & Serve
+* Bake at 375°F (190°C) for 25–30 minutes, or until golden and bubbly.
+* Let cool slightly before slicing.
+. A perfect blend of fresh summer flavors and creamy cheese goodness!
+
+@ Oysters Bienville
+> A rich and flavorful dish featuring oysters baked with a creamy shrimp and bacon sauce!
+- Fresh oysters on the half shell
+- 4-5 slices bacon (cooked & chopped)
+- ½ cup diced onion
+- Salt & a pinch of cayenne
+- 3 cloves garlic, minced (add late to prevent burning)
+- 30g butter
+- Flour (to make a thick roux)
+- Sliced mushrooms
+- 1 cup chopped raw shrimp
+- White wine (for flavor)
+- 2 egg yolks
+= Prepare the Bacon & Aromatics
+* Cook bacon until crispy, then chop.
+* In the same pan, sauté onions with salt and cayenne.
+* Add garlic towards the end to prevent burning.
+= Make the Roux & Sauce
+* In a separate pan, melt butter, then stir in flour gradually to form a thick roux.
+* Slowly add sliced mushrooms, stirring constantly.
+* Stir in chopped shrimp, followed by a splash of white wine.
+* Simmer, letting the shrimp cook through.
+* Remove from heat and whisk in egg yolks to thicken the sauce.
+= Assemble & Bake
+* Spoon the shrimp & bacon sauce over fresh oysters in their shells.
+* Bake at 350°F (175°C) for 20 minutes, until bubbly and golden.
+. A decadent and elegant seafood dish, perfect for special occasions!
+
+@ Frank's Crab Cakes
+> These crispy, flavorful crab cakes are packed with delicate crab meat and a touch of spice. Pan-fried in butter and olive oil, they make a delicious appetizer or main course.
+-: Per pound of crab meat
+- 1 lb crab meat
+- ½ teaspoon mustard powder
+- ½ teaspoon celery salt
+- Pinch of cayenne pepper
+- ½ cup mayonnaise
+- 1 egg
+- Bread crumbs (for coating)
+- Olive oil & butter (for frying)
+= Prepare the Crab Cake Mixture
+* In a bowl, mix the mustard powder, celery salt, cayenne pepper, mayonnaise, and egg.
+* Add the crab meat and mix gently until well combined.
+= Form & Coat the Crab Cakes
+* Shape the mixture into small patties.
+* Roll each patty in bread crumbs, ensuring an even coating.
+= Fry the Crab Cakes
+* Heat a generous amount of olive oil and butter in a hot skillet over medium heat.
+* Fry the crab cakes for 3–4 minutes per side, or until golden brown and crispy.
+= Serve & Enjoy
+* Serve hot with a squeeze of lemon or a creamy dipping sauce.
+. Crispy on the outside and tender on the inside, perfect for any seafood lover!
+
+# Salads
+@ Roasted Fennel Salad
+> A delicious blend of caramelized fennel, citrus, and crunchy pine nuts, perfect for a refreshing side dish or light meal. The roasting process enhances the natural sweetness of fennel, while the citrus zest and lemon juice provide a bright contrast.
+- 1 fennel bulb
+- Olive oil
+- Salt & pepper
+- 1 orange
+- ½ small red onion
+- 1 handful diced olives
+- 1 handful pine nuts
+- Lemon juice & zest (to taste)
+= Prepare the fennel
+* Trim off any tough outer layers and cut the fennel bulb into ½-inch thick slices. Reserve a handful of the fronds for garnish.
+= Roast the fennel
+* Heat olive oil in a pan and sauté fennel slices on both sides until caramelized.
+* Season with salt and pepper. Set aside.
+= Prepare the other ingredients
+* Slice the red onion into paper-thin slices.
+* Zest the orange and set aside.
+* Remove the orange skin, then dice the fruit into bite-sized pieces.
+= Assemble the salad
+* Arrange the roasted fennel on a platter and top with the orange pieces and red onion.
+* Scatter the diced olives and pine nuts over the top, then sprinkle with the orange zest.
+= Dress the salad
+* Squeeze fresh lemon juice over the salad and drizzle with olive oil to taste.
+= Garnish
+* Sprinkle the reserved fennel fronds over the top and serve immediately.
+. This salad pairs beautifully with grilled fish or roasted chicken.
+
+@ Classic Caesar Salad (La Casa Pepe Style)
+> This homemade Caesar salad captures the bold flavors of a traditional dressing, combined with crisp romaine lettuce, crunchy croutons, and savory Parmesan. Perfect for a light lunch or a flavorful side dish!
+-: Dressing
+- 3 cloves garlic, minced
+- 2 tsp hot mustard (powder)
+- 1 egg yolk
+- ½ lemon (juiced)
+- 2 tbsp vinegar
+- 6 tbsp oil (olive oil recommended)
+-: Salad
+- Romaine lettuce, chopped
+- Croutons
+- Crumbled Parmesan cheese
+- Cooked and crumbled bacon
+- (Optional) Capers or pimentos for extra flavor
+= Prepare the Dressing
+* In a mixing bowl, whisk together the minced garlic, mustard powder, egg yolk, lemon juice, and vinegar.
+* Slowly drizzle in the oil while continuously whisking to emulsify the dressing.
+= Assemble the Salad
+* In a large salad bowl, toss the romaine lettuce with croutons, Parmesan cheese, and crumbled bacon.
+* If using, add capers or pimentos for extra flavor.
+= Combine & Serve
+* Pour the dressing over the salad and toss to coat evenly.
+* Serve immediately for the freshest taste.
+
+@ Greek Salad Dressing
+> Fresh, tangy, and full of Mediterranean flavors. Perfect for drizzling over salads, marinating meats, or even as a dipping sauce for bread.
+- 2 tablespoons lemon juice
+- 1 tablespoon red wine vinegar
+- 1 clove garlic, mashed
+- 1 teaspoon salt
+- ½ teaspoon pepper
+- ½ cup olive oil
+- 1 tablespoon chopped fresh cilantro
+- 1 tablespoon chopped fresh mint
+- 1 tablespoon chopped green onions or chives
+- 1 teaspoon fresh oregano
+= Combine Ingredients
+* In a small bowl or jar, whisk together the lemon juice, red wine vinegar, garlic, salt, and pepper.
+= Add the Olive Oil
+* Slowly drizzle in the olive oil while whisking continuously to help emulsify the dressing.
+= Mix in the Herbs
+* Stir in the chopped cilantro, mint, green onions (or chives), and oregano.
+= Serve or Store
+* Use immediately or store in an airtight container in the refrigerator for up to a week.
+* Shake or stir before using, as separation is natural.
+
+@ Fennel, Apple & Prosciutto Salad
+> Combines the crispness of fennel and apples with the savory richness of prosciutto and Asiago cheese. Tossed with a tangy vinaigrette, it's a perfect appetizer or side dish.
+-: For the Salad
+- 4 cups thinly sliced fennel bulb
+- 2 cups thinly sliced green apple
+- 1 tablespoon lemon juice
+- ½ cup grated Asiago cheese
+- 8 slices prosciutto (torn into pieces)
+- ½ cup chopped toasted pecans
+-: For the Vinaigrette
+- 2 tablespoons light mayonnaise
+- 2 tablespoons apple cider vinegar
+- 2 tablespoons chopped chives
+- ½ teaspoon sugar
+- ¼ cup olive oil
+- Salt & pepper (to taste)
+= Prepare the Salad Base
+* In a large bowl, toss the sliced fennel and apple with lemon juice to prevent browning.
+* Add the grated Asiago cheese and gently mix.
+= Make the Vinaigrette
+* In a small bowl, whisk together mayonnaise, apple cider vinegar, chopped chives, sugar, olive oil, salt, and pepper until well combined.
+= Assemble the Salad
+* Divide the fennel-apple mixture into individual serving bowls.
+* Drizzle the vinaigrette evenly over the salad.
+* Top with torn prosciutto pieces and toasted pecans.
+= Serve & Enjoy
+* Serve immediately for a fresh, crisp salad with a perfect balance of flavors.
+
+@ Black Bean & Corn Salad
+> A fresh, vibrant dish packed with protein and crunch. Perfect as a side dish, a topping for tacos, or a light lunch.
+-: Salad
+- 1 can black beans, rinsed
+- 1 red pepper, chopped
+- 2 cups corn kernels
+- ½ cup chopped celery
+- ¼ cup green onions, chopped
+- 2 tablespoons chopped cilantro or parsley
+-: Dressing
+- 3 tablespoons white or cider vinegar
+- 1 ½ tablespoons Dijon mustard
+- ¼ teaspoon salt
+- ¼ teaspoon black pepper
+- 1 teaspoon each of water & olive oil
+= Prepare the Salad
+* In a large bowl, combine black beans, red pepper, corn, celery, green onions, and cilantro or parsley.
+= Make the Dressing
+* In a small bowl, whisk together vinegar, Dijon mustard, salt, pepper, water, and olive oil.
+= Mix & Chill
+* Pour the dressing over the salad ingredients and toss well to coat.
+* Let sit in the refrigerator for at least 30 minutes to enhance the flavors.
+= Serve
+* Enjoy chilled as a salad, in tacos, or as a side to grilled meats.
+
+@ Mediterranean Couscous Salad
+> A fresh and flavorful dish, packed with vibrant herbs, feta cheese, and juicy tomatoes.
+-: Base
+- 1 ¾ cups water
+- ½ teaspoon salt
+- 1 ¼ cups couscous
+-: Vegetables & Add-ins
+- ⅓ cup chopped green onions
+- 2 tomatoes, dried & chopped
+- 1 cup feta cheese, cubed
+- ½ cup black olives, pitted & quartered (or finely chopped)
+- 2 tablespoons fresh mint or oregano, chopped
+- ⅓ cup olive oil
+- ¼ cup lemon juice
+= Prepare the Couscous
+* Bring water and salt to a boil in a saucepan.
+* Stir in couscous, cover, remove from heat, and let stand for 4 minutes.
+* Fluff with a fork to separate the grains.
+= Assemble the Salad
+* Add green onions, dried tomatoes, feta, black olives, and fresh herbs to the couscous.
+* Drizzle with olive oil and lemon juice.
+= Mix & Serve
+* Toss well to combine all ingredients.
+* Serve chilled or at room temperature.
+. Pairs perfectly with grilled meats, seafood, or as a light vegetarian meal!
+
+@ Fennel Salad
+> Crisp, refreshing, and perfect as a light side dish!
+- 1 fennel bulb
+- Juice & zest from ½ lemon
+- 1 spoonful of honey
+- A few splashes of olive oil
+- A sprinkle of salt & pepper
+= Prepare the Fennel
+* Remove stalks from the fennel bulb.
+* Cut the bulb in half and trim out the woody core.
+* Slice the remaining bulb as thinly as possible (or use a box grater for extra fine shavings).
+= Make the Dressing
+* In a bowl, whisk together the lemon juice & zest, honey, olive oil, salt, and pepper.
+= Assemble the Salad
+* Toss the sliced fennel in the dressing until well coated.
+* Optionally, garnish with mint, chives, or basil for extra flavor.
+. Pairs well with seafood, grilled meats, or as a crisp contrast to rich dishes!
+
+@ Tabbouleh
+> A refreshing Mediterranean salad made with bulgur, fresh herbs, and a zesty dressing. Perfect as a light meal, side dish, or a complement to grilled meats.
+- 1 ½ cups bulgur wheat
+- 3 red tomatoes, finely chopped
+- 1 ½ cups fresh parsley, finely chopped
+- ½ cup green onions, chopped
+- ¼ cup olive oil
+- 2 tablespoons lemon juice (or 1 tablespoon lemon juice + 1 tablespoon red wine vinegar)
+- Salt & pepper (to taste)
+= Prepare the Bulgur
+* Place bulgur in a bowl and cover with boiling water.
+* Let it sit for 30 minutes, then drain and squeeze out excess moisture.
+= Chop & Combine
+* In a large bowl, combine the tomatoes, parsley, and green onions with the drained bulgur.
+= Make the Dressing
+* In a small bowl, whisk together olive oil, lemon juice (or vinegar), salt, and pepper.
+= Mix & Chill
+* Pour the dressing over the bulgur mixture and toss well.
+* Refrigerate for at least 30 minutes to let the flavors blend.
+= Serve
+* Enjoy chilled as a salad or side dish.
+
+@ Grilled Avocado & Seafood Salsa
+> Combines creamy avocados, smoky grilled seafood, and zesty citrus for a delicious topping or dip.
+- 2 avocados, diced
+- 2 grilled seafood skewers (shrimp, fish, or scallops), chopped
+- ½ red onion, finely diced
+- ¼ cup fresh cilantro, chopped
+- 1 jalapeño, finely diced
+- Juice of 1 lime
+- 1 tablespoon olive oil
+- Salt & pepper (to taste)
+= Grill the Seafood
+* Grill seafood skewers until cooked through.
+* Remove from skewers and chop into bite-sized pieces.
+= Prepare the Salsa
+* In a large bowl, combine diced avocados, red onion, cilantro, and jalapeño.
+* Add the grilled seafood.
+= Season & Toss
+* Drizzle with lime juice and olive oil.
+* Season with salt and pepper to taste.
+* Gently toss to combine without mashing the avocado.
+= Serve & Enjoy
+* Serve as a dip with tortilla chips or as a topping for tacos, grilled meats, or salads.
+
+# Soups & Chowders
+@ Seafood Chowder (Crockpot Version)
+^ 4
+> This creamy and hearty seafood chowder is perfect for a cozy meal. Packed with tender fish, potatoes, and aromatic vegetables, this crockpot version makes it easy to prepare while letting the flavors meld beautifully over time.
+- 1 ½ lbs fresh or frozen cod (or other white fish fillets)
+- 3 slices bacon, diced
+- 1 onion, chopped
+- ¾ cup chopped green onions (with tops)
+- 2-3 potatoes, cubed
+- 1 ½ cups water
+- 1 tsp salt
+- ¼ tsp pepper
+- 1 (13-oz) can evaporated milk
+= Prepare the Ingredients
+* Cut the fish fillets into bite-sized pieces and set aside.
+* In a skillet, cook the diced bacon until golden and crispy.
+* Add the chopped onions to the skillet and sauté until soft.
+= Assemble in the Crockpot
+* Transfer the cooked bacon and onions to the crockpot.
+* Add the cubed potatoes, chopped green onions, water, salt, and pepper.
+= Cook
+* Cover and cook on Low for 6-8 hours or High for 2-4 hours, until the potatoes are tender.
+= Add the Fish & Milk
+* During the last hour of cooking, add the fish pieces and stir in the evaporated milk. Cook until the fish flakes easily and the chowder is rich and creamy.
+. Serve hot with crusty bread or oyster crackers. Garnish with fresh parsley or additional green onions, or add a dash of hot sauce or Old Bay seasoning.
+
+@ Curried Baby Pea Soup
+> A creamy, flavorful dish infused with the warmth of curry and ginger. Perfect as a comforting appetizer or a light meal.
+- 2 tablespoons unsalted butter
+- 1 leek (white part only), sliced
+- 1 clove garlic, minced
+- ½ teaspoon grated fresh ginger root
+- 1 ½ teaspoons curry powder
+- 1 cup frozen baby sweet peas
+- 1 cup chicken stock
+- ¼ cup sliced almonds
+- ⅓ cup whipping cream
+- Salt & freshly ground pepper (to taste)
+= Sauté Aromatics
+* Melt butter in a medium saucepan over low heat.
+* Add leek, garlic, and ginger, cooking until softened.
+= Add Curry & Peas
+* Stir in the curry powder and cook for 1 minute until fragrant.
+* Add the baby peas and chicken stock, bringing to a simmer.
+= Blend the Soup
+* Transfer the mixture to a blender or food processor and purée until smooth.
+* Return the soup to the pan and stir in the whipping cream.
+= Season & Serve
+* Heat through without boiling.
+* Season with salt and pepper to taste.
+* Garnish with toasted almonds or a swirl of cream before serving.
+
+# Main Courses
+@ Dijon Chicken
+> A quick weeknight favourite: golden pan-fried chicken breasts finished in a creamy sauce of Dijon mustard, tarragon and a touch of honey. Serve it with rice or mashed potatoes to catch every bit of the sauce.
+- Boneless, skinless chicken breasts
+- Flour (for dredging)
+- Salt & pepper
+- 2 tbsp butter
+- 1 cup chicken bouillon
+- 2 tbsp Dijon mustard
+- 1 tsp tarragon
+- ¾ tsp honey
+- ¼ cup sour cream
+* Dredge chicken breasts in flour, salt, and pepper.
+* Brown the chicken in 2 tbsp butter, cooking both sides until golden brown. Remove and set aside.
+* In the same pan, combine bouillon, Dijon mustard, tarragon, and honey.
+* Add the chicken back to the pan and cook in the sauce until done.
+* Stir in sour cream last, mixing well before serving.
+
+@ Hunter's Chicken
+> A rich and hearty dish featuring tender chicken simmered in a flavorful sauce made with mushrooms, white wine, beef stock, and herbs. Pairs well with rice, mashed potatoes, or crusty bread to soak up the sauce.
+- 1 whole chicken, cut into pieces
+- 2 tbsp butter
+- ½ cup chopped onion
+- 1 pkg mushrooms
+- ½ cup white wine
+- ¼ cup beef stock
+- 2 tbsp tomato paste (or ketchup)
+- 1 tbsp cornstarch
+- 3 tbsp cold water
+- 1 tsp parsley
+- 1 tsp tarragon
+- Salt & pepper, to taste
+= Cook the Chicken
+* In a large skillet, melt the butter over medium heat.
+* Add the chicken pieces and cook for 18-20 minutes until browned on all sides.
+* Remove the chicken and set it aside.
+= Prepare the Sauce
+* In the same skillet, add the chopped onions and mushrooms.
+* Season with salt and pepper.
+* Cook for 4 minutes until softened.
+= Deglaze and Simmer
+* Add the white wine and let it cook for 3 minutes, allowing the alcohol to evaporate.
+* Stir in the beef stock and tomato paste.
+= Thicken the Sauce
+* In a small bowl, mix cornstarch with cold water until smooth.
+* Slowly add the cornstarch mixture to the skillet, stirring continuously.
+= Finish Cooking
+* Return the chicken to the pan and add the parsley and tarragon.
+* Let the dish simmer until the sauce has thickened and the chicken is fully cooked.
+= Serve
+* Enjoy with rice, mashed potatoes, or a warm baguette.
+
+@ Mushroom Braised Chicken
+> Tender chicken simmered in a rich white wine and mushroom sauce, finished with a creamy texture. Pairs well with rice, pasta, or crusty bread.
+- Chicken pieces (your choice)
+- 1 onion, chopped
+- 1 cup mushrooms, sliced
+- ½ cup white wine
+- ½ tsp tarragon
+- 2 tbsp flour
+- ⅓ cup whipping cream
+= Brown the Chicken
+* In a large pan, brown the chicken on both sides.
+= Simmer
+* Add chopped onions and mushrooms to the pan.
+* Pour in ½ cup white wine and sprinkle with ½ tsp tarragon.
+* Cover and simmer for 15-20 minutes.
+= Thicken the Sauce
+* Remove the lid from the pan.
+* Mix 2 tbsp flour into ⅓ cup whipping cream until smooth.
+* Stir the mixture into the sauce.
+= Final Simmer
+* Let the sauce simmer uncovered until it thickens to a rich consistency.
+. Enjoy over rice, mashed potatoes, or buttered egg noodles. Garnish with fresh parsley.
+
+@ Classic Meatloaf
+> Hearty, flavorful, and perfect for a comforting homemade meal. With a blend of minced beef, fresh vegetables, and a tangy hint of horseradish, it's sure to become a family favorite.
+- 2 lbs minced beef
+- ¼ cup chopped onion
+- ¼ cup chopped green pepper
+- 2 cups cubed bread
+- 2 eggs, beaten
+- ¼ cup ketchup
+- 2 tbsp horseradish
+- ¼ cup milk
+- Small tsp dry mustard
+- Salt & pepper to taste
+= Preheat Oven
+* Set your oven to 400°F (200°C).
+= Mix Ingredients
+* In a large bowl, combine the minced beef, chopped onion, green pepper, cubed bread, and beaten eggs.
+* Add ketchup, horseradish, milk, dry mustard, salt, and pepper.
+* Mix until all ingredients are well incorporated.
+= Shape & Bake
+* Shape the mixture into a loaf and place it in a greased baking dish or loaf pan.
+* Bake for 45 minutes or until the meatloaf is cooked through and golden brown.
+= Serve & Enjoy
+* Let the meatloaf rest for a few minutes before slicing. Serve with mashed potatoes or your favorite side dishes.
+
+@ Tuna Noodle Casserole (Crockpot Version)
+> A classic comfort food, made even easier with a crockpot! Tender noodles, tuna, and vegetables in a rich sauce, topped with crunchy almonds.
+- 2 cans tuna, drained
+- 2 cans cream of mushroom soup
+- 1 cup milk
+- 2 tbsp dried parsley
+- 1 (10 oz) package frozen mixed vegetables, thawed
+- 1 (10 oz) package noodles, cooked and drained
+- ½ cup toasted almonds
+= Prepare the Mixture
+* In a large bowl, combine the tuna, soup, milk, parsley, and vegetables.
+* Stir well until fully mixed.
+= Add Noodles
+* Gently fold in the cooked noodles until evenly coated with the sauce.
+= Cook in the Crockpot
+* Grease the crockpot lightly and pour in the mixture.
+* Sprinkle toasted almonds on top.
+= Set the Cooking Time
+* Cook on Low for 7-9 hours or High for 3-4 hours until heated through.
+. Serve warm with a fresh salad or garlic bread. Add a sprinkle of cheese or breadcrumbs on top before serving for extra flavor.
+
+@ Swiss Steak (Crockpot Version)
+> Tender beef simmered in a rich tomato sauce with vegetables. The crockpot makes it incredibly easy, letting the flavors develop over time.
+- 1 ½ lbs round steak (¾-inch thick)
+- 2 tbsp flour
+- ½ tsp salt
+- ¼ tsp pepper
+- 1 medium onion, sliced
+- 1 carrot, chopped
+- 1 celery stalk, chopped
+- 1 (15-oz) can tomato sauce
+= Prepare the Steak
+* Cut the steak into serving-sized pieces.
+* In a small bowl, mix the flour, salt, and pepper.
+* Dredge the steak pieces in the seasoned flour mixture, ensuring even coating.
+= Layer in the Crockpot
+* Place the sliced onions at the bottom of the crockpot.
+* Add the flour-coated steak pieces on top.
+* Scatter the chopped carrots and celery over the meat.
+= Add the Sauce & Cook
+* Pour the tomato sauce over the layered ingredients.
+* Cover and cook on Low for 8-10 hours or High for 3-5 hours, until the meat is fork-tender.
+. Serve hot over mashed potatoes, rice, or buttered egg noodles, with steamed green beans or a fresh salad.
+
+@ Oriental Beef & Noodles
+^ 6
+> This slow-cooked Asian-inspired beef dish is packed with tender sirloin, colorful vegetables, and a rich, flavorful sauce. Served over vermicelli noodles, it's a hearty and satisfying meal.
+- 1½ lb lean boneless sirloin, cut into strips
+- 1 red bell pepper, chopped
+- 3 carrots, chopped
+- 2 tbsp rice vinegar (use white if preferred)
+- ¼ cup soy sauce
+- ¼ cup sherry
+- 1 tbsp oyster sauce
+- 1 tsp sugar
+- 2 tbsp chopped peanuts
+- 12 oz cooked vermicelli noodles
+= Prepare the Slow Cooker
+* Add all ingredients except the noodles into the crockpot.
+= Cook
+* Cook on High for 4-5 hours or Low for 8-10 hours, until the beef is tender and the flavors are well combined.
+= Serve
+* Cook vermicelli noodles separately according to package instructions.
+* Serve the beef mixture over the noodles and enjoy!
+. Garnish with extra chopped peanuts or green onions for added texture and flavor.
+
+@ Italian Pork Chops (Crockpot Recipe)
+^ 4-6
+> Slow-cooked pork chops in a hearty tomato sauce with mushrooms, garlic, and herbs. Dry sherry and lemon juice add depth and brightness.
+- 4-6 pork chops
+- 1 tbsp oil
+- ½ lb sliced mushrooms
+- 1 onion, chopped
+- 1 clove garlic, chopped
+- 2 (8 oz) cans tomato sauce
+- ¼ cup dry sherry
+- 1 tbsp lemon juice
+- ½ tsp salt
+- 1 tbsp parsley flakes
+- ½ tsp oregano
+- ½ tsp basil
+- ½ tsp pepper
+- 2 green peppers, cut into rings
+= Brown the Chops
+* In a skillet, heat 1 tbsp oil and brown the pork chops on both sides. Remove from heat.
+= Prepare the Ingredients
+* Chop the mushrooms, onions, garlic, and green peppers.
+= Combine in Crockpot
+* Add mushrooms, onions, garlic, and green peppers to the crockpot.
+* Pour in tomato sauce, sherry, lemon juice, and seasonings (salt, parsley, oregano, basil, and pepper).
+* Stir well to combine.
+= Cook
+* Place browned pork chops into the sauce mixture in the crockpot.
+* Cover and cook on Low for 7-9 hours or High for 4-5 hours until tender.
+. Serve over pasta, mashed potatoes, or with crusty bread to soak up the rich sauce.
+
+@ Pork Cutlets in Mustard Sauce
+^ 4
+> Tender pork cutlets seared and simmered in a rich mustard sauce with sautéed mushrooms and apples. Savory and slightly sweet, comforting yet elegant.
+- 2 tbsp oil
+- 4 pork cutlets (chops)
+- 1 pkg mushrooms, sliced
+- 1 apple, peeled & sliced thick
+- ½ cup chicken stock
+- 1 tbsp cornstarch
+- 2 tbsp cold water
+- 1 tbsp Dijon mustard
+= Sear the Pork
+* Heat 1 tbsp oil in a pan over medium-high heat.
+* Cook pork cutlets for 3-4 minutes per side until browned.
+* Remove from pan and set aside.
+= Sauté Mushrooms & Apples
+* Add the remaining 1 tbsp oil (and a bit of butter if desired).
+* Sauté mushrooms and apples for about 3 minutes, stirring occasionally.
+= Prepare the Sauce
+* Stir in chicken stock and bring to a gentle boil.
+* In a small bowl, mix cornstarch and cold water to create a slurry.
+* Add to the pan, stirring continuously.
+= Simmer & Finish
+* Stir in Dijon mustard and mix well.
+* Return pork cutlets to the pan.
+* Cook on low heat until the sauce thickens and the pork is cooked through.
+. Serve with mashed potatoes, rice, or buttered noodles for a complete meal.
+
+@ Pot-Roasted Pork in White Wine with Fennel and Rosemary
+- 1 3½ lb loin pork roast
+- 2–3 tbsp fennel seeds
+- Salt and pepper
+- 2–3 tbsp butter or olive oil
+- 8 cloves garlic (skin left on)
+- 1 handful fresh rosemary (½–1 tsp dried)
+- 4 bay leaves
+- 1 fennel bulb, sliced
+- ½ bottle Chardonnay (or other dry wine)
+* Preheat oven to 400°F.
+* Season roast with salt, pepper, and fennel seeds.
+* Heat butter or olive oil in a pan and brown the pork on all sides.
+* Add garlic, rosemary, bay leaves, fennel slices, and wine to the pan.
+* Cover the roast with wet waxed paper.
+* Bake for 1½ hours.
+* If the roast has the bone, it will take longer.
+* After cooking, remove the roast and let it rest.
+* For the finishing sauce, remove the garlic cloves, squish them open, and squeeze out the juice from the bottom of the pan.
+
+@ Penne Abigail
+^ 4-6
+> A hearty pasta dish that combines ground beef, zucchini, kidney beans, and a touch of spice. Basil, chili powder, and hot sauce bring warmth and depth, while mozzarella gives it a creamy finish.
+- 2 tbsp olive oil
+- 1 onion, chopped
+- ½ hot green pepper, seeded and chopped
+- 1 small zucchini, diced with skin
+- 1 lb ground beef
+- 1 (25 oz) tin tomatoes, chopped and drained
+- 1 tbsp chopped parsley
+- ½ tsp chili powder
+- 1 tsp basil (more if fresh)
+- ½ (large can) red kidney beans
+- 4 cups cooked penne pasta
+- 1 cup grated mozzarella cheese
+- Salt, pepper, and hot sauce to taste
+= Sauté Vegetables
+* Heat olive oil in a large pan over medium heat.
+* Add onion, hot pepper, and zucchini. Cook for 7-8 minutes, stirring occasionally.
+= Cook Meat
+* Add ground beef, breaking it up with a spoon.
+* Cook for 4-5 minutes until browned.
+= Season & Simmer
+* Season with salt, pepper, and hot sauce to taste.
+* Stir in tomatoes, parsley, and kidney beans.
+* Add basil and chili powder, mixing well.
+* Reduce heat and let simmer for 15 minutes.
+= Add Pasta & Cheese
+* Stir in cooked penne and mozzarella cheese.
+* Cook for another 4 minutes, stirring occasionally, until cheese is melted and pasta is well combined.
+= Serve & Enjoy!
+* Serve warm, garnished with extra parsley or basil if desired.
+. Perfect for a family dinner or meal prep, as the flavors continue to develop over time.
+
+@ Veal Marsala
+> A classic Italian dish, rich, savory, and elegant. Thin veal cutlets are coated in Parmesan, seared until golden, and simmered in a Marsala wine sauce with mushrooms and garlic.
+- 1 lb thin veal cutlets
+- ⅓ cup grated Parmesan cheese
+- ¼ cup butter or margarine
+- 1 clove garlic, minced
+- 4-5 mushrooms, thinly sliced
+- Dash of cayenne pepper
+- ¼ bouillon cube
+- ¼ cup hot water
+- ¼ cup Marsala wine
+* Flatten the veal cutlets and cut them into 2-inch pieces. Coat each piece well with grated Parmesan.
+* In a skillet, sauté the garlic in butter until fragrant. Add the coated veal pieces and cook until golden brown, adding extra butter if needed. Remove the veal from the pan and discard the garlic.
+* In the same pan, sauté mushrooms for about 5 minutes, then remove and set aside.
+* Add butter to the pan, stir in cayenne, bouillon cube, and hot water, mixing until the bouillon dissolves.
+* Return the veal and mushrooms to the pan and cook for about 1 minute over high heat.
+* Add Marsala wine, stir, and serve immediately.
+
+@ Pasta Sauce with Pork Hocks
+> An inexpensive yet delicious pasta sauce. Slow simmering the pork hocks gives it deep flavor, perfect for a cozy family dinner.
+- 2 meaty pork hocks (skin removed)
+- 4 cloves garlic
+- ½ large carrot, chopped
+- 1 stalk celery, chopped
+- 1 onion, chopped
+- 1 can diced tomatoes
+- 1 bay leaf
+- ¼ tsp thyme
+- Salt and pepper, to taste
+* In a large pot, brown the pork hocks over medium heat. Remove and set aside.
+* In the same pot, sauté garlic, carrot, celery, and onion until softened.
+* Return pork hocks to the pot and add diced tomatoes, bay leaf, thyme, salt, and pepper.
+* Cover and simmer gently for 1½ hours.
+* Remove pork hocks from the pot, remove meat from bones, and chop finely.
+* Return chopped pork to the sauce, simmering for an additional 15 minutes.
+* Serve over your favorite noodles and enjoy!
+
+@ Broccoli Casserole
+> A delicious, creamy side dish for any meal. Easy to prepare, and it can be made ahead of time!
+- 2 eggs
+- ¾ cup mayonnaise
+- ¾ cup shredded cheese
+- ¼ cup small onion, chopped
+- 1 can mushroom soup
+- Partially cooked broccoli
+- Bread crumbs (for topping)
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Mixture
+* In a mixing bowl, whisk the eggs, then add the mayonnaise, shredded cheese, chopped onion, and mushroom soup. Mix well.
+= Combine with Broccoli
+* Pour the mixture over the partially cooked broccoli in a baking dish.
+= Add the Topping
+* Sprinkle bread crumbs evenly over the top for a crispy finish.
+= Bake
+* Place in the oven and bake for about 30 minutes or until golden and bubbly.
+= Serve & Enjoy
+* Let it cool slightly before serving.
+. Can be made ahead of time for convenience!
+
+@ Marinated Balsamic Grilled Vegetables
+> Grilled vegetables with a tangy balsamic vinaigrette and creamy feta cheese. Perfect as a side dish or light main course!
+-: For the Vegetables
+- Asparagus
+- Onion
+- Zucchini
+- Mushrooms
+- Peppers
+- Olive oil (for tossing)
+- Salt & pepper (to taste)
+-: For the Vinaigrette
+- 1 small tub of feta cheese, cubed
+- 2 tablespoons balsamic vinegar
+- 2 tablespoons olive oil
+- Fresh basil, sliced
+- Salt & pepper (to taste)
+= Prepare the Vegetables
+* Cut the vegetables into bite-sized pieces.
+* Toss them with a drizzle of olive oil, salt, and pepper.
+= Grill the Vegetables
+* Place the vegetables in a grill basket.
+* Grill over medium heat, tossing often, until tender and slightly charred.
+= Make the Vinaigrette
+* In a bowl, whisk together balsamic vinegar, olive oil, fresh basil, salt, and pepper.
+= Assemble & Serve
+* Toss the grilled vegetables with the feta cheese and vinaigrette.
+* Serve warm or at room temperature.
+
+@ Olive & Chicken Curry Crêpes
+^ 6–8
+> Savory crêpes filled with a creamy chicken and olive curry, then baked with a sprinkle of parmesan. A perfect dish for a special brunch or dinner!
+- ¼ cup butter
+- ¼ cup diced celery
+- 1 cup diced onion
+- 2 tablespoons flour
+- 1 teaspoon salt
+- ¾ teaspoon curry powder
+- 1 cup milk
+- 2 cubes chicken bouillon
+- ½ cup warm water
+- ¾ cup sliced olives
+- 2 ½ cups cooked chicken, shredded or diced
+- ¼ cup parmesan cheese
+- Basic Crêpes (see Desserts)
+= Prepare the Filling
+* Melt butter in a skillet over medium heat.
+* Add diced celery and onion, cooking until softened.
+* Stir in flour, salt, and curry powder, blending well.
+= Make the Sauce
+* Dissolve the bouillon cubes in warm water.
+* Gradually add the milk and bouillon mixture to the skillet, stirring constantly until the sauce thickens.
+= Add Chicken & Olives
+* Stir in the sliced olives and cooked chicken, blending everything together.
+= Assemble the Crêpes
+* Fill each crêpe with the chicken curry mixture and roll them up.
+* Place the filled crêpes in a lightly greased baking dish.
+= Bake
+* Sprinkle the crêpes with parmesan cheese.
+* Bake at 400°F (200°C) for 12 minutes, until heated through and slightly golden on top.
+
+@ Seafood Casserole (Cy's)
+> A rich and creamy seafood casserole filled with lobster, crab, shrimp and scallops in a smooth Velveeta cheese sauce. Perfect for special occasions or cozy dinners.
+-: For the Sautéed Vegetables
+- 3 cups chopped celery
+- 2 cups chopped onion
+- 3 tbsp butter (for sautéing)
+-: For the Cheese Sauce
+- ¾ cup flour
+- ½ cup butter
+- 5 cups milk
+- 1 lb Velveeta cheese
+- 1 tsp salt
+- ¼ tsp pepper
+-: For the Seafood
+- 10 oz lobster meat
+- ½ lb crab meat
+- ¾ lb cooked shrimp
+- 1 lb cooked scallops
+= Sauté the Vegetables
+* In a large pan, melt butter over medium heat.
+* Add chopped celery and onion, sautéing until soft and translucent.
+= Prepare the Cheese Sauce
+* In a separate saucepan, melt ½ cup butter.
+* Whisk in flour and cook for 1–2 minutes until slightly golden.
+* Gradually add milk, whisking constantly to create a smooth sauce.
+* Stir in Velveeta cheese and continue stirring until melted.
+* Season with the salt and pepper.
+= Assemble the Casserole
+* Preheat oven to 375°F (190°C).
+* Combine the sautéed vegetables with the cheese sauce, then gently fold in the lobster, crab, shrimp and scallops.
+* Pour into a greased casserole dish, or divide among individual serving dishes.
+= Bake & Serve
+* Bake uncovered for 30–35 minutes (about 20 minutes for individual dishes) until bubbly and lightly browned on top.
+* Let cool slightly before serving.
+
+@ Pakistani Chicken with Potato and Spinach
+-: For the Chicken
+- 2 large onions, thinly sliced
+- 2–3 lbs chicken (skinned, bone-in or boneless)
+- 2 tbsp oil
+- 1 tsp cayenne pepper
+- 1 tsp chili powder
+- 1 bay leaf
+- 2–3 tomatoes, chopped
+- 1 cup chickpeas or lentils (optional)
+- 2 stalks celery, chopped
+- 1 tbsp turmeric
+- Salt and pepper to taste
+-: For the Potatoes
+- 2 large potatoes, pre-cooked and cubed
+- 1 cup fresh spinach, chopped
+- 1 tsp turmeric
+- 1 tbsp oil for sautéing
+-: For the Chapatis
+- 1 cup whole wheat flour
+- 1 cup white flour
+- ½ cup water (adjust as needed)
+- 1 tbsp oil
+- ½ tsp salt
+= Prepare the Chicken
+* Heat oil in a pan and sauté the onions until golden brown.
+* Add the chicken pieces and brown them on all sides.
+* Stir in cayenne, chili powder, and bay leaf.
+* Add chopped tomatoes and simmer until they soften.
+* Add chickpeas/lentils, celery, turmeric, and enough water to cover the ingredients.
+* Simmer for 30-40 minutes until chicken is fully cooked and tender.
+= Prepare the Potatoes
+* In a separate pan, heat oil over medium heat.
+* Add pre-cooked potato chunks and sauté.
+* Stir in chopped spinach and turmeric.
+* Cook for a few minutes until the spinach is wilted and potatoes are well-coated.
+= Make the Chapatis
+* In a bowl, mix both flours, salt, and oil.
+* Gradually add water and knead into a soft dough.
+* Let rest for 15 minutes, then divide into small balls.
+* Roll out each ball into thin rounds.
+* Cook on a dry, hot pan for about 1-2 minutes per side until slightly charred and puffed.
+. Serve the chicken with the sautéed potatoes and spinach on the side, with fresh homemade chapatis.
+
+@ Mushroom Braised Chicken (with Cream & Noodles)
+> Rich, flavorful, and tender, cooked in a creamy white wine sauce and served over buttered noodles. A comforting and elegant dish for any occasion.
+- 3 lbs chicken (cut into quarters)
+- 3 tablespoons butter
+- Salt & pepper (to taste)
+- 1 onion, chopped
+- ½ lb mushrooms, sliced
+- ¼–½ cup white wine
+- ¼ teaspoon tarragon
+- 1 tablespoon flour
+- 1 cup cream
+- Buttered noodles (for serving)
+= Brown the Chicken
+* Heat butter in a large skillet over medium heat.
+* Season chicken with salt and pepper, then brown it on all sides.
+= Add Vegetables & Wine
+* Once the chicken is browned, add the mushrooms, onions, white wine, and tarragon.
+= Braise the Chicken
+* Cover and simmer for 45 minutes, or until the chicken is fully cooked and tender.
+= Make the Sauce
+* Remove the chicken from the pan and set aside.
+* Stir in the flour, scraping up any browned bits from the bottom of the pan.
+* Gradually add the cream, whisking until smooth.
+* Let the sauce simmer until thickened.
+= Serve
+* Return the chicken to the sauce, letting it heat through.
+* Serve over buttered noodles and garnish with parsley if desired.
+
+@ Crêpes with Spinach, Bacon & Mushroom Filling
+^ 4
+> Savory crêpes filled with a creamy spinach, bacon, and mushroom mixture, then topped with a warm egg sauce.
+- 6 slices bacon
+- 1 tablespoon unsalted butter
+- ½ lb mushrooms, sliced
+- 3 tablespoons butter
+- ¼ cup flour
+- 1 cup milk
+- 1 package chopped spinach
+- 1 tablespoon parsley
+- 2 tablespoons parmesan cheese
+- Salt & pepper (to taste)
+- Basic Crêpes (see Desserts)
+= Cook the Bacon
+* Cook bacon in a skillet until crispy, then crumble and set aside.
+= Sauté the Mushrooms
+* Add 1 tablespoon butter to the bacon drippings and cook mushrooms until tender.
+= Make the Sauce
+* In a saucepan, melt 3 tablespoons butter over medium heat.
+* Whisk in flour and cook for 1 minute.
+* Gradually add milk, whisking constantly until smooth and thickened.
+= Combine the Filling
+* Stir in the cooked bacon, mushrooms, spinach, parsley, parmesan cheese, salt, and pepper.
+* Simmer for 1 minute to combine flavors.
+= Assemble the Crêpes
+* Fill each crêpe with the spinach-bacon-mushroom mixture and roll up.
+= Warm & Serve
+* Top with a warm egg-based sauce if desired and heat in the oven before serving.
+
+@ Scallop, Lobster & Mushroom Crêpes
+^ 30 crêpes
+> Luxurious seafood crêpes filled with a creamy mixture of scallops, lobster, mushrooms, and Swiss cheese. An elegant dish for special occasions.
+-: For the Filling
+- 2 lbs scallops (cooked & chopped)
+- Meat from 10 lobsters (cooked & chopped)
+- 8 oz fresh spinach (cooked, drained & chopped)
+- 1 lb mushrooms, chopped
+- ¾ cup butter
+- 4 shallots, finely chopped
+- ⅔ cup flour
+- 4 cups milk
+- 2 cups heavy cream
+- 3–4 cups grated Swiss, muenster, or gruyère cheese
+- 1 cup grated parmesan cheese
+- ½ teaspoon cayenne pepper
+- ½ teaspoon nutmeg
+- Salt & pepper (to taste)
+-: For Assembly
+- 30 crêpes
+= Prepare the Seafood & Vegetables
+* Cook and chop the scallops and lobster meat, then set aside.
+* Cook the spinach, drain excess liquid, and chop finely.
+* Sauté the mushrooms in 2 tablespoons of butter until soft.
+= Make the Sauce
+* In a large saucepan, melt ¾ cup butter over medium heat.
+* Add the shallots and cook until fragrant.
+* Stir in the flour, cooking for 1–2 minutes.
+* Gradually whisk in the milk and heavy cream, stirring constantly until thickened.
+* Add the grated Swiss cheese, cayenne, nutmeg, salt, and pepper.
+= Combine the Filling
+* Stir the cooked scallops, lobster, spinach, and mushrooms into the sauce.
+* Mix well and let simmer for a few minutes to blend the flavors.
+= Assemble the Crêpes
+* Spoon the seafood filling into each crêpe and roll them up.
+* Place the filled crêpes in a greased baking dish.
+* Sprinkle with parmesan cheese.
+= Bake & Serve
+* Bake at 375°F (190°C) for 15–20 minutes until golden and bubbly.
+* Serve hot and enjoy this decadent seafood dish!
+
+# Bread & Baking
+@ Plum Loaf
+> A rich, spiced bread with a hint of cinnamon and nutmeg. Soft, slightly sweet, and packed with raisins, perfect for breakfast or as a cozy treat with tea.
+- ½ – ¾ cup shortening
+- 1 cup sugar
+- 1 egg
+- 1 tablespoon yeast dissolved in ⅓ cup warm water + 1 teaspoon sugar
+- 4 cups boiling water
+- ¾ cup raisins
+- ½ teaspoon nutmeg
+- 1 teaspoon vanilla
+- ½ to 1 teaspoon cinnamon
+- 1 tablespoon salt
+- 12–14 cups flour (enough to make a soft dough, just stiff enough to handle)
+= Prepare the Base
+* Cream together the shortening and sugar in a large mixing bowl.
+* Add the egg and mix well.
+= Prepare the Yeast Mixture
+* In a small bowl, dissolve the yeast in warm water with 1 teaspoon of sugar. Let sit until frothy (about 5–10 minutes).
+= Add Boiling Water & Raisins
+* Pour the boiling water into the shortening-sugar mixture and stir.
+* Add the raisins while the mixture is still warm, allowing them to plump up.
+* Let the mixture cool to lukewarm.
+= Incorporate the Yeast & Spices
+* Once cooled, add the yeast mixture, nutmeg, vanilla, cinnamon, and salt. Mix well.
+= Form the Dough
+* Gradually add flour, mixing continuously, until a soft, kneadable dough forms (about 12–14 cups).
+* Knead the dough well until smooth and elastic.
+= Let the Dough Rise
+* Cover the dough and let it rise in a warm place for about 1 ½ hours, or until doubled in size.
+= Shape & Bake
+* Punch down the dough and shape it into loaves.
+* Place in greased loaf pans and let rise again until doubled.
+* Bake at 375°F (190°C) until golden brown.
+. Enjoy warm, with butter or jam!
+
+@ Christmas Shortbread
+> Rich, buttery, and slightly sweet, the perfect holiday treat. Simple to prepare, great for gifting or enjoying with a cup of tea.
+- 1 lb butter (softened)
+- 1 cup light brown sugar
+- 4 cups flour
+= Prepare the Dough
+* In a large bowl, mix the butter, brown sugar, and flour.
+* Knead the mixture for about 20 minutes until it forms a smooth ball.
+= Chill the Dough
+* Divide the dough into portions and chill for at least 30 minutes to make it easier to roll out.
+= Roll & Cut
+* Roll out the dough to about ⅓-inch thickness on a lightly floured surface.
+* Use cookie cutters to create festive shapes.
+= Bake
+* Preheat the oven to 250°F (120°C).
+* Place the cookies on a parchment-lined baking sheet and bake for 30 minutes until firm but not browned.
+= Cool & Enjoy
+* Let the cookies cool completely before storing in an airtight container.
+
+@ Nannie's Bread
+> A cherished classic, passed down through generations. It produces a soft, hearty loaf with a beautifully golden crust, perfect for sandwiches, toast, or simply enjoyed warm with butter.
+- 11 cups flour
+- 2 packets fast-rising yeast
+- ½ cup lukewarm water (not hot)
+- 2 teaspoons white sugar
+- 3 ½ cups lukewarm water
+- 3 tablespoons sugar
+- 2 tablespoons lard
+- 1 ½ tablespoons salt
+= Prepare the yeast mixture
+* Dissolve yeast and 2 teaspoons sugar in ½ cup lukewarm water. Set aside until foamy.
+= Mix the dough
+* In a large bowl, sift flour. Add 3 ½ cups lukewarm water, 3 tablespoons sugar, lard, and salt.
+= Combine ingredients
+* Gradually mix in yeast mixture until dough is smooth and stiff enough to handle without sticking.
+= First rise
+* Roll dough onto a floured surface, cover, and let rest for 10 minutes. Transfer to a greased bowl, grease top of dough, cover, and let rise for about 1 hour.
+= Shape the loaves
+* Divide dough into three portions and knead each portion into loaf shape.
+= Second rise
+* Place shaped dough into greased loaf pans. Allow loaves to rise in a slightly warm oven with a pan of hot water for about 1 ½ hours.
+= Bake
+* Preheat oven to 375°F. Bake loaves for 1 hour, until golden brown.
+= Cool & serve
+* Remove from oven, let cool slightly before slicing, and enjoy.
+
+@ Mom's Classic Scones
+> Soft, slightly sweet, and perfect with jam, butter, or clotted cream. Enjoy them fresh from the oven with your favorite tea or coffee!
+- 2 cups flour
+- 3 tsp baking powder
+- ½ cup Crisco (or butter)
+- ⅓ cup sugar
+- 1 egg
+- ½ cup milk
+- ⅓ cup raisins
+- 1 tsp vanilla
+- Pinch of salt
+= Preheat the Oven
+* Set oven to 400°F.
+= Prepare the Dough
+* In a mixing bowl, combine flour, baking powder, sugar, and salt.
+* Cut in the Crisco (or butter) until the mixture is crumbly.
+* In a separate bowl, whisk together the milk, beaten egg, and vanilla.
+* Add the wet ingredients to the dry, stirring gently until just combined.
+* Fold in the raisins.
+= Shape and Bake
+* Turn the dough onto a floured surface and gently knead a few times.
+* Pat the dough into a ½-inch thick circle and cut into rounds or wedges.
+* Place on a baking sheet and bake for 15-18 minutes or until golden brown.
+= Cool and Serve
+* Allow to cool slightly before serving warm with butter or jam.
+
+@ Irish Scones
+> Lightly sweet, tender, and perfect for breakfast or tea time. Raisins or currants add bursts of sweetness, while nutmeg brings a gentle warmth.
+- 4 cups flour
+- 1 cup brown sugar
+- 1 cup lard
+- 2 eggs
+- 1 teaspoon salt
+- 1 teaspoon baking soda
+- ½ teaspoon cream of tartar
+- ½ cup milk
+- ½ cup raisins or currants (optional)
+- ½ teaspoon nutmeg (optional)
+* Preheat oven to 375°F (190°C).
+* In a large bowl, combine flour, sugar, salt, baking soda, cream of tartar, and nutmeg.
+* Cut lard into dry ingredients until the mixture resembles coarse crumbs.
+* In a separate bowl, beat eggs with milk, reserving a small amount for glazing.
+* Mix egg-milk mixture into dry ingredients until just combined; gently fold in raisins or currants if using.
+* Pat dough out to ½-inch thickness and cut into desired shapes.
+* Brush tops with reserved egg mixture.
+* Bake for 15–20 minutes, until golden brown.
+
+# Desserts
+@ Hershey's Chocolate Cake
+> Rich and moist, made with cocoa and a hint of coffee for extra depth. Perfect for any occasion, with a smooth coffee-flavored icing.
+-: For the Cake
+- 2 cups flour
+- 1 ½ cups sugar
+- 2 eggs
+- ½ cup mayonnaise
+- ½ cup milk + 2 teaspoons baking soda
+- 1 ½ teaspoons vanilla
+- 6 rounded tablespoons cocoa
+- 1 cup boiling water
+-: For the Icing
+- ½ package icing sugar
+- 25g unsweetened chocolate
+- Coffee
+- Salt (a pinch)
+- Vanilla (to taste)
+= Preheat the Oven
+* Set your oven to 350°F (175°C).
+= Prepare the Batter
+* In a large bowl, beat together flour, sugar, eggs, and mayonnaise.
+* Add the milk mixed with baking soda, vanilla, and cocoa. Mix until smooth.
+* Slowly stir in the boiling water, blending well.
+= Bake
+* Pour the batter into a greased 9×13-inch pan.
+* Bake for 55 minutes or until a toothpick inserted in the center comes out clean.
+* Let the cake cool before icing.
+= Prepare the Icing
+* Melt the unsweetened chocolate.
+* Mix with icing sugar, coffee, salt, and vanilla.
+* Beat until smooth and spread over the cooled cake.
+
+@ Vanilla Wafers
+> A simple, buttery delight with a crisp texture and a rich vanilla flavor. Perfect for snacking, layering in banana pudding, or serving alongside tea or coffee.
+- 8 tablespoons (1 stick) butter, softened
+- ⅓ cup sugar
+- 1 egg
+- Pinch of salt
+- ½ teaspoon vanilla extract
+- ⅔ cup flour
+* Preheat oven to 325°F (163°C).
+* Cream butter and sugar together in a mixing bowl until light and fluffy.
+* Add the egg, salt, and vanilla extract, mixing until fully combined.
+* Gradually mix in the flour until a smooth dough forms.
+* Scoop small portions of dough onto a baking sheet, spacing them evenly apart.
+* Bake for 7-8 minutes, or until the edges turn lightly golden.
+* Cool on a wire rack before serving.
+
+@ Basic Crêpes
+^ 8
+> Delicate and versatile crêpes for sweet or savory fillings. Perfect for breakfast, brunch, or dessert!
+- 1 cup flour
+- 2 eggs
+- ½ cup milk
+- ½ cup water
+- ¼ teaspoon salt
+- 2 tablespoons melted butter
+= Prepare the Batter
+* In a bowl, whisk together the flour and eggs.
+* Gradually add the milk and water, whisking continuously to avoid lumps.
+* Stir in the salt and melted butter.
+* Beat until the batter is smooth and slightly runny.
+= Cook the Crêpes
+* Heat a lightly greased non-stick skillet or crêpe pan over medium heat.
+* Pour about ¼ cup of batter into the pan, swirling it to coat the surface evenly.
+* Cook for about 1–2 minutes until the edges lift slightly and the bottom is lightly golden.
+* Flip and cook for another 30 seconds.
+= Serve & Enjoy
+* Fill with your favorite sweet or savory ingredients, such as fruit, jam, Nutella, ham, or cheese.
+* Fold or roll and serve warm.
+
+@ Boston Cream Cake (Nannie's Cake)
+> A light, fluffy cake layered with a rich, creamy filling, combining vanilla, custard, and a tender crumb.
+-: For the Cake
+- 1 ¾ cups flour
+- 3 ½ teaspoons baking powder
+- ½ teaspoon salt
+- ⅓ cup butter
+- 1 scant cup sugar
+- 1 cup milk
+- 1 egg
+- 1 teaspoon vanilla
+-: For the Filling
+- 1 ¾ cups milk (heated)
+- ¼ cup milk
+- 2 tablespoons cornstarch
+- ⅓ cup sugar
+- 2 tablespoons flour
+- 2 egg yolks
+- 1 teaspoon vanilla
+- 1 ½ tablespoons butter
+= Make the Cake
+* Preheat your oven to 375°F (190°C).
+* In a bowl, whisk together the flour, baking powder, and salt.
+* In a separate bowl, cream the butter, gradually adding the sugar while beating until light and fluffy.
+* Beat in the egg.
+* Alternately add the flour mixture and milk, beginning and ending with the flour.
+* Stir in the vanilla last.
+* Pour the batter into a greased cake pan and bake for 25 minutes or until a toothpick inserted in the center comes out clean.
+* Let the cake cool completely.
+= Make the Filling
+* Heat 1 ¾ cups of milk in a saucepan over medium heat.
+* In a separate bowl, mix ¼ cup milk, cornstarch, sugar, and flour until smooth.
+* Add the egg yolks to the mixture and whisk well.
+* Gradually pour this mixture into the hot milk, stirring constantly.
+* Cook over medium heat, stirring continuously, until the mixture thickens.
+* Remove from heat and stir in vanilla and butter.
+= Cool and Assemble
+* Transfer the filling to a bowl, cover with wax paper, and refrigerate until cool.
+* Once the cake and filling are cool, slice the cake in half and spread the filling between the layers.
+
+@ Jam Tarts
+> A flaky, buttery crust filled with sweet raspberry jam. A perfect treat for tea time or dessert, especially with a dollop of whipped cream.
+- ¾ cup shortening
+- ¼ cup sugar
+- 1 egg, unbeaten
+- 1 tablespoon milk
+- ½ teaspoon salt
+- 1 ½ cups flour
+- ½ teaspoon vanilla
+- Raspberry jam (for filling)
+= Prepare the Dough
+* In a large bowl, mix the shortening and sugar until well combined.
+* Add the egg, milk, vanilla, salt, and flour. Mix until a dough forms.
+= Roll & Cut
+* Roll out the dough on a lightly floured surface.
+* Cut rounds using a cookie cutter or a glass to fit into tartlet molds.
+= Fill the Tarts
+* Place the dough rounds into a greased tartlet pan.
+* Fill each tart with a spoonful of raspberry jam.
+= Bake
+* Conventional oven: bake at 350°F (175°C) for 20 minutes.
+* Convection oven: bake at 325°F (163°C) for 16 minutes.
+= Serve & Enjoy
+* Allow the tarts to cool slightly before removing them from the pan.
+* Serve with a dollop of Cool Whip or whipped cream.
+
+@ Wanda's Butter Tarts
+- 2 eggs
+- 1 cup brown sugar
+- ½ cup butter
+- 1½ tsp cornstarch (or 1 tbsp maple syrup)
+- 2 tbsp water
+- 1 tsp vanilla
+- 1 cup raisins
+- 30 nuts
+- Tart shells
+* Soak the raisins in rum or water.
+* Blend eggs, brown sugar, butter, cornstarch (or maple syrup), water, and vanilla together.
+* Stir in the soaked raisins and nuts.
+* Pour mixture into tart shells.
+* Bake at 350°F until done.
+
+@ Christmas Pineapple Cake
+> A rich, fruit-filled holiday treat with coconut, raisins, and cherries. It bakes low and slow for a moist and flavorful finish.
+- 3 eggs, separated
+- 1 ¾ cups white sugar
+- 1 cup butter
+- 1 lb white raisins
+- 2 ¾ cups flour
+- 1 teaspoon baking powder
+- ¼ cup grated orange rind
+- 1 lb mixed red & green cherries
+- 1 (20 oz) can crushed pineapple
+- 8 oz candied pineapple
+- 1 teaspoon vanilla
+- ½ teaspoon nutmeg
+- 1 teaspoon salt
+- 1 cup coconut
+= Prepare the Batter
+* Cream the butter and sugar together until light and fluffy.
+* Add the egg yolks one at a time, mixing well after each addition, then mix in the vanilla.
+= Add Dry Ingredients
+* In a separate bowl, whisk together the flour, baking powder, salt, and nutmeg.
+* Gradually add the dry ingredients to the butter mixture, mixing until combined.
+= Incorporate the Fruits
+* Stir in the grated orange rind, crushed pineapple, coconut, raisins, cherries, and candied pineapple.
+= Fold in the Egg Whites
+* In a clean bowl, beat the egg whites until stiff peaks form.
+* Gently fold the egg whites into the batter to keep the cake light.
+= Bake
+* Grease a loaf or bundt cake pan and pour in the batter.
+* Bake at 300°F (150°C) for 2 hours until a toothpick inserted in the center comes out clean.
+= Cool & Serve
+* Let the cake cool completely before removing it from the pan.
+* Slice and enjoy as a festive Christmas treat!
+
+@ Nannie's 1-Egg Cake
+> Simple, classic, light and fluffy. A no-fuss recipe that needs just one egg, great for a quick homemade treat.
+- 1 ¾ cups flour
+- 3 ½ teaspoons baking powder
+- ½ teaspoon salt
+- ⅓ cup butter or shortening
+- 1 scant cup of white sugar
+- 1 egg
+- 1 cup sweet milk
+- 1 teaspoon vanilla
+= Prepare the Batter
+* Cream the butter or shortening until smooth.
+* Gradually add sugar, beating well between additions. The fine texture of the cake depends on proper beating.
+* Beat the egg separately and combine it with the butter-sugar mixture.
+= Combine Ingredients
+* Mix the dry ingredients (flour, baking powder, and salt) in a separate bowl.
+* Add the dry mixture to the wet ingredients alternately with the milk.
+* Stir in the vanilla last.
+= Bake
+* Pour the batter into a greased cake pan.
+* Bake at 375°F (190°C) for 25 minutes, or until a toothpick inserted in the center comes out clean.
+. Let the cake cool before serving. Enjoy it on its own, or frost it with your favorite icing!
+
+@ Lemon Sorbet
+> The perfect light and tangy dessert for hot summer days or as a palate cleanser between courses. Smooth, bright, and made with just a few ingredients.
+- 1 cup milk (2% or skim is fine)
+- 1 cup whipping cream
+- 5 lemons (to yield 1 cup fresh lemon juice)
+- ⅔ cup berry sugar (fine granulated sugar)
+= Prepare the Mixture
+* Squeeze the lemons to extract 1 cup of fresh lemon juice.
+* In a mixing bowl, combine the lemon juice, milk, whipping cream, and berry sugar. Stir well until the sugar is fully dissolved.
+= Freeze the Sorbet
+* Pour the mixture into a shallow dish and place it in the freezer.
+* Freeze for about 4 hours, stirring occasionally to break up ice crystals and create a smooth texture.
+= Final Touches
+* Once the sorbet reaches a slushy consistency, spoon it into serving dishes (such as lemon halves for a decorative touch).
+* Return the sorbet to the freezer until ready to serve.
+
+@ Rice Pudding
+> A comforting, creamy dessert that's simple to make and perfect for any time of year. A hint of vanilla and a touch of nutmeg make this baked version rich and satisfying.
+- 2 eggs
+- 1 ½ cups milk
+- ¾ cup cooked rice
+- ¼ cup brown sugar
+- ¼ teaspoon salt
+- 1 teaspoon vanilla
+- Nutmeg (for topping, optional)
+= Preheat & Prepare
+* Preheat oven to 325°F (160°C).
+* Grease a casserole dish.
+= Mix Ingredients
+* In a medium bowl, beat the eggs.
+* Stir in the milk, cooked rice, brown sugar, salt, and vanilla until well combined.
+= Bake
+* Pour the mixture into the prepared casserole dish.
+* Place the dish in a larger pan filled with hot water (water bath) to help it cook evenly.
+* Bake for about 45 minutes, stirring once during baking if desired.
+= Finish & Serve
+* If desired, sprinkle nutmeg on top before serving.
+* Serve warm or chilled.
+
+# Condiments
+@ Fleur De Sel Lunenburg Mustard
+- ¼ cup mustard seed
+- ¼ cup mustard powder
+- ½ cup water
+- ½ cup white wine vinegar
+- 1 small onion (diced)
+- 2 tablespoons brown sugar
+- 1 teaspoon salt
+- 2 garlic cloves (diced)
+- ½ teaspoon cinnamon
+- ¼ teaspoon turmeric
+- 2 thyme sprigs
+* Boil and reduce the mixture by half, then add it to the seeds and powder mixture.
+* Let it sit at room temperature in a non-reactive container for 3 days.
+* After 3 days, put it in jars.
+. Easy to make and perfect for storage in small jars!
+</script>
+<script type="application/json" id="images">
+{"almond-cheddar-appetizers":{"ai":"images/ai/almond-cheddar-appetizers.jpg?v=1007408677"},"basic-crepes":{"ai":"images/ai/basic-crepes.jpg?v=3454490001"},"basil-tomato-tart":{"ai":"images/ai/basil-tomato-tart.jpg?v=1495900456"},"black-bean-corn-salad":{"ai":"images/ai/black-bean-corn-salad.jpg?v=549485412"},"boston-cream-cake-nannies-cake":{"ai":"images/ai/boston-cream-cake-nannies-cake.jpg?v=2208278178"},"broccoli-casserole":{"ai":"images/ai/broccoli-casserole.jpg?v=842484280"},"christmas-pineapple-cake":{"ai":"images/ai/christmas-pineapple-cake.jpg?v=2091234319"},"christmas-shortbread":{"ai":"images/ai/christmas-shortbread.jpg?v=2398675648"},"classic-caesar-salad-la-casa-pepe-style":{"ai":"images/ai/classic-caesar-salad-la-casa-pepe-style.jpg?v=3279231303"},"classic-meatloaf":{"ai":"images/ai/classic-meatloaf.jpg?v=2068278126"},"crabmeat-dip":{"ai":"images/ai/crabmeat-dip.jpg?v=174483890"},"crepes-with-spinach-bacon-mushroom-filling":{"ai":"images/ai/crepes-with-spinach-bacon-mushroom-filling.jpg?v=976941576"},"curried-baby-pea-soup":{"ai":"images/ai/curried-baby-pea-soup.jpg?v=2247362930"},"dijon-chicken":{"ai":"images/ai/dijon-chicken.jpg?v=3307595392"},"fennel-apple-prosciutto-salad":{"ai":"images/ai/fennel-apple-prosciutto-salad.jpg?v=123468727"},"fennel-salad":{"ai":"images/ai/fennel-salad.jpg?v=1664207089"},"fleur-de-sel-lunenburg-mustard":{"ai":"images/ai/fleur-de-sel-lunenburg-mustard.jpg?v=3561002529"},"franks-crab-cakes":{"ai":"images/ai/franks-crab-cakes.jpg?v=1703069925"},"greek-salad-dressing":{"ai":"images/ai/greek-salad-dressing.jpg?v=2976985339"},"grilled-avocado-seafood-salsa":{"ai":"images/ai/grilled-avocado-seafood-salsa.jpg?v=1400457547"},"guacamole":{"ai":"images/ai/guacamole.jpg?v=2966000901"},"hersheys-chocolate-cake":{"ai":"images/ai/hersheys-chocolate-cake.jpg?v=2909830198"},"hunters-chicken":{"ai":"images/ai/hunters-chicken.jpg?v=2003501822"},"irish-scones":{"ai":"images/ai/irish-scones.jpg?v=1193098402"},"italian-pork-chops-crockpot-recipe":{"ai":"images/ai/italian-pork-chops-crockpot-recipe.jpg?v=3929448508"},"jam-tarts":{"ai":"images/ai/jam-tarts.jpg?v=1054531863"},"lemon-sorbet":{"ai":"images/ai/lemon-sorbet.jpg?v=1574670472"},"marinated-balsamic-grilled-vegetables":{"ai":"images/ai/marinated-balsamic-grilled-vegetables.jpg?v=1403189319"},"mediterranean-couscous-salad":{"ai":"images/ai/mediterranean-couscous-salad.jpg?v=2134505438"},"moms-classic-scones":{"ai":"images/ai/moms-classic-scones.jpg?v=3852476545"},"mushroom-braised-chicken":{"ai":"images/ai/mushroom-braised-chicken.jpg?v=2318665794"},"mushroom-braised-chicken-with-cream-noodles":{"ai":"images/ai/mushroom-braised-chicken-with-cream-noodles.jpg?v=992354121"},"nannies-1-egg-cake":{"ai":"images/ai/nannies-1-egg-cake.jpg?v=1005253591"},"nannies-bread":{"ai":"images/ai/nannies-bread.jpg?v=359793196"},"normas-meatballs":{"ai":"images/ai/normas-meatballs.jpg?v=2701171456"},"olive-chicken-curry-crepes":{"ai":"images/ai/olive-chicken-curry-crepes.jpg?v=2675828795"},"oriental-beef-noodles":{"ai":"images/ai/oriental-beef-noodles.jpg?v=367567106"},"oysters-bienville":{"ai":"images/ai/oysters-bienville.jpg?v=2282943169"},"pakistani-chicken-with-potato-and-spinach":{"ai":"images/ai/pakistani-chicken-with-potato-and-spinach.jpg?v=3353773240"},"pasta-sauce-with-pork-hocks":{"ai":"images/ai/pasta-sauce-with-pork-hocks.jpg?v=3184869547"},"penne-abigail":{"ai":"images/ai/penne-abigail.jpg?v=3662978291"},"plum-loaf":{"ai":"images/ai/plum-loaf.jpg?v=184183015"},"pork-cutlets-in-mustard-sauce":{"ai":"images/ai/pork-cutlets-in-mustard-sauce.jpg?v=1667330491"},"pot-roasted-pork-in-white-wine-with-fennel-and-rosemary":{"ai":"images/ai/pot-roasted-pork-in-white-wine-with-fennel-and-rosemary.jpg?v=3463021439"},"rice-pudding":{"ai":"images/ai/rice-pudding.jpg?v=2557027410"},"roasted-fennel-salad":{"ai":"images/ai/roasted-fennel-salad.jpg?v=322405399"},"scallop-lobster-mushroom-crepes":{"ai":"images/ai/scallop-lobster-mushroom-crepes.jpg?v=462465778"},"seafood-casserole-cys":{"ai":"images/ai/seafood-casserole-cys.jpg?v=1856585409"},"seafood-chowder-crockpot-version":{"ai":"images/ai/seafood-chowder-crockpot-version.jpg?v=3918889999"},"swiss-steak-crockpot-version":{"ai":"images/ai/swiss-steak-crockpot-version.jpg?v=3835597215"},"tabbouleh":{"ai":"images/ai/tabbouleh.jpg?v=888308513"},"tarragon-shrimp":{"ai":"images/ai/tarragon-shrimp.jpg?v=4113520524"},"tuna-noodle-casserole-crockpot-version":{"ai":"images/ai/tuna-noodle-casserole-crockpot-version.jpg?v=2526681521"},"vanilla-wafers":{"ai":"images/ai/vanilla-wafers.jpg?v=2908919849"},"veal-marsala":{"ai":"images/ai/veal-marsala.jpg?v=488193943"},"wandas-butter-tarts":{"ai":"images/ai/wandas-butter-tarts.jpg?v=2368448169"}}</script>
+<script src="https://cdn.jsdelivr.net/npm/page-flip@2.0.7/dist/js/page-flip.browser.js"></script>
+<script>
+(async () => {
+"use strict";
+const $ = s => document.querySelector(s);
+const esc = s => String(s ?? "").replace(/[&<>"']/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", '"': "&quot;", "'": "&#39;" }[c]));
+const RELAY = "https://cookbook-relay.chambers-cookbook.workers.dev";
+
+/* ---------- the recipes (same rules as the website's parseBook) ---------- */
+const SEC = { "Appetizers": "--c-app", "Salads": "--c-sal", "Soups & Chowders": "--c-soup", "Main Courses": "--c-main", "Bread & Baking": "--c-bread", "Desserts": "--c-des", "Condiments": "--c-cond" };
+const slug = s => s.normalize("NFD").replace(/[̀-ͯ]/g, "").toLowerCase().replace(/['’]/g, "").replace(/[^a-z0-9]+/g, "-").replace(/^-|-$/g, "");
+function parseBook(txt) {
+  const out = []; let cat = "", r = null, grp = null;
+  for (const raw of txt.split("\n")) {
+    const l = raw.trim(); if (!l) continue;
+    const body = l.replace(/^(-:|[#@^>\-=*.!~])\s?/, "");
+    if (l.startsWith("# ")) { cat = body; continue; }
+    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, aliases: [], serves: "", intro: "", ing: [], steps: [], outro: "" }; out.push(r); grp = null; continue; }
+    if (!r) continue;
+    if (l.startsWith("~ ")) r.aliases.push(body);
+    else if (l.startsWith("^ ")) r.serves = body;
+    else if (l.startsWith("> ")) r.intro = body;
+    else if (l.startsWith("-:")) r.ing.push({ g: body });
+    else if (l.startsWith("- ")) r.ing.push({ t: body });
+    else if (l.startsWith("= ")) { grp = { h: body, items: [] }; r.steps.push(grp); }
+    else if (l.startsWith("* ")) { if (!grp) { grp = { h: "", items: [] }; r.steps.push(grp); } grp.items.push(body); }
+    else if (l.startsWith(". ")) r.outro = body;
+  }
+  return out;
+}
+let text = $("#book").textContent;
+// Pick up edits made on the website since this page was built (best effort, never blocks for long).
+if (/^https?:$/.test(location.protocol)) {
+  try {
+    const ctl = new AbortController(); const t = setTimeout(() => ctl.abort(), 2500);
+    const res = await fetch(RELAY + "/book", { signal: ctl.signal }); clearTimeout(t);
+    if (res.ok) { const j = await res.json(); if (typeof j.text === "string" && j.text.includes("@ ")) text = j.text; }
+  } catch {}
+}
+const RECIPES = parseBook(text);
+const SECTIONS = [...new Set(RECIPES.map(r => r.cat))];
+const IMAGES = (() => { try { return JSON.parse($("#images").textContent || "{}"); } catch { return {}; } })();
+function imgFor(r) {
+  const keys = [r.id, ...r.aliases];
+  for (const k of keys) if (IMAGES[k]?.photo) return { src: IMAGES[k].photo, ai: false };
+  for (const k of keys) if (IMAGES[k]?.ai) return { src: IMAGES[k].ai, ai: true };
+  return null;
+}
+
+/* ---------- building sheets ---------- */
+const room = $("#print");
+const pages = [];               // in reading order; index 0 = front cover (alone, on the right)
+const side = i => i % 2 ? "left" : "right";
+function sheet(cls, html, opts = {}) {
+  const i = pages.length;
+  const page = document.createElement("div");
+  page.className = "page"; if (opts.hard) page.dataset.density = "hard";
+  page.innerHTML = `<div class="sheet ${side(i)} ${cls}" ${opts.style ? `style="${opts.style}"` : ""}>${html}${opts.folio ? `<div class="folio">${i}</div>` : ""}</div>`;
+  room.appendChild(page); if (!opts.dry) pages.push(page);
+  return page.firstElementChild;
+}
+// Every recipe opens on a left page; when one is needed, `filler` adds a page that earns its place.
+const padTo = (parity, filler) => { while (pages.length % 2 !== parity) filler(); }; // 1 = next sheet is a left page
+const bleedPage = (im, alt, fx) => sheet("bleed", `<img src="${esc(im.src)}" alt="${esc(alt)}">${im.ai ? `<span class="credit">AI-generated image</span>` : ""}`, { style: `--fx:${fx}` });
+const secStyle = c => `--sec:var(${SEC[c] || "--ink-2"})`;
+const overflows = el => el.scrollHeight > el.clientHeight + 1;
+
+const coverRecipe = RECIPES.find(r => r.id === "nannies-bread" && imgFor(r)) || RECIPES.find(r => imgFor(r));
+const coverImg = coverRecipe ? imgFor(coverRecipe) : null;
+
+// 0 · front cover
+sheet("cover", `<div class="photo">${coverImg ? `<img src="${esc(coverImg.src)}" alt="">` : ""}<div class="tag">A family recipe book</div></div>
+  <div class="band"></div>
+  <div class="words"><div class="sub">Recipes handed down through generations</div><h1>The Chambers<br>Family Cookbook</h1><div class="ded"><i></i><span>for Nancy Chambers</span></div></div>`, { hard: true });
+// 1 · inside front cover: dishes from across the book around the dedication (designed in Claude Design)
+const MOSAIC = ["guacamole", "seafood-chowder-crockpot-version", "moms-classic-scones", "hunters-chicken", null, "roasted-fennel-salad", "christmas-pineapple-cake", "oysters-bienville", "jam-tarts"];
+const pool = RECIPES.filter(r => imgFor(r));
+let spare = 0;
+const tile = id => { let r = RECIPES.find(x => x.id === id || x.aliases.includes(id)); if (!r || !imgFor(r)) r = pool[spare++ % Math.max(pool.length, 1)]; return r ? `<img src="${esc(imgFor(r).src)}" alt="${esc(r.name)}">` : "<div></div>"; };
+sheet("mosaic", MOSAIC.map(id => id ? tile(id) : `<div class="ded-card"><small>This book is for</small><b>Nancy Chambers</b><i></i><span>and everyone who<br>gathered at her table</span></div>`).join(""), { hard: true });
+// 2 · title  3 · introduction
+sheet("titlepage", `<div class="eyebrow" style="color:var(--ink-3)">A family recipe book</div><h1>The Chambers<br>Family Cookbook</h1><div class="orn"></div><p>Recipes handed down through generations</p>`);
+const plate = RECIPES.find(r => r.cat === "Desserts" && imgFor(r) && r !== coverRecipe) || RECIPES.find(r => imgFor(r) && r !== coverRecipe);
+const plateImg = plate ? imgFor(plate) : null;
+const printed = new Date().toLocaleDateString(undefined, { year: "numeric", month: "long", day: "numeric" });
+sheet("intro-pg", `<h2>Before you begin</h2>
+  <p class="first">Food is more than just nourishment. It's a cherished connection to our past, present, and future.</p>
+  <p>Each recipe here carries a piece of family heritage, passed down through generations. Cook from it, write in the margins, and pass it on.</p>
+  <div class="note">This edition holds ${RECIPES.length} recipes in ${SECTIONS.length} sections, set from the family's online cookbook on ${esc(printed)}. Pictures marked “AI-generated image” are stand-ins until the family's own photographs replace them.</div>
+  ${plateImg ? `<div class="plate"><img src="${esc(plateImg.src)}" alt="${esc(plate.name)}">${plateImg.ai ? `<span class="credit">AI-generated image</span>` : ""}</div>` : ""}`);
+
+// 4… · contents, flowed across as many pages as it needs (page numbers filled in at the end)
+const tocRows = [];
+SECTIONS.forEach((c, n) => {
+  tocRows.push(`<div class="sec" style="${secStyle(c)}"><em>${String(n + 1).padStart(2, "0")}</em>${esc(c)}</div>`);
+  RECIPES.filter(r => r.cat === c).forEach(r => tocRows.push(`<a href="#" data-goto="${r.id}"><span>${esc(r.name)}</span><b data-pg="${r.id}"></b></a>`));
+});
+let tocPage = null, tocList = null;
+const newToc = first => { tocPage = sheet("contents", `${first ? "<h2>Contents</h2>" : ""}<div class="toc" style="height:${first ? 700 : 768}px;overflow:hidden"></div>`, { folio: true }); tocList = tocPage.querySelector(".toc"); };
+newToc(true);
+for (const row of tocRows) {
+  tocList.insertAdjacentHTML("beforeend", row);
+  if (overflows(tocList)) {
+    const el = tocList.lastElementChild; el.remove();
+    const orphan = tocList.lastElementChild?.classList.contains("sec") ? tocList.lastElementChild : null; orphan?.remove();
+    newToc(false); if (orphan) tocList.appendChild(orphan); tocList.appendChild(el);
+  }
+}
+
+// sections and recipes
+const firstPage = {};
+const sectionFiller = () => plate ? bleedPage(imgFor(plate), plate.name, "50%") : sheet("colophon", `<span>for Nancy Chambers</span>`);
+SECTIONS.forEach((c, n) => {
+  const list = RECIPES.filter(r => r.cat === c);
+  padTo(1, sectionFiller);
+  sheet("div-l", `<div class="num">${String(n + 1).padStart(2, "0")}</div><h2>${esc(c)}</h2><div class="eyebrow">${list.length} recipe${list.length === 1 ? "" : "s"}</div>`, { style: secStyle(c) });
+  sheet("div-r", `<div class="eyebrow">Section ${String(n + 1).padStart(2, "0")}</div><h3>${esc(c)}</h3><div class="dlist">${list.map(r => `<a href="#" data-goto="${r.id}"><span>${esc(r.name)}</span><b data-pg="${r.id}"></b></a>`).join("")}</div>`, { style: secStyle(c), folio: true });
+  list.forEach(r => {
+    firstPage[r.id] = pages.length;
+    // left: photograph and title
+    const im = imgFor(r);
+    const op = sheet(`opener ${im ? "" : "nophoto"}`, `${im ? `<div class="photo"><img src="${esc(im.src)}" alt="${esc(r.name)}">${im.ai ? `<span class="credit">AI-generated image</span>` : ""}</div>` : ""}
+      <div class="words"><div class="eyebrow">${esc(c)}</div><h2>${esc(r.name)}</h2>${r.intro ? `<p class="intro">${esc(r.intro)}</p>` : ""}${r.serves ? `<div class="serves"><i></i>Serves ${esc(r.serves)}</div>` : ""}</div>`, { style: secStyle(c), folio: !im });
+    // long titles step down; the photo then takes whatever room the words leave
+    const h2 = op.querySelector("h2"); let ts = 48;
+    while (h2.offsetHeight > 160 && ts > 34) { ts -= 2; op.style.setProperty("--tsize", ts + "px"); }
+    if (im) op.style.setProperty("--ph", Math.max(380, Math.min(640, 880 - op.querySelector(".words").offsetHeight)) + "px");
+    // right (and continuations): ingredients beside the method
+    const ing = r.ing.map(i => i.g ? `<li class="grp">${esc(i.g)}</li>` : `<li>${esc(i.t)}</li>`);
+    const flat = !r.steps.some(g => g.h);
+    const meth = [];
+    r.steps.forEach((g, gi) => { if (g.h) meth.push(`<h4><em>${gi + 1}</em>${esc(g.h)}</h4>`); g.items.forEach(t => meth.push(`<p>${esc(t)}</p>`)); });
+    if (r.outro) meth.push(`<p class="outro">${esc(r.outro)}</p>`);
+    const flow = (fs, dry) => {
+      const out = [];
+      let ingLeft = ing, methLeft = meth, first = true;
+      while (first || ingLeft.length || methLeft.length) {
+        const pg = sheet(`method ${first ? "" : "cont"}`, `<div class="running"><span>${esc(r.name)}${first ? "" : " · continued"}</span><b>${esc(c)}</b></div>
+          <div class="cols"><div class="col ingr">${ingLeft.length ? `${first ? "<h3>Ingredients</h3>" : ""}<ul></ul>` : ""}</div><div class="col meth ${flat ? "flat" : ""}">${methLeft.length && first ? "<h3>Method</h3>" : ""}</div></div>`, { style: `${secStyle(c)};--fs:${fs}`, folio: true, dry });
+        out.push(pg);
+        const ic = pg.querySelector(".ingr"), ul = ic.querySelector("ul"), mc = pg.querySelector(".meth");
+        if (ul) ul.innerHTML = ingLeft.join("");
+        mc.insertAdjacentHTML("beforeend", methLeft.join(""));
+        if (flat && !first) mc.style.counterReset = `st ${meth.length - methLeft.length}`;
+        const ci = [], cm = [];
+        while (ul && overflows(ic) && ul.children.length > 1) { ci.unshift(ul.lastElementChild.outerHTML); ul.lastElementChild.remove(); }
+        if (ci.length && ul?.lastElementChild?.classList.contains("grp")) { ci.unshift(ul.lastElementChild.outerHTML); ul.lastElementChild.remove(); }
+        const items = () => [...mc.children].filter(x => x.tagName !== "H3");
+        while (overflows(mc) && items().length > 1) { const x = items().at(-1); cm.unshift(x.outerHTML); x.remove(); }
+        if (cm.length && items().at(-1)?.tagName === "H4") { const x = items().at(-1); cm.unshift(x.outerHTML); x.remove(); }
+        if (out.length > 6) break; // safety: never loop on content that can't be placed
+        ingLeft = ci; methLeft = cm; first = false;
+      }
+      if (dry) { out.forEach(el => el.parentElement.remove()); return out.length; }
+      return out;
+    };
+    // 0.82 keeps body text at 12px (9pt), the smallest that prints comfortably; 1.24 fills short recipes
+    let lo = 0.82, hi = 1.24;
+    const fewest = flow(lo, true);
+    let fs = lo;
+    if (flow(hi, true) === fewest) fs = hi;
+    else { for (let k = 0; k < 7; k++) { const mid = (lo + hi) / 2; if (flow(mid, true) === fewest) lo = mid; else hi = mid; } fs = lo; }
+    const made = flow(Math.floor(fs * 1000) / 1000, false);
+    // a short recipe leaves room: fill it with a close-up of the dish, bled off the bottom of the page
+    const last = made.at(-1), cols = last.querySelector(".cols");
+    const used = Math.max(...[...cols.querySelectorAll("li,p,h4,h3")].map(x => x.offsetTop + x.offsetHeight), 0);
+    const room = cols.clientHeight - used;
+    if (im && room > 280) {
+      const top = cols.offsetTop + used + 40;
+      last.insertAdjacentHTML("beforeend", `<div class="detail" style="top:${top}px"><img src="${esc(im.src)}" alt=""></div>`);
+      last.classList.add("has-detail");
+    }
+    // a recipe that ran onto a left page closes with a second look at the dish (or its closing words)
+    padTo(1, () => im ? bleedPage(im, r.name, "35%")
+      : sheet("quote", `<p>${esc(r.outro || r.intro || r.name)}</p><small>${esc(r.name)}</small>`, { style: secStyle(c), folio: true }));
+  });
+});
+
+// the back cover sits alone on a left page
+padTo(1, () => sheet("colophon", `<span>for Nancy Chambers</span><small>The Chambers Family Cookbook<br>Set from the family's online cookbook</small>`));
+sheet("back", `<div class="ded" style="gap:16px"><i style="width:40px"></i><span class="eyebrow" style="font:600 12px/1.2 var(--f-body);color:#c9c2b4;letter-spacing:.24em">The Chambers Family Cookbook</span></div>
+  <p class="lead">Food is more than just nourishment. It's a cherished connection to our past, present, and future.</p>
+  <p>Each recipe here carries a piece of family heritage, passed down through generations: the breads and scones, chowders, crêpes and Christmas cakes of the Chambers table.</p>
+  <div class="secs">${SECTIONS.map(c => `<div>${esc(c)}</div>`).join("")}</div>
+  <div class="foot"><span style="font:700 34px/1 var(--f-hand);color:var(--warm)">for Nancy Chambers</span></div>`, { hard: true });
+
+// page numbers in the contents and section lists
+room.querySelectorAll("[data-pg]").forEach(b => b.textContent = firstPage[b.dataset.pg] ?? "");
+
+/* ---------- the page-turning viewer ---------- */
+const flipEl = $("#flip");
+const clones = pages.map(p => p.cloneNode(true));
+clones.forEach(c => flipEl.appendChild(c));
+await Promise.all([...room.querySelectorAll("img")].slice(0, 6).map(i => i.decode?.().catch(() => {})));
+const pf = new St.PageFlip(flipEl, { width: 768, height: 960, size: "stretch", minWidth: 260, maxWidth: 1600, minHeight: 325, maxHeight: 2000, showCover: true, usePortrait: true, mobileScrollSupport: false, maxShadowOpacity: .45, flippingTime: 850, drawShadow: true });
+pf.loadFromHTML(clones);
+const scale = () => { const w = clones[0].offsetWidth || clones.find(c => c.offsetWidth)?.offsetWidth; if (w) flipEl.style.setProperty("--k", w / 768); };
+const pos = () => { const i = pf.getCurrentPageIndex(), n = pages.length; $("#pos").textContent = i === 0 ? "Cover" : i >= n - 1 ? "Back cover" : `Page ${i} of ${n - 2}`; };
+pf.on("flip", () => { pos(); $("#hint").hidden = true; });
+pf.on("changeOrientation", () => setTimeout(scale, 30));
+pf.on("update", scale);
+new ResizeObserver(scale).observe(flipEl);
+addEventListener("resize", () => setTimeout(scale, 60));
+scale(); pos();
+$("#loading").hidden = true;
+
+$("#b-prev").addEventListener("click", () => pf.flipPrev());
+$("#b-next").addEventListener("click", () => pf.flipNext());
+$("#b-toc").addEventListener("click", () => pf.flip(4));
+$("#b-print").addEventListener("click", () => print());
+$("#b-full").addEventListener("click", () => document.fullscreenElement ? document.exitFullscreen() : document.documentElement.requestFullscreen?.().catch(() => {}));
+addEventListener("keydown", e => { if (e.key === "ArrowRight" || e.key === "PageDown") pf.flipNext(); else if (e.key === "ArrowLeft" || e.key === "PageUp") pf.flipPrev(); else if (e.key === "Home") pf.flip(0); });
+flipEl.addEventListener("click", e => { const a = e.target.closest("[data-goto]"); if (!a) return; e.preventDefault(); e.stopPropagation(); pf.flip(firstPage[a.dataset.goto]); }, true);
+// open at a recipe: book.html#r-<id>
+const goHash = turn => {
+  const want = decodeURIComponent(location.hash.replace(/^#r-/, ""));
+  const target = RECIPES.find(r => r.id === want || r.aliases.includes(want));
+  if (target) { turn ? pf.turnToPage(firstPage[target.id]) : pf.flip(firstPage[target.id]); pos(); }
+};
+goHash(true);
+addEventListener("hashchange", () => goHash(false));
+})();
+</script>
+</body>
+</html>

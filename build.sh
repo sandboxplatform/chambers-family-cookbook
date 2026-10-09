@@ -40,3 +40,11 @@ images_json() {
   echo '<script>'; cat src/app.js; echo '</script>'
   echo '</body></html>'
 } > index.html
+
+# The page-turning book: src/book.html with the same recipe text and image list dropped in at <!--DATA-->.
+{
+  sed -n '1,/<!--DATA-->/p' src/book.html | sed '$d'
+  echo '<script type="text/plain" id="book">'; cat src/book.txt; echo '</script>'
+  echo '<script type="application/json" id="images">'; images_json; echo '</script>'
+  sed -n '/<!--DATA-->/,$p' src/book.html | sed '1d'
+} > book.html
