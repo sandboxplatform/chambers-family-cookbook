@@ -130,6 +130,7 @@ main{padding-block:28px 80px}
 .rc .badges{position:absolute;top:10px;right:10px;display:flex;gap:4px}
 .dot{display:inline-flex;align-items:center;gap:3px;font:700 .7rem/1 var(--f-body);padding:4px 6px;border-radius:999px;background:var(--card-2);border:1px solid var(--line);color:var(--ink-2)}
 .dot svg{width:12px;height:12px}
+.dot.review{color:var(--amber);border-color:var(--amber-soft);background:var(--amber-soft)}
 .dot.fav{color:var(--margin);border-color:var(--margin-soft);background:var(--margin-soft)}
 .empty{padding:40px 16px;text-align:center;color:var(--ink-3)}
 .empty h3{color:var(--ink);margin-bottom:6px}
@@ -1920,6 +1921,7 @@ const ICON = {
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M5 21V4h11l-1.5 4L16 12H5"/></svg>',
   camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
@@ -2013,7 +2015,7 @@ const scaledText = (t, f) => { const s = scaleLine(t, f); return s.scaled ? s.te
 /* ---------------- state ---------------- */
 const S = {
   q: "", cat: store.get("cat", "All"), filter: "all", factor: 1,
-  fav: new Set(store.get("fav", [])), checks: store.get("checks", {}), list: store.get("list", []),
+  fav: new Set(store.get("fav", [])), review: new Set(store.get("review", [])), checks: store.get("checks", {}), list: store.get("list", []),
   sugg: [], stories: [], dbState: "loading",
   me: { id: null, canEdit: false, canWrite: null, readOnly: false }, names: {},
   sFilter: { status: "open", recipe: "" }
@@ -2021,10 +2023,11 @@ const S = {
 let db = null, user = null, sample = null, downloads = null;
 for (const [from, to] of Object.entries(RENAMED)) {
   if (S.fav.delete(from)) S.fav.add(to);
+  if (S.review.delete(from)) S.review.add(to);
   if (S.checks[from]) { S.checks[to] = S.checks[from]; delete S.checks[from]; }
   S.list.forEach(g => { if (g.id === from) g.id = to; });
 }
-const saveLocal = () => { store.set("fav", [...S.fav]); store.set("checks", S.checks); store.set("list", S.list); store.set("cat", S.cat); };
+const saveLocal = () => { store.set("fav", [...S.fav]); store.set("review", [...S.review]); store.set("checks", S.checks); store.set("list", S.list); store.set("cat", S.cat); };
 
 /* ---------------- routing ---------------- */
 function route() {
@@ -2081,7 +2084,7 @@ function card(r) {
   const fav = S.fav.has(r.id), n = suggFor(r.id).filter(s => s.status === "open").length, m = storiesFor(r.id).length, im = imgFor(r.id);
   return `<a class="rc" href="#r-${r.id}" style="${catStyle(r.cat)}">
     ${im ? `<span class="rc-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" loading="lazy" decoding="async" ${imgGone}><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${IMG_TAG[im.kind]}</span></span>` : ""}
-    <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
+    <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${S.review.has(r.id) ? `<span class="dot review" title="Needs review">${ICON.flag}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
     <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
     <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}</span></a>`;
 }
@@ -2089,7 +2092,7 @@ function filtered() {
   const q = S.q.trim().toLowerCase();
   return RECIPES.filter(r => (S.cat === "All" || r.cat === S.cat) &&
     (!q || q.split(/\s+/).every(w => r.search.includes(w))) &&
-    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && suggFor(r.id).some(s => s.status === "open")) || (S.filter === "story" && storiesFor(r.id).length)));
+    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && (S.review.has(r.id) || suggFor(r.id).some(s => s.status === "open"))) || (S.filter === "story" && storiesFor(r.id).length)));
 }
 function vHome() {
   const open = S.sugg.filter(s => s.status === "open").length;
@@ -2166,6 +2169,7 @@ function vRecipe(r) {
         <div class="actions" style="margin-top:16px">
           <button class="btn primary" data-act="cook">${ICON.pot} Cook mode</button>
           <button class="btn" data-act="fav" aria-pressed="${fav}">${fav ? ICON.heart : ICON.heartO} ${fav ? "Favourite" : "Add to favourites"}</button>
+          <button class="btn" data-act="review" aria-pressed="${S.review.has(r.id)}">${ICON.flag} ${S.review.has(r.id) ? "Marked for review" : "Needs review"}</button>
           <button class="btn" data-act="to-list">${ICON.cart} Add to shopping list</button>
           <button class="btn" data-act="ask" ${sample === null ? "hidden" : ""}>${ICON.spark} Ask Claude</button>
         </div>
@@ -2283,6 +2287,7 @@ document.addEventListener("click", async e => {
     case "new-recipe": openSuggest({ kind: "new" }); break;
     case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
+    case "review": S.review.has(r.id) ? S.review.delete(r.id) : S.review.add(r.id); saveLocal(); render(); toast(S.review.has(r.id) ? "Marked for review. Find it under the Needs review filter." : "Review mark removed"); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
     case "uncheck": delete S.checks[r.id]; saveLocal(); render(); break;
     case "to-list": {
