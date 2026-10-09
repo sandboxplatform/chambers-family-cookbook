@@ -6,7 +6,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 
 - 56 family recipes in 7 sections, searchable by name or ingredient
 - Ingredient and step check-offs, ½×–3× batch scaling, favourites, a shopping list and a step-by-step cook mode
-- A pencil on every ingredient and step for suggesting corrections, plus forms for memories, introductions and missing recipes
+- A pencil on every ingredient and step for suggesting corrections, plus forms for memories, introductions and new recipes
 - A suggestions review queue (accept or decline, CSV export)
 - A picture for every recipe: AI-generated stand-ins until the family adds real photos
 
@@ -48,7 +48,7 @@ Edit the text file, then run `./build.sh`.
 
 ## Adding a recipe from a photo
 
-"Add a missing recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. Photos go to a small relay (`relay/`, a Cloudflare Worker at https://cookbook-relay.chambers-cookbook.workers.dev) that holds the Gemini key as a Worker secret, so the key never appears in the page. The relay only answers requests from the cookbook site, fixes the model and prompt, and limits reads to 10 a minute per person and 200 a day in total (`DAILY_LIMIT` in `relay/wrangler.toml`).
+"Add a recipe" can read a photo of a recipe card or page with Gemini and fill in the form, which the person then checks before sending. Photos go to a small relay (`relay/`, a Cloudflare Worker at https://cookbook-relay.chambers-cookbook.workers.dev) that holds the Gemini key as a Worker secret, so the key never appears in the page. The relay only answers requests from the cookbook site, fixes the model and prompt, and limits reads to 10 a minute per person and 200 a day in total (`DAILY_LIMIT` in `relay/wrangler.toml`).
 
 - Change the key: `npx wrangler@4 secret put GEMINI_API_KEY --name cookbook-relay`
 - Redeploy after editing `relay/`: `cd relay && npx wrangler@4 deploy`

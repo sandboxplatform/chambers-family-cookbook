@@ -2069,7 +2069,7 @@ const KINDS = [
   { k: "missing", label: "Add missing info", now: "What's missing" },
   { k: "intro", label: "Write an introduction", now: "Your introduction" },
   { k: "memory", label: "Share a memory", now: "Your memory or story" },
-  { k: "new", label: "Add a missing recipe", now: "Anything else we should know" },
+  { k: "new", label: "Add a recipe", now: "Anything else we should know" },
   { k: "other", label: "Something else", now: "Your suggestion" }
 ];
 const KIND = Object.fromEntries(KINDS.map(k => [k.k, k]));
@@ -2110,7 +2110,7 @@ function vHome() {
       </div>
       <div class="hero-actions">
         <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
-        <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
+        <button class="btn" data-act="new-recipe">${ICON.plus} Add a recipe</button>
       </div>
     </div>
   </section>
@@ -2318,7 +2318,7 @@ function setKind(k) {
   $("#f-why-wrap").hidden = isMem;
   $("#f-now-label").textContent = KIND[k].now;
   $("#f-now").classList.toggle("typed", !(isMem || isIntro || isNew));
-  $("#sg-eyebrow").textContent = isMem ? "Share a memory" : isNew ? "Add a missing recipe" : "Suggest a change";
+  $("#sg-eyebrow").textContent = isMem ? "Share a memory" : isNew ? "Add a recipe" : "Suggest a change";
   $("#f-submit").textContent = S.dbState === "off" ? "Copy suggestion" : isMem ? "Share memory" : isNew ? "Send recipe" : "Send suggestion";
   $("#f-now").placeholder = isMem ? "e.g. Nannie made this every Christmas Eve, and we'd sneak the first slice" : isIntro ? "A sentence or two about this dish and who made it" : "";
 }
@@ -2330,7 +2330,7 @@ function openSuggest({ recipeId = "", kind = "fix", current = "", why = "" }) {
   $("#f-scan-msg").textContent = "";
   setKind(kind);
   const r = BY[recipeId];
-  $("#sg-title").textContent = kind === "new" ? "Add a missing recipe" : r ? r.name : "Help improve the book";
+  $("#sg-title").textContent = kind === "new" ? "Add a recipe" : r ? r.name : "Help improve the book";
   dlg.showModal();
   setTimeout(() => (kind === "new" ? $("#f-nname") : $("#f-now")).focus(), 30);
 }
