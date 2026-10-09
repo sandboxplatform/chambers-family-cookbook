@@ -9,7 +9,6 @@
       <a href="#" data-nav="home">Recipes</a>
       <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
       <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
-      <a href="#desk" data-nav="desk">Editor's desk</a>
     </nav>
   </div>
 </header>
@@ -122,6 +121,18 @@
     </div>
     <div class="dlg-b" id="ph-body"></div>
     <div class="dlg-f"><span class="muted" style="font-size:.82rem" id="ph-foot"></span><button type="button" class="btn ghost" data-close>Close</button></div>
+  </div>
+</dialog>
+
+<!-- Install as an app -->
+<dialog id="dlg-install" aria-labelledby="in-title">
+  <div class="dlg">
+    <div class="dlg-h">
+      <div><div class="eyebrow">Get the app</div><h2 id="in-title">Put the cookbook on your phone</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b" id="in-body"></div>
+    <div class="dlg-f"><span class="muted" style="font-size:.82rem">It opens full screen like any other app, and recipes you've viewed work without a connection.</span><button type="button" class="btn ghost" data-close>Close</button></div>
   </div>
 </dialog>
 

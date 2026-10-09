@@ -1,0 +1,15 @@
+{
+  "name": "The Chambers Family Cookbook",
+  "short_name": "Cookbook",
+  "description": "The Chambers family recipe collection, dedicated to Nancy Chambers.",
+  "start_url": "./",
+  "scope": "./",
+  "display": "standalone",
+  "background_color": "#eef1ee",
+  "theme_color": "#1c2540",
+  "icons": [
+    { "src": "icons/icon-192.png", "sizes": "192x192", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "any" },
+    { "src": "icons/icon-512.png", "sizes": "512x512", "type": "image/png", "purpose": "maskable" }
+  ]
+}

@@ -1,5 +1,12 @@
 <!doctype html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
 <title>The Chambers Family Cookbook</title>
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icons/icon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="theme-color" content="#1c2540">
+<meta name="apple-mobile-web-app-title" content="Cookbook">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Young+Serif&family=Figtree:ital,wght@0,400;0,500;0,600;0,700;1,400&family=Courier+Prime:wght@400;700&family=Caveat:wght@500;700&display=swap">
@@ -175,13 +182,6 @@ main{padding-block:28px 80px}
 .sg h3 .n{font:400 .95rem var(--f-display);color:var(--margin);font-variant-numeric:tabular-nums}
 .steps .txt{flex:1;min-width:0}
 .outro{font-style:italic;color:var(--ink-2);border-top:1px solid var(--line);padding-top:14px;margin:0}
-.ednote{display:flex;gap:10px;background:var(--amber-soft);color:var(--ink);border-radius:8px;padding:12px 14px;font-size:.92rem}
-.ednote svg{width:18px;height:18px;color:var(--amber);flex:none;margin-top:2px}
-.ednote b{color:var(--amber)}
-.ednote.done{opacity:.6}
-.ednote.done p{text-decoration:line-through}
-.ednote p{margin:0}
-.ednote .btn{margin-top:6px;padding-left:0}
 
 .side{display:grid;gap:16px;position:sticky;top:calc(env(safe-area-inset-top,0px) + 76px)}
 @media (max-width:980px){.side{position:static}}
@@ -305,7 +305,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
       <a href="#" data-nav="home">Recipes</a>
       <a href="#suggestions" data-nav="suggestions">Suggestions <span class="count" id="nav-open" hidden></span></a>
       <a href="#list" data-nav="list">Shopping list <span class="count" id="nav-list" hidden></span></a>
-      <a href="#desk" data-nav="desk">Editor's desk</a>
     </nav>
   </div>
 </header>
@@ -421,6 +420,18 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
   </div>
 </dialog>
 
+<!-- Install as an app -->
+<dialog id="dlg-install" aria-labelledby="in-title">
+  <div class="dlg">
+    <div class="dlg-h">
+      <div><div class="eyebrow">Get the app</div><h2 id="in-title">Put the cookbook on your phone</h2></div>
+      <button type="button" class="x" data-close aria-label="Close"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 6l12 12M18 6 6 18"/></svg></button>
+    </div>
+    <div class="dlg-b" id="in-body"></div>
+    <div class="dlg-f"><span class="muted" style="font-size:.82rem">It opens full screen like any other app, and recipes you've viewed work without a connection.</span><button type="button" class="btn ghost" data-close>Close</button></div>
+  </div>
+</dialog>
+
 <div class="cook" id="cook" hidden role="dialog" aria-modal="true" aria-labelledby="cook-title"></div>
 <div class="toast" id="toast" hidden role="status"></div>
 <script type="text/plain" id="book">
@@ -493,7 +504,7 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 
 @ Shrimp Tarragon
 > This elegant shrimp dish features a rich, creamy tarragon sauce with a touch of cognac for a bold and flavorful finish. Perfect for a special dinner, it pairs beautifully with rice or crusty bread.
-- 5 tablespoons butter
+- 4 tablespoons butter
 - 36 medium-sized shrimp, peeled and deveined
 - Salt (to taste)
 - 2 tablespoons finely minced shallots
@@ -519,7 +530,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Serve & Enjoy
 * Remove from heat and serve immediately over rice, pasta, or with crusty bread.
 . This Shrimp Tarragon is a luxurious dish perfect for impressing guests or treating yourself to a gourmet meal at home!
-! The ingredient list calls for 5 tablespoons of butter, but the steps only use 4. The fifth tablespoon is never mentioned.
 
 @ Norma's Meatballs
 > These tender and flavorful meatballs are baked to perfection and coated in a sweet and tangy sauce. A family favorite, they make a great appetizer or main dish.
@@ -553,7 +563,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Pour the warm sauce over the meatballs and stir gently to coat.
 * Simmer on low heat for a few minutes before serving.
 . Enjoy these as a delicious appetizer or over rice for a hearty meal!
-! A second, slightly different set of meatball steps (skillet option, 10–15 minute simmer) is stranded at the end of Frank's Crab Cakes in the manuscript. Decide which version belongs here.
 
 @ Basil Tomato Tart
 > This savory basil tomato tart features juicy tomatoes, fresh basil, and a rich cheese filling in a flaky pie crust. It's perfect as a light lunch, appetizer, or side dish.
@@ -565,6 +574,8 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 - ½ cup mayonnaise
 - ¼ cup grated parmesan
 - ⅛ teaspoon ground white pepper
+- ½ teaspoon olive oil
+- Extra shredded mozzarella for the topping
 = Preheat & Prepare Crust
 * Preheat oven to 375°F (190°C).
 * Pre-bake the pie crust according to package or recipe instructions.
@@ -576,16 +587,16 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * In a food processor, combine basil, garlic, and ½ teaspoon olive oil until coarsely chopped.
 * Sprinkle this mixture over the tomatoes.
 = Prepare the Cheese Topping
-* In a mixing bowl, combine the remaining mozzarella, mayonnaise, parmesan, and white pepper.
+* In a mixing bowl, combine some extra mozzarella, the mayonnaise, parmesan, and white pepper.
 * Spoon the cheese mixture evenly over the tart.
 = Bake & Serve
 * Bake at 375°F (190°C) for 25–30 minutes, or until golden and bubbly.
 * Let cool slightly before slicing.
 . A perfect blend of fresh summer flavors and creamy cheese goodness!
-! The steps use "the remaining mozzarella", but all ½ cup was already used on the crust. The original card probably called for more mozzarella. Olive oil is also used in the steps but missing from the ingredients.
 
 @ Oysters Bienville
 > A rich and flavorful dish featuring oysters baked with a creamy shrimp and bacon sauce!
+- Fresh oysters on the half shell
 - 4-5 slices bacon (cooked & chopped)
 - ½ cup diced onion
 - Salt & a pinch of cayenne
@@ -610,7 +621,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Spoon the shrimp & bacon sauce over fresh oysters in their shells.
 * Bake at 350°F (175°C) for 20 minutes, until bubbly and golden.
 . A decadent and elegant seafood dish, perfect for special occasions!
-! The oysters themselves are not in the ingredient list.
 
 @ Frank's Crab Cakes
 > These crispy, flavorful crab cakes are packed with delicate crab meat and a touch of spice. Pan-fried in butter and olive oil, they make a delicious appetizer or main course.
@@ -635,7 +645,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Serve & Enjoy
 * Serve hot with a squeeze of lemon or a creamy dipping sauce.
 . Crispy on the outside and tender on the inside, perfect for any seafood lover!
-! In the manuscript, meatball sauce steps follow this recipe by mistake, and a stray line ("Here's the combined recipe for Pakistani Chicken…") sits just above it. Both need to be removed from the book file.
 
 # Salads
 @ Roasted Fennel Salad
@@ -658,13 +667,13 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Zest the orange and set aside.
 * Remove the orange skin, then dice the fruit into bite-sized pieces.
 = Assemble the salad
-* Scatter the diced olives and pine nuts over the roasted fennel.
+* Arrange the roasted fennel on a platter and top with the orange pieces and red onion.
+* Scatter the diced olives and pine nuts over the top, then sprinkle with the orange zest.
 = Dress the salad
 * Squeeze fresh lemon juice over the salad and drizzle with olive oil to taste.
 = Garnish
 * Sprinkle the reserved fennel fronds over the top and serve immediately.
 . This salad pairs beautifully with grilled fish or roasted chicken.
-! The orange, its zest and the red onion are prepared but never added to the salad in the steps.
 
 @ Classic Caesar Salad (La Casa Pepe Style)
 > This homemade Caesar salad captures the bold flavors of a traditional dressing, combined with crisp romaine lettuce, crunchy croutons, and savory Parmesan. Perfect for a light lunch or a flavorful side dish!
@@ -877,13 +886,11 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Add the cubed potatoes, chopped green onions, water, salt, and pepper.
 = Cook
 * Cover and cook on Low for 6-8 hours or High for 2-4 hours, until the potatoes are tender.
-= Add the Milk
-* Stir in the evaporated milk during the last hour of cooking to create a rich and creamy texture.
+= Add the Fish & Milk
+* During the last hour of cooking, add the fish pieces and stir in the evaporated milk. Cook until the fish flakes easily and the chowder is rich and creamy.
 . Serve hot with crusty bread or oyster crackers. Garnish with fresh parsley or additional green onions, or add a dash of hot sauce or Old Bay seasoning.
-! The fish is cut up in step 1 but never added to the crockpot. It most likely goes in with the milk during the last hour.
 
 @ Curried Baby Pea Soup
-^ 8
 > A creamy, flavorful dish infused with the warmth of curry and ginger. Perfect as a comforting appetizer or a light meal.
 - 2 tablespoons unsalted butter
 - 1 leek (white part only), sliced
@@ -908,10 +915,10 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Heat through without boiling.
 * Season with salt and pepper to taste.
 * Garnish with toasted almonds or a swirl of cream before serving.
-! "Serves 8" seems high for 1 cup of peas and 1 cup of stock. Worth checking against the original card.
 
 # Main Courses
 @ Dijon Chicken
+> A quick weeknight favourite: golden pan-fried chicken breasts finished in a creamy sauce of Dijon mustard, tarragon and a touch of honey. Serve it with rice or mashed potatoes to catch every bit of the sauce.
 - Boneless, skinless chicken breasts
 - Flour (for dredging)
 - Salt & pepper
@@ -926,7 +933,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * In the same pan, combine bouillon, Dijon mustard, tarragon, and honey.
 * Add the chicken back to the pan and cook in the sauce until done.
 * Stir in sour cream last, mixing well before serving.
-! No introduction yet. A family member could write one.
 
 @ Hunter's Chicken
 > A rich and hearty dish featuring tender chicken simmered in a flavorful sauce made with mushrooms, white wine, beef stock, and herbs. Pairs well with rice, mashed potatoes, or crusty bread to soak up the sauce.
@@ -934,7 +940,7 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 - 2 tbsp butter
 - ½ cup chopped onion
 - 1 pkg mushrooms
-- ½ cup white wine (cubist)
+- ½ cup white wine
 - ¼ cup beef stock
 - 2 tbsp tomato paste (or ketchup)
 - 1 tbsp cornstarch
@@ -961,7 +967,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Let the dish simmer until the sauce has thickened and the chicken is fully cooked.
 = Serve
 * Enjoy with rice, mashed potatoes, or a warm baguette.
-! "(cubist)" after white wine looks like a transcription error. Possibly a brand or "dry".
 
 @ Mushroom Braised Chicken
 > Tender chicken simmered in a rich white wine and mushroom sauce, finished with a creamy texture. Pairs well with rice, pasta, or crusty bread.
@@ -985,7 +990,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Final Simmer
 * Let the sauce simmer uncovered until it thickens to a rich consistency.
 . Enjoy over rice, mashed potatoes, or buttered egg noodles. Garnish with fresh parsley.
-! The book has two different Mushroom Braised Chicken recipes. Keep both with distinct names, or merge them.
 
 @ Classic Meatloaf
 > Hearty, flavorful, and perfect for a comforting homemade meal. With a blend of minced beef, fresh vegetables, and a tangy hint of horseradish, it's sure to become a family favorite.
@@ -1150,11 +1154,10 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Heat butter or olive oil in a pan and brown the pork on all sides.
 * Add garlic, rosemary, bay leaves, fennel slices, and wine to the pan.
 * Cover the roast with wet waxed paper.
-* Bake for 1½ hours (for a 4–6 lb roast, 1¾–2 hours for a 7–9 lb roast).
+* Bake for 1½ hours.
 * If the roast has the bone, it will take longer.
 * After cooking, remove the roast and let it rest.
 * For the finishing sauce, remove the garlic cloves, squish them open, and squeeze out the juice from the bottom of the pan.
-! The manuscript reads "1–3 ½ lb loin pork roast". Shown here as one 3½ lb roast; please confirm. The bake times also mention 4–9 lb roasts, which don't match. No introduction yet.
 
 @ Penne Abigail
 ^ 4-6
@@ -1190,28 +1193,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Serve warm, garnished with extra parsley or basil if desired.
 . Perfect for a family dinner or meal prep, as the flavors continue to develop over time.
 
-@ Seafood Casserole
-> A rich and creamy seafood casserole filled with lobster, crab, shrimp, and a smooth cheese sauce. Perfect for special occasions or cozy dinners.
-- 2 cups chopped onion
-- 3 cups chopped celery
-- 3 tbsp butter
-- 1 tsp salt
-- ¼ tsp pepper
-- ¾ cup flour
-- ½ cup butter
-- 5 cups milk
-- 1 lb Velveeta cheese
-- 10 oz lobster meat
-- ½ lb crab meat
-- ¾ lb cooked shrimp
-- 1 lb cooked scallops
-* Sauté the onion and celery in 3 tbsp butter until softened. Add salt and pepper.
-* Prepare a white sauce: Melt ½ cup butter, stir in flour, then slowly whisk in milk until thickened.
-* Add the sautéed vegetables and Velveeta cheese, stirring until the cheese is fully melted.
-* Mix in the seafood, then transfer to a large casserole dish or individual serving dishes.
-* Bake until bubbly and lightly browned.
-! Not in the table of contents. It looks like the complete version of Seafood Casserole (Cy's). Consider merging the two. Needs an oven temperature and time.
-
 @ Veal Marsala
 > A classic Italian dish, rich, savory, and elegant. Thin veal cutlets are coated in Parmesan, seared until golden, and simmered in a Marsala wine sauce with mushrooms and garlic.
 - 1 lb thin veal cutlets
@@ -1229,7 +1210,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Add butter to the pan, stir in cayenne, bouillon cube, and hot water, mixing until the bouillon dissolves.
 * Return the veal and mushrooms to the pan and cook for about 1 minute over high heat.
 * Add Marsala wine, stir, and serve immediately.
-! Not in the table of contents and has no section heading in the manuscript.
 
 @ Pasta Sauce with Pork Hocks
 > An inexpensive yet delicious pasta sauce. Slow simmering the pork hocks gives it deep flavor, perfect for a cozy family dinner.
@@ -1249,7 +1229,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Remove pork hocks from the pot, remove meat from bones, and chop finely.
 * Return chopped pork to the sauce, simmering for an additional 15 minutes.
 * Serve over your favorite noodles and enjoy!
-! Not in the table of contents and has no section heading in the manuscript.
 
 @ Broccoli Casserole
 > A delicious, creamy side dish for any meal. Easy to prepare, and it can be made ahead of time!
@@ -1335,17 +1314,23 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Bake at 400°F (200°C) for 12 minutes, until heated through and slightly golden on top.
 
 @ Seafood Casserole (Cy's)
-> A creamy and comforting seafood casserole with a rich Velveeta cheese sauce and sautéed vegetables.
+> A rich and creamy seafood casserole filled with lobster, crab, shrimp and scallops in a smooth Velveeta cheese sauce. Perfect for special occasions or cozy dinners.
 -: For the Sautéed Vegetables
 - 3 cups chopped celery
 - 2 cups chopped onion
-- Butter (for sautéing)
+- 3 tbsp butter (for sautéing)
 -: For the Cheese Sauce
 - ¾ cup flour
 - ½ cup butter
 - 5 cups milk
 - 1 lb Velveeta cheese
-- Salt & pepper (to taste)
+- 1 tsp salt
+- ¼ tsp pepper
+-: For the Seafood
+- 10 oz lobster meat
+- ½ lb crab meat
+- ¾ lb cooked shrimp
+- 1 lb cooked scallops
 = Sauté the Vegetables
 * In a large pan, melt butter over medium heat.
 * Add chopped celery and onion, sautéing until soft and translucent.
@@ -1354,14 +1339,14 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Whisk in flour and cook for 1–2 minutes until slightly golden.
 * Gradually add milk, whisking constantly to create a smooth sauce.
 * Stir in Velveeta cheese and continue stirring until melted.
-* Season with salt and pepper to taste.
+* Season with the salt and pepper.
 = Assemble the Casserole
 * Preheat oven to 375°F (190°C).
-* Combine the sautéed vegetables with the cheese sauce and pour into a greased casserole dish.
+* Combine the sautéed vegetables with the cheese sauce, then gently fold in the lobster, crab, shrimp and scallops.
+* Pour into a greased casserole dish, or divide among individual serving dishes.
 = Bake & Serve
-* Bake uncovered for about 30 minutes until bubbly and golden on top.
+* Bake uncovered for 30–35 minutes (about 20 minutes for individual dishes) until bubbly and lightly browned on top.
 * Let cool slightly before serving.
-! This version has no seafood in it at all. The uncatalogued Seafood Casserole has the lobster, crab, shrimp and scallops.
 
 @ Pakistani Chicken with Potato and Spinach
 -: For the Chicken
@@ -1406,7 +1391,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Roll out each ball into thin rounds.
 * Cook on a dry, hot pan for about 1-2 minutes per side until slightly charred and puffed.
 . Serve the chicken with the sautéed potatoes and spinach on the side, with fresh homemade chapatis.
-! The manuscript ends this recipe with "Let me know if you'd like any modifications!", leftover assistant text that should be removed. No introduction yet.
 
 @ Mushroom Braised Chicken (with Cream & Noodles)
 > Rich, flavorful, and tender, cooked in a creamy white wine sauce and served over buttered noodles. A comforting and elegant dish for any occasion.
@@ -1435,7 +1419,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Serve
 * Return the chicken to the sauce, letting it heat through.
 * Serve over buttered noodles and garnish with parsley if desired.
-! Second recipe titled "Mushroom Braised Chicken" in the manuscript. Renamed here so the two can be told apart.
 
 @ Crêpes with Spinach, Bacon & Mushroom Filling
 ^ 4
@@ -1466,7 +1449,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Fill each crêpe with the spinach-bacon-mushroom mixture and roll up.
 = Warm & Serve
 * Top with a warm egg-based sauce if desired and heat in the oven before serving.
-! The egg sauce is mentioned but there is no recipe for it.
 
 @ Scallop, Lobster & Mushroom Crêpes
 ^ 30 crêpes
@@ -1544,7 +1526,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Place in greased loaf pans and let rise again until doubled.
 * Bake at 375°F (190°C) until golden brown.
 . Enjoy warm, with butter or jam!
-! No bake time given. The egg is added to boiling water in step 3. Check whether the original adds it after cooling.
 
 @ Christmas Shortbread
 > Rich, buttery, and slightly sweet, the perfect holiday treat. Simple to prepare, great for gifting or enjoying with a cup of tea.
@@ -1564,7 +1545,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Place the cookies on a parchment-lined baking sheet and bake for 30 minutes until firm but not browned.
 = Cool & Enjoy
 * Let the cookies cool completely before storing in an airtight container.
-! Appears twice in the manuscript, word for word, under both Bread & Baking and Desserts. Keep one.
 
 @ Nannie's Bread
 > A cherished classic, passed down through generations. It produces a soft, hearty loaf with a beautifully golden crust, perfect for sandwiches, toast, or simply enjoyed warm with butter.
@@ -1665,14 +1645,13 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Add the milk mixed with baking soda, vanilla, and cocoa. Mix until smooth.
 * Slowly stir in the boiling water, blending well.
 = Bake
-* Pour the batter into a greased cake pan.
+* Pour the batter into a greased 9×13-inch pan.
 * Bake for 55 minutes or until a toothpick inserted in the center comes out clean.
 * Let the cake cool before icing.
 = Prepare the Icing
 * Melt the unsweetened chocolate.
 * Mix with icing sugar, coffee, salt, and vanilla.
 * Beat until smooth and spread over the cooled cake.
-! Pan size isn't given. 55 minutes suggests a 9×13 or tube pan.
 
 @ Vanilla Wafers
 > A simple, buttery delight with a crisp texture and a rich vanilla flavor. Perfect for snacking, layering in banana pudding, or serving alongside tea or coffee.
@@ -1752,7 +1731,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Cool and Assemble
 * Transfer the filling to a bowl, cover with wax paper, and refrigerate until cool.
 * Once the cake and filling are cool, slice the cake in half and spread the filling between the layers.
-! The cake is identical to Nannie's 1-Egg Cake. The book could point from one to the other.
 
 @ Jam Tarts
 > A flaky, buttery crust filled with sweet raspberry jam. A perfect treat for tea time or dessert, especially with a dollop of whipped cream.
@@ -1790,12 +1768,11 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 - 1 cup raisins
 - 30 nuts
 - Tart shells
-* Soak raisins in Allegra (or another liquid, possibly rum or water).
+* Soak the raisins in rum or water.
 * Blend eggs, brown sugar, butter, cornstarch (or maple syrup), water, and vanilla together.
 * Stir in the soaked raisins and nuts.
 * Pour mixture into tart shells.
 * Bake at 350°F until done.
-! Found in the middle of Main Courses with leftover transcription text around it. Not in the contents. "Allegra" and "30 nuts" need checking against Wanda's original card, along with a bake time.
 
 @ Christmas Pineapple Cake
 > A rich, fruit-filled holiday treat with coconut, raisins, and cherries. It bakes low and slow for a moist and flavorful finish.
@@ -1815,7 +1792,7 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 - 1 cup coconut
 = Prepare the Batter
 * Cream the butter and sugar together until light and fluffy.
-* Add the egg yolks one at a time, mixing well after each addition.
+* Add the egg yolks one at a time, mixing well after each addition, then mix in the vanilla.
 = Add Dry Ingredients
 * In a separate bowl, whisk together the flour, baking powder, salt, and nutmeg.
 * Gradually add the dry ingredients to the butter mixture, mixing until combined.
@@ -1830,7 +1807,6 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 = Cool & Serve
 * Let the cake cool completely before removing it from the pan.
 * Slice and enjoy as a festive Christmas treat!
-! Vanilla is listed but never used in the steps.
 
 @ Nannie's 1-Egg Cake
 > Simple, classic, light and fluffy. A no-fuss recipe that needs just one egg, great for a quick homemade treat.
@@ -1911,10 +1887,9 @@ footer{border-top:1px solid var(--line);padding-block:22px;color:var(--ink-3);fo
 * Let it sit at room temperature in a non-reactive container for 3 days.
 * After 3 days, put it in jars.
 . Easy to make and perfect for storage in small jars!
-! The first step says "the mixture" without saying which ingredients go in the pot. Presumably everything except the seeds and powder. The name mentions fleur de sel but the list just says salt. No introduction yet.
 </script>
 <script type="application/json" id="images">
-{"almond-cheddar-appetizers":{"ai":"images/ai/almond-cheddar-appetizers.jpg?v=1007408677"},"basic-crepes":{"ai":"images/ai/basic-crepes.jpg?v=3454490001"},"basil-tomato-tart":{"ai":"images/ai/basil-tomato-tart.jpg?v=1495900456"},"black-bean-corn-salad":{"ai":"images/ai/black-bean-corn-salad.jpg?v=549485412"},"boston-cream-cake-nannies-cake":{"ai":"images/ai/boston-cream-cake-nannies-cake.jpg?v=2208278178"},"broccoli-casserole":{"ai":"images/ai/broccoli-casserole.jpg?v=842484280"},"christmas-pineapple-cake":{"ai":"images/ai/christmas-pineapple-cake.jpg?v=2091234319"},"christmas-shortbread":{"ai":"images/ai/christmas-shortbread.jpg?v=2398675648"},"classic-caesar-salad-la-casa-pepe-style":{"ai":"images/ai/classic-caesar-salad-la-casa-pepe-style.jpg?v=3279231303"},"classic-meatloaf":{"ai":"images/ai/classic-meatloaf.jpg?v=2068278126"},"crabmeat-dip":{"ai":"images/ai/crabmeat-dip.jpg?v=174483890"},"crepes-with-spinach-bacon-mushroom-filling":{"ai":"images/ai/crepes-with-spinach-bacon-mushroom-filling.jpg?v=976941576"},"curried-baby-pea-soup":{"ai":"images/ai/curried-baby-pea-soup.jpg?v=2247362930"},"dijon-chicken":{"ai":"images/ai/dijon-chicken.jpg?v=3307595392"},"fennel-apple-prosciutto-salad":{"ai":"images/ai/fennel-apple-prosciutto-salad.jpg?v=123468727"},"fennel-salad":{"ai":"images/ai/fennel-salad.jpg?v=1664207089"},"fleur-de-sel-lunenburg-mustard":{"ai":"images/ai/fleur-de-sel-lunenburg-mustard.jpg?v=3561002529"},"franks-crab-cakes":{"ai":"images/ai/franks-crab-cakes.jpg?v=1703069925"},"greek-salad-dressing":{"ai":"images/ai/greek-salad-dressing.jpg?v=2976985339"},"grilled-avocado-seafood-salsa":{"ai":"images/ai/grilled-avocado-seafood-salsa.jpg?v=1400457547"},"guacamole":{"ai":"images/ai/guacamole.jpg?v=2966000901"},"hersheys-chocolate-cake":{"ai":"images/ai/hersheys-chocolate-cake.jpg?v=2909830198"},"hunters-chicken":{"ai":"images/ai/hunters-chicken.jpg?v=2003501822"},"irish-scones":{"ai":"images/ai/irish-scones.jpg?v=1193098402"},"italian-pork-chops-crockpot-recipe":{"ai":"images/ai/italian-pork-chops-crockpot-recipe.jpg?v=3929448508"},"jam-tarts":{"ai":"images/ai/jam-tarts.jpg?v=1054531863"},"lemon-sorbet":{"ai":"images/ai/lemon-sorbet.jpg?v=1574670472"},"marinated-balsamic-grilled-vegetables":{"ai":"images/ai/marinated-balsamic-grilled-vegetables.jpg?v=1403189319"},"mediterranean-couscous-salad":{"ai":"images/ai/mediterranean-couscous-salad.jpg?v=2134505438"},"moms-classic-scones":{"ai":"images/ai/moms-classic-scones.jpg?v=3852476545"},"mushroom-braised-chicken":{"ai":"images/ai/mushroom-braised-chicken.jpg?v=2318665794"},"mushroom-braised-chicken-with-cream-noodles":{"ai":"images/ai/mushroom-braised-chicken-with-cream-noodles.jpg?v=992354121"},"nannies-1-egg-cake":{"ai":"images/ai/nannies-1-egg-cake.jpg?v=1005253591"},"nannies-bread":{"ai":"images/ai/nannies-bread.jpg?v=359793196"},"normas-meatballs":{"ai":"images/ai/normas-meatballs.jpg?v=2701171456"},"olive-chicken-curry-crepes":{"ai":"images/ai/olive-chicken-curry-crepes.jpg?v=2675828795"},"oriental-beef-noodles":{"ai":"images/ai/oriental-beef-noodles.jpg?v=367567106"},"oysters-bienville":{"ai":"images/ai/oysters-bienville.jpg?v=2282943169"},"pakistani-chicken-with-potato-and-spinach":{"ai":"images/ai/pakistani-chicken-with-potato-and-spinach.jpg?v=3353773240"},"pasta-sauce-with-pork-hocks":{"ai":"images/ai/pasta-sauce-with-pork-hocks.jpg?v=3184869547"},"penne-abigail":{"ai":"images/ai/penne-abigail.jpg?v=3662978291"},"plum-loaf":{"ai":"images/ai/plum-loaf.jpg?v=184183015"},"pork-cutlets-in-mustard-sauce":{"ai":"images/ai/pork-cutlets-in-mustard-sauce.jpg?v=1667330491"},"pot-roasted-pork-in-white-wine-with-fennel-and-rosemary":{"ai":"images/ai/pot-roasted-pork-in-white-wine-with-fennel-and-rosemary.jpg?v=3463021439"},"rice-pudding":{"ai":"images/ai/rice-pudding.jpg?v=2557027410"},"roasted-fennel-salad":{"ai":"images/ai/roasted-fennel-salad.jpg?v=322405399"},"scallop-lobster-mushroom-crepes":{"ai":"images/ai/scallop-lobster-mushroom-crepes.jpg?v=462465778"},"seafood-casserole":{"ai":"images/ai/seafood-casserole.jpg?v=1023138321"},"seafood-casserole-cys":{"ai":"images/ai/seafood-casserole-cys.jpg?v=1856585409"},"seafood-chowder-crockpot-version":{"ai":"images/ai/seafood-chowder-crockpot-version.jpg?v=3918889999"},"shrimp-tarragon":{"ai":"images/ai/shrimp-tarragon.jpg?v=4113520524"},"swiss-steak-crockpot-version":{"ai":"images/ai/swiss-steak-crockpot-version.jpg?v=3835597215"},"tabbouleh":{"ai":"images/ai/tabbouleh.jpg?v=888308513"},"tuna-noodle-casserole-crockpot-version":{"ai":"images/ai/tuna-noodle-casserole-crockpot-version.jpg?v=2526681521"},"vanilla-wafers":{"ai":"images/ai/vanilla-wafers.jpg?v=2908919849"},"veal-marsala":{"ai":"images/ai/veal-marsala.jpg?v=488193943"},"wandas-butter-tarts":{"ai":"images/ai/wandas-butter-tarts.jpg?v=2368448169"}}</script>
+{"almond-cheddar-appetizers":{"ai":"images/ai/almond-cheddar-appetizers.jpg?v=1007408677"},"basic-crepes":{"ai":"images/ai/basic-crepes.jpg?v=3454490001"},"basil-tomato-tart":{"ai":"images/ai/basil-tomato-tart.jpg?v=1495900456"},"black-bean-corn-salad":{"ai":"images/ai/black-bean-corn-salad.jpg?v=549485412"},"boston-cream-cake-nannies-cake":{"ai":"images/ai/boston-cream-cake-nannies-cake.jpg?v=2208278178"},"broccoli-casserole":{"ai":"images/ai/broccoli-casserole.jpg?v=842484280"},"christmas-pineapple-cake":{"ai":"images/ai/christmas-pineapple-cake.jpg?v=2091234319"},"christmas-shortbread":{"ai":"images/ai/christmas-shortbread.jpg?v=2398675648"},"classic-caesar-salad-la-casa-pepe-style":{"ai":"images/ai/classic-caesar-salad-la-casa-pepe-style.jpg?v=3279231303"},"classic-meatloaf":{"ai":"images/ai/classic-meatloaf.jpg?v=2068278126"},"crabmeat-dip":{"ai":"images/ai/crabmeat-dip.jpg?v=174483890"},"crepes-with-spinach-bacon-mushroom-filling":{"ai":"images/ai/crepes-with-spinach-bacon-mushroom-filling.jpg?v=976941576"},"curried-baby-pea-soup":{"ai":"images/ai/curried-baby-pea-soup.jpg?v=2247362930"},"dijon-chicken":{"ai":"images/ai/dijon-chicken.jpg?v=3307595392"},"fennel-apple-prosciutto-salad":{"ai":"images/ai/fennel-apple-prosciutto-salad.jpg?v=123468727"},"fennel-salad":{"ai":"images/ai/fennel-salad.jpg?v=1664207089"},"fleur-de-sel-lunenburg-mustard":{"ai":"images/ai/fleur-de-sel-lunenburg-mustard.jpg?v=3561002529"},"franks-crab-cakes":{"ai":"images/ai/franks-crab-cakes.jpg?v=1703069925"},"greek-salad-dressing":{"ai":"images/ai/greek-salad-dressing.jpg?v=2976985339"},"grilled-avocado-seafood-salsa":{"ai":"images/ai/grilled-avocado-seafood-salsa.jpg?v=1400457547"},"guacamole":{"ai":"images/ai/guacamole.jpg?v=2966000901"},"hersheys-chocolate-cake":{"ai":"images/ai/hersheys-chocolate-cake.jpg?v=2909830198"},"hunters-chicken":{"ai":"images/ai/hunters-chicken.jpg?v=2003501822"},"irish-scones":{"ai":"images/ai/irish-scones.jpg?v=1193098402"},"italian-pork-chops-crockpot-recipe":{"ai":"images/ai/italian-pork-chops-crockpot-recipe.jpg?v=3929448508"},"jam-tarts":{"ai":"images/ai/jam-tarts.jpg?v=1054531863"},"lemon-sorbet":{"ai":"images/ai/lemon-sorbet.jpg?v=1574670472"},"marinated-balsamic-grilled-vegetables":{"ai":"images/ai/marinated-balsamic-grilled-vegetables.jpg?v=1403189319"},"mediterranean-couscous-salad":{"ai":"images/ai/mediterranean-couscous-salad.jpg?v=2134505438"},"moms-classic-scones":{"ai":"images/ai/moms-classic-scones.jpg?v=3852476545"},"mushroom-braised-chicken":{"ai":"images/ai/mushroom-braised-chicken.jpg?v=2318665794"},"mushroom-braised-chicken-with-cream-noodles":{"ai":"images/ai/mushroom-braised-chicken-with-cream-noodles.jpg?v=992354121"},"nannies-1-egg-cake":{"ai":"images/ai/nannies-1-egg-cake.jpg?v=1005253591"},"nannies-bread":{"ai":"images/ai/nannies-bread.jpg?v=359793196"},"normas-meatballs":{"ai":"images/ai/normas-meatballs.jpg?v=2701171456"},"olive-chicken-curry-crepes":{"ai":"images/ai/olive-chicken-curry-crepes.jpg?v=2675828795"},"oriental-beef-noodles":{"ai":"images/ai/oriental-beef-noodles.jpg?v=367567106"},"oysters-bienville":{"ai":"images/ai/oysters-bienville.jpg?v=2282943169"},"pakistani-chicken-with-potato-and-spinach":{"ai":"images/ai/pakistani-chicken-with-potato-and-spinach.jpg?v=3353773240"},"pasta-sauce-with-pork-hocks":{"ai":"images/ai/pasta-sauce-with-pork-hocks.jpg?v=3184869547"},"penne-abigail":{"ai":"images/ai/penne-abigail.jpg?v=3662978291"},"plum-loaf":{"ai":"images/ai/plum-loaf.jpg?v=184183015"},"pork-cutlets-in-mustard-sauce":{"ai":"images/ai/pork-cutlets-in-mustard-sauce.jpg?v=1667330491"},"pot-roasted-pork-in-white-wine-with-fennel-and-rosemary":{"ai":"images/ai/pot-roasted-pork-in-white-wine-with-fennel-and-rosemary.jpg?v=3463021439"},"rice-pudding":{"ai":"images/ai/rice-pudding.jpg?v=2557027410"},"roasted-fennel-salad":{"ai":"images/ai/roasted-fennel-salad.jpg?v=322405399"},"scallop-lobster-mushroom-crepes":{"ai":"images/ai/scallop-lobster-mushroom-crepes.jpg?v=462465778"},"seafood-casserole-cys":{"ai":"images/ai/seafood-casserole-cys.jpg?v=1856585409"},"seafood-chowder-crockpot-version":{"ai":"images/ai/seafood-chowder-crockpot-version.jpg?v=3918889999"},"shrimp-tarragon":{"ai":"images/ai/shrimp-tarragon.jpg?v=4113520524"},"swiss-steak-crockpot-version":{"ai":"images/ai/swiss-steak-crockpot-version.jpg?v=3835597215"},"tabbouleh":{"ai":"images/ai/tabbouleh.jpg?v=888308513"},"tuna-noodle-casserole-crockpot-version":{"ai":"images/ai/tuna-noodle-casserole-crockpot-version.jpg?v=2526681521"},"vanilla-wafers":{"ai":"images/ai/vanilla-wafers.jpg?v=2908919849"},"veal-marsala":{"ai":"images/ai/veal-marsala.jpg?v=488193943"},"wandas-butter-tarts":{"ai":"images/ai/wandas-butter-tarts.jpg?v=2368448169"}}</script>
 <script>
 (() => {
 "use strict";
@@ -1934,13 +1909,13 @@ const ICON = {
   pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6Z"/><path d="M2 10h20M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/></svg>',
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
-  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   dice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
   camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
@@ -1954,7 +1929,7 @@ function parseBook(txt) {
     const l = raw.trim(); if (!l) continue;
     const body = l.replace(/^(-:|[#@^>\-=*.!])\s?/, "");
     if (l.startsWith("# ")) { cat = body; continue; }
-    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "", notes: [] }; out.push(r); grp = null; continue; }
+    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "" }; out.push(r); grp = null; continue; }
     if (!r) continue;
     if (l.startsWith("^ ")) r.serves = body;
     else if (l.startsWith("> ")) r.intro = body;
@@ -1963,7 +1938,6 @@ function parseBook(txt) {
     else if (l.startsWith("= ")) { grp = { h: body, items: [] }; r.steps.push(grp); }
     else if (l.startsWith("* ")) { if (!grp) { grp = { h: "", items: [] }; r.steps.push(grp); } grp.items.push(body); }
     else if (l.startsWith(". ")) r.outro = body;
-    else if (l.startsWith("! ")) r.notes.push(body);
   }
   out.forEach(r => { r.search = (r.name + " " + r.cat + " " + r.ing.map(i => i.t || "").join(" ")).toLowerCase(); r.nIng = r.ing.filter(i => i.t).length; r.nSteps = r.steps.reduce((a, g) => a + g.items.length, 0); });
   return out;
@@ -2033,7 +2007,7 @@ const scaledText = (t, f) => { const s = scaleLine(t, f); return s.scaled ? s.te
 const S = {
   q: "", cat: store.get("cat", "All"), filter: "all", factor: 1,
   fav: new Set(store.get("fav", [])), checks: store.get("checks", {}), list: store.get("list", []),
-  sugg: [], stories: [], desk: {}, dbState: "loading",
+  sugg: [], stories: [], dbState: "loading",
   me: { id: null, canEdit: false, canWrite: null, readOnly: false }, names: {},
   sFilter: { status: "open", recipe: "" }
 };
@@ -2044,7 +2018,7 @@ const saveLocal = () => { store.set("fav", [...S.fav]); store.set("checks", S.ch
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
   if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: h.slice(2) };
-  if (["suggestions", "list", "desk"].includes(h)) return { v: h };
+  if (["suggestions", "list"].includes(h)) return { v: h };
   return { v: "home" };
 }
 let lastRoute = "";
@@ -2056,7 +2030,6 @@ function render() {
   if (r.v === "recipe") view.innerHTML = vRecipe(BY[r.id]);
   else if (r.v === "suggestions") view.innerHTML = vSuggestions();
   else if (r.v === "list") view.innerHTML = vList();
-  else if (r.v === "desk") view.innerHTML = vDesk();
   else view.innerHTML = vHome();
   const navKey = r.v === "recipe" ? "home" : r.v;
   $$(".nav a").forEach(a => a.dataset.nav === navKey ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
@@ -2098,13 +2071,13 @@ function card(r) {
     ${im ? `<span class="rc-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" loading="lazy" decoding="async" ${imgGone}><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${IMG_TAG[im.kind]}</span></span>` : ""}
     <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
     <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
-    <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}${r.notes.length ? `<span style="color:var(--amber)">needs a look</span>` : ""}</span></a>`;
+    <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}</span></a>`;
 }
 function filtered() {
   const q = S.q.trim().toLowerCase();
   return RECIPES.filter(r => (S.cat === "All" || r.cat === S.cat) &&
     (!q || q.split(/\s+/).every(w => r.search.includes(w))) &&
-    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && (r.notes.length || suggFor(r.id).some(s => s.status === "open"))) || (S.filter === "story" && storiesFor(r.id).length)));
+    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && suggFor(r.id).some(s => s.status === "open")) || (S.filter === "story" && storiesFor(r.id).length)));
 }
 function vHome() {
   const open = S.sugg.filter(s => s.status === "open").length;
@@ -2127,6 +2100,7 @@ function vHome() {
         <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
         <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
         <button class="btn ghost" data-act="random">${ICON.dice} What should I cook?</button>
+        ${canInstall() ? `<button class="btn ghost" data-act="install">${ICON.phone} Get the app</button>` : ""}
       </div>
     </div>
   </section>
@@ -2187,7 +2161,6 @@ function vRecipe(r) {
         </div>
       </header>
       <div class="card-body">
-        ${r.notes.map((nt, i) => { const done = S.desk[r.id + ":" + i]; return `<div class="ednote ${done ? "done" : ""}">${ICON.note}<div><p><b>Editor's note.</b> ${esc(nt)}</p>${done ? ` <span class="pill accepted">Resolved</span>` : `<button class="btn sm ghost" data-act="suggest-kind" data-kind="fix" data-text="${esc(nt)}">I know the answer</button>`}</div></div>`; }).join("")}
         <div class="scaler">
           <span class="eyebrow">Batch size</span>
           <div class="seg" role="group" aria-label="Scale quantities">${[[.5, "½×"], [1, "1×"], [2, "2×"], [3, "3×"]].map(([v, l]) => `<button data-scale="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>
@@ -2276,17 +2249,6 @@ function vList() {
   ${groups.length ? `<div class="shop">${groups.map((g, gi) => `<div class="panel" style="${catStyle(BY[g.id]?.cat)}"><div class="panel-head"><h3><a href="#r-${esc(g.id)}" style="text-decoration:none">${esc(g.name)}</a></h3><button class="btn sm ghost" data-rm-group="${gi}">Remove</button></div>${g.factor !== 1 ? `<div class="muted" style="font-size:.8rem;margin:-6px 0 6px">${g.factor}× batch</div>` : ""}<ul class="ing">${g.items.map((it, ii) => `<li class="line ${it.done ? "done" : ""}"><button class="tick" data-shop="${gi}:${ii}" aria-pressed="${!!it.done}" aria-label="Got ${esc(it.t)}">${ICON.check}</button><span class="txt">${esc(it.t)}</span></li>`).join("")}</ul></div>`).join("")}</div>`
     : `<div class="panel empty"><h3>Your list is empty</h3><p>Open a recipe and choose “Add to shopping list”.</p><a class="btn" href="#">Browse recipes</a></div>`}`;
 }
-function vDesk() {
-  const items = RECIPES.flatMap(r => r.notes.map((n, i) => ({ r, n, k: r.id + ":" + i })));
-  const done = items.filter(x => S.desk[x.k]).length;
-  const accepted = S.sugg.filter(s => s.status === "accepted");
-  return `<div class="ph"><div><div class="eyebrow">Getting ready for print</div><h1>Editor's desk</h1><p>Things in the manuscript that need a decision or a family member's knowledge before the book is printed: missing amounts, duplicate recipes, leftover transcription text. Anyone can help answer them.</p></div>
-    <div class="stats" style="min-width:min(100%,360px)"><div class="stat"><b>${items.length - done}</b><span>to resolve</span></div><div class="stat"><b>${done}</b><span>resolved</span></div><div class="stat"><b>${accepted.length}</b><span>accepted edits</span></div></div></div>
-  <div class="stack">${items.map(x => { const d = S.desk[x.k]; return `<div class="panel" style="display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;${d ? "opacity:.65" : ""}">
-    <div style="min-width:0;flex:1 1 320px"><a href="#r-${x.r.id}" style="font-family:var(--f-display);font-size:1.1rem;text-decoration:none">${esc(x.r.name)}</a> <span class="muted" style="font-size:.82rem">· ${esc(x.r.cat)}</span><p style="margin:6px 0 0;${d ? "text-decoration:line-through" : ""}">${esc(x.n)}</p></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">${d ? `<span class="pill accepted">Resolved</span>` : `<button class="btn sm" data-act="suggest-for" data-id="${x.r.id}" data-text="${esc(x.n)}">${ICON.pencil} I know the answer</button>`}
-    ${S.me.canEdit && S.dbState === "on" ? `<button class="btn sm ghost" data-desk="${esc(x.k)}">${d ? "Reopen" : "Mark resolved"}</button>` : ""}</div></div>`; }).join("")}</div>`;
-}
 
 /* ---------------- events ---------------- */
 $("#q").addEventListener("input", e => { S.q = e.target.value; if (route().v !== "home") location.hash = ""; render(); });
@@ -2305,13 +2267,11 @@ document.addEventListener("click", async e => {
   if (d.resolve) { resolveSugg(d.id, d.resolve); return; }
   if (d.delSugg) { if (t.dataset.armed) { delDoc("suggestions", d.delSugg); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
   if (d.delStory) { if (t.dataset.armed) { delDoc("stories", d.delStory); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
-  if (d.desk) { toggleDesk(d.desk); return; }
   if (d.close !== undefined) { t.closest("dialog").close(); return; }
   switch (d.act) {
     case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
     case "new-recipe": openSuggest({ kind: "new" }); break;
     case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
-    case "suggest-for": openSuggest({ recipeId: d.id, kind: "fix", why: "Re: editor's note: " + d.text }); break;
     case "random": { const pool = filtered().length ? filtered() : RECIPES; location.hash = "r-" + pool[Math.floor(Math.random() * pool.length)].id; break; }
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
@@ -2328,6 +2288,7 @@ document.addEventListener("click", async e => {
     case "cook": openCook(r); break;
     case "ask": openAsk(r); break;
     case "photo": openPhoto(r); break;
+    case "install": install(); break;
     case "export": exportCsv(); break;
   }
 });
@@ -2438,10 +2399,6 @@ $("#rs-form").addEventListener("submit", async e => {
   catch { toast("Couldn't update. You may not have editor access."); }
 });
 async function delDoc(col, id) { try { await db.doc(col + "/" + id).delete(); toast("Deleted"); } catch { toast("Couldn't delete that."); } }
-async function toggleDesk(k) {
-  const next = { ...S.desk }; if (next[k]) delete next[k]; else next[k] = true;
-  try { await db.doc("desk/status").set(next); } catch { toast("Couldn't save. You may not have editor access."); }
-}
 async function exportCsv() {
   const cols = ["status", "recipe", "kind", "book_says", "suggested", "why", "from", "date", "editor_note"];
   const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
@@ -2534,6 +2491,24 @@ $("#dlg-photo").addEventListener("click", async e => {
   if (b.dataset.ph === "remove") { try { await idb.del(phR.id); } catch {} setLocal(phR.id, null); render(); drawPhoto(); toast("Removed from this device"); }
 });
 
+/* ---------------- install as an app ---------------- */
+// Chrome/Edge/Samsung offer a real install prompt; iPhone and others get step-by-step instructions.
+let installEvt = null, installed = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const framed = (() => { try { return window.self !== window.top; } catch { return true; } })();
+const canInstall = () => !installed && !framed && /^https?:$/.test(location.protocol);
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
+addEventListener("appinstalled", () => { installed = true; installEvt = null; render(); toast("The cookbook is on your home screen"); });
+if ("serviceWorker" in navigator && !framed && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
+async function install() {
+  if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }
+  const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1), android = /Android/.test(ua);
+  const steps = ios ? ["Tap the <b>Share</b> button (the square with an arrow pointing up). In Safari it's at the bottom of the screen; in Chrome it's at the top right.", "Scroll down and tap <b>Add to Home Screen</b>.", "Tap <b>Add</b>. The cookbook appears on your home screen."]
+    : android ? ["Tap the <b>⋮</b> menu at the top right of your browser.", "Tap <b>Install app</b> or <b>Add to Home screen</b>.", "Tap <b>Install</b> (or <b>Add</b>). The cookbook appears on your home screen."]
+    : ["In Chrome or Edge, click the <b>install icon</b> at the right end of the address bar, or open the <b>⋮</b> menu and choose <b>Install</b> (in Edge: <b>Apps → Install this site as an app</b>).", "On a Mac in Safari, choose <b>File → Add to Dock</b>.", "To get it on your phone, open this page on the phone and tap <b>Get the app</b> there."];
+  $("#in-body").innerHTML = `<ol class="ph-steps">${steps.map(t => `<li>${t}</li>`).join("")}</ol>`;
+  $("#dlg-install").showModal();
+}
+
 /* ---------------- ask claude ---------------- */
 let askR = null, askCtl = null, lastAnswer = "";
 const recipeText = r => `${r.name} (${r.cat})${r.serves ? "\nServes: " + r.serves : ""}\n${r.intro}\nIngredients:\n${r.ing.map(i => i.g ? i.g + ":" : "- " + i.t).join("\n")}\nMethod:\n${r.steps.map(g => (g.h ? g.h + ":\n" : "") + g.items.map(t => "- " + t).join("\n")).join("\n")}`;
@@ -2582,7 +2557,6 @@ async function boot() {
   const onErr = () => { S.dbState = "off"; render(); };
   db.collection("suggestions").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.sugg = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
   db.collection("stories").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.stories = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
-  db.doc("desk/status").onSnapshot(d => { S.desk = d.exists ? { ...d.data() } : {}; render(); }, () => {});
 }
 boot();
 })();

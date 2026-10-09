@@ -4,11 +4,10 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 
 ## What's in it
 
-- 57 family recipes in 7 sections, searchable by name or ingredient
+- 56 family recipes in 7 sections, searchable by name or ingredient
 - Ingredient and step check-offs, ½×–3× batch scaling, favourites, a shopping list and a step-by-step cook mode
 - A pencil on every ingredient and step for suggesting corrections, plus forms for memories, introductions and missing recipes
 - A suggestions review queue (accept or decline, CSV export)
-- An editor's desk listing manuscript issues to settle before printing
 - A picture for every recipe: AI-generated stand-ins until the family adds real photos
 
 ## Files
@@ -37,7 +36,6 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 = Step group heading
 * Step
 . Closing note
-! Editor's note (manuscript issue)
 ```
 
 Edit the text file, then run `./build.sh`.

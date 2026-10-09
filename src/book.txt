@@ -67,7 +67,7 @@
 
 @ Shrimp Tarragon
 > This elegant shrimp dish features a rich, creamy tarragon sauce with a touch of cognac for a bold and flavorful finish. Perfect for a special dinner, it pairs beautifully with rice or crusty bread.
-- 5 tablespoons butter
+- 4 tablespoons butter
 - 36 medium-sized shrimp, peeled and deveined
 - Salt (to taste)
 - 2 tablespoons finely minced shallots
@@ -93,7 +93,6 @@
 = Serve & Enjoy
 * Remove from heat and serve immediately over rice, pasta, or with crusty bread.
 . This Shrimp Tarragon is a luxurious dish perfect for impressing guests or treating yourself to a gourmet meal at home!
-! The ingredient list calls for 5 tablespoons of butter, but the steps only use 4. The fifth tablespoon is never mentioned.
 
 @ Norma's Meatballs
 > These tender and flavorful meatballs are baked to perfection and coated in a sweet and tangy sauce. A family favorite, they make a great appetizer or main dish.
@@ -127,7 +126,6 @@
 * Pour the warm sauce over the meatballs and stir gently to coat.
 * Simmer on low heat for a few minutes before serving.
 . Enjoy these as a delicious appetizer or over rice for a hearty meal!
-! A second, slightly different set of meatball steps (skillet option, 10–15 minute simmer) is stranded at the end of Frank's Crab Cakes in the manuscript. Decide which version belongs here.
 
 @ Basil Tomato Tart
 > This savory basil tomato tart features juicy tomatoes, fresh basil, and a rich cheese filling in a flaky pie crust. It's perfect as a light lunch, appetizer, or side dish.
@@ -139,6 +137,8 @@
 - ½ cup mayonnaise
 - ¼ cup grated parmesan
 - ⅛ teaspoon ground white pepper
+- ½ teaspoon olive oil
+- Extra shredded mozzarella for the topping
 = Preheat & Prepare Crust
 * Preheat oven to 375°F (190°C).
 * Pre-bake the pie crust according to package or recipe instructions.
@@ -150,16 +150,16 @@
 * In a food processor, combine basil, garlic, and ½ teaspoon olive oil until coarsely chopped.
 * Sprinkle this mixture over the tomatoes.
 = Prepare the Cheese Topping
-* In a mixing bowl, combine the remaining mozzarella, mayonnaise, parmesan, and white pepper.
+* In a mixing bowl, combine some extra mozzarella, the mayonnaise, parmesan, and white pepper.
 * Spoon the cheese mixture evenly over the tart.
 = Bake & Serve
 * Bake at 375°F (190°C) for 25–30 minutes, or until golden and bubbly.
 * Let cool slightly before slicing.
 . A perfect blend of fresh summer flavors and creamy cheese goodness!
-! The steps use "the remaining mozzarella", but all ½ cup was already used on the crust. The original card probably called for more mozzarella. Olive oil is also used in the steps but missing from the ingredients.
 
 @ Oysters Bienville
 > A rich and flavorful dish featuring oysters baked with a creamy shrimp and bacon sauce!
+- Fresh oysters on the half shell
 - 4-5 slices bacon (cooked & chopped)
 - ½ cup diced onion
 - Salt & a pinch of cayenne
@@ -184,7 +184,6 @@
 * Spoon the shrimp & bacon sauce over fresh oysters in their shells.
 * Bake at 350°F (175°C) for 20 minutes, until bubbly and golden.
 . A decadent and elegant seafood dish, perfect for special occasions!
-! The oysters themselves are not in the ingredient list.
 
 @ Frank's Crab Cakes
 > These crispy, flavorful crab cakes are packed with delicate crab meat and a touch of spice. Pan-fried in butter and olive oil, they make a delicious appetizer or main course.
@@ -209,7 +208,6 @@
 = Serve & Enjoy
 * Serve hot with a squeeze of lemon or a creamy dipping sauce.
 . Crispy on the outside and tender on the inside, perfect for any seafood lover!
-! In the manuscript, meatball sauce steps follow this recipe by mistake, and a stray line ("Here's the combined recipe for Pakistani Chicken…") sits just above it. Both need to be removed from the book file.
 
 # Salads
 @ Roasted Fennel Salad
@@ -232,13 +230,13 @@
 * Zest the orange and set aside.
 * Remove the orange skin, then dice the fruit into bite-sized pieces.
 = Assemble the salad
-* Scatter the diced olives and pine nuts over the roasted fennel.
+* Arrange the roasted fennel on a platter and top with the orange pieces and red onion.
+* Scatter the diced olives and pine nuts over the top, then sprinkle with the orange zest.
 = Dress the salad
 * Squeeze fresh lemon juice over the salad and drizzle with olive oil to taste.
 = Garnish
 * Sprinkle the reserved fennel fronds over the top and serve immediately.
 . This salad pairs beautifully with grilled fish or roasted chicken.
-! The orange, its zest and the red onion are prepared but never added to the salad in the steps.
 
 @ Classic Caesar Salad (La Casa Pepe Style)
 > This homemade Caesar salad captures the bold flavors of a traditional dressing, combined with crisp romaine lettuce, crunchy croutons, and savory Parmesan. Perfect for a light lunch or a flavorful side dish!
@@ -451,13 +449,11 @@
 * Add the cubed potatoes, chopped green onions, water, salt, and pepper.
 = Cook
 * Cover and cook on Low for 6-8 hours or High for 2-4 hours, until the potatoes are tender.
-= Add the Milk
-* Stir in the evaporated milk during the last hour of cooking to create a rich and creamy texture.
+= Add the Fish & Milk
+* During the last hour of cooking, add the fish pieces and stir in the evaporated milk. Cook until the fish flakes easily and the chowder is rich and creamy.
 . Serve hot with crusty bread or oyster crackers. Garnish with fresh parsley or additional green onions, or add a dash of hot sauce or Old Bay seasoning.
-! The fish is cut up in step 1 but never added to the crockpot. It most likely goes in with the milk during the last hour.
 
 @ Curried Baby Pea Soup
-^ 8
 > A creamy, flavorful dish infused with the warmth of curry and ginger. Perfect as a comforting appetizer or a light meal.
 - 2 tablespoons unsalted butter
 - 1 leek (white part only), sliced
@@ -482,10 +478,10 @@
 * Heat through without boiling.
 * Season with salt and pepper to taste.
 * Garnish with toasted almonds or a swirl of cream before serving.
-! "Serves 8" seems high for 1 cup of peas and 1 cup of stock. Worth checking against the original card.
 
 # Main Courses
 @ Dijon Chicken
+> A quick weeknight favourite: golden pan-fried chicken breasts finished in a creamy sauce of Dijon mustard, tarragon and a touch of honey. Serve it with rice or mashed potatoes to catch every bit of the sauce.
 - Boneless, skinless chicken breasts
 - Flour (for dredging)
 - Salt & pepper
@@ -500,7 +496,6 @@
 * In the same pan, combine bouillon, Dijon mustard, tarragon, and honey.
 * Add the chicken back to the pan and cook in the sauce until done.
 * Stir in sour cream last, mixing well before serving.
-! No introduction yet. A family member could write one.
 
 @ Hunter's Chicken
 > A rich and hearty dish featuring tender chicken simmered in a flavorful sauce made with mushrooms, white wine, beef stock, and herbs. Pairs well with rice, mashed potatoes, or crusty bread to soak up the sauce.
@@ -508,7 +503,7 @@
 - 2 tbsp butter
 - ½ cup chopped onion
 - 1 pkg mushrooms
-- ½ cup white wine (cubist)
+- ½ cup white wine
 - ¼ cup beef stock
 - 2 tbsp tomato paste (or ketchup)
 - 1 tbsp cornstarch
@@ -535,7 +530,6 @@
 * Let the dish simmer until the sauce has thickened and the chicken is fully cooked.
 = Serve
 * Enjoy with rice, mashed potatoes, or a warm baguette.
-! "(cubist)" after white wine looks like a transcription error. Possibly a brand or "dry".
 
 @ Mushroom Braised Chicken
 > Tender chicken simmered in a rich white wine and mushroom sauce, finished with a creamy texture. Pairs well with rice, pasta, or crusty bread.
@@ -559,7 +553,6 @@
 = Final Simmer
 * Let the sauce simmer uncovered until it thickens to a rich consistency.
 . Enjoy over rice, mashed potatoes, or buttered egg noodles. Garnish with fresh parsley.
-! The book has two different Mushroom Braised Chicken recipes. Keep both with distinct names, or merge them.
 
 @ Classic Meatloaf
 > Hearty, flavorful, and perfect for a comforting homemade meal. With a blend of minced beef, fresh vegetables, and a tangy hint of horseradish, it's sure to become a family favorite.
@@ -724,11 +717,10 @@
 * Heat butter or olive oil in a pan and brown the pork on all sides.
 * Add garlic, rosemary, bay leaves, fennel slices, and wine to the pan.
 * Cover the roast with wet waxed paper.
-* Bake for 1½ hours (for a 4–6 lb roast, 1¾–2 hours for a 7–9 lb roast).
+* Bake for 1½ hours.
 * If the roast has the bone, it will take longer.
 * After cooking, remove the roast and let it rest.
 * For the finishing sauce, remove the garlic cloves, squish them open, and squeeze out the juice from the bottom of the pan.
-! The manuscript reads "1–3 ½ lb loin pork roast". Shown here as one 3½ lb roast; please confirm. The bake times also mention 4–9 lb roasts, which don't match. No introduction yet.
 
 @ Penne Abigail
 ^ 4-6
@@ -764,28 +756,6 @@
 * Serve warm, garnished with extra parsley or basil if desired.
 . Perfect for a family dinner or meal prep, as the flavors continue to develop over time.
 
-@ Seafood Casserole
-> A rich and creamy seafood casserole filled with lobster, crab, shrimp, and a smooth cheese sauce. Perfect for special occasions or cozy dinners.
-- 2 cups chopped onion
-- 3 cups chopped celery
-- 3 tbsp butter
-- 1 tsp salt
-- ¼ tsp pepper
-- ¾ cup flour
-- ½ cup butter
-- 5 cups milk
-- 1 lb Velveeta cheese
-- 10 oz lobster meat
-- ½ lb crab meat
-- ¾ lb cooked shrimp
-- 1 lb cooked scallops
-* Sauté the onion and celery in 3 tbsp butter until softened. Add salt and pepper.
-* Prepare a white sauce: Melt ½ cup butter, stir in flour, then slowly whisk in milk until thickened.
-* Add the sautéed vegetables and Velveeta cheese, stirring until the cheese is fully melted.
-* Mix in the seafood, then transfer to a large casserole dish or individual serving dishes.
-* Bake until bubbly and lightly browned.
-! Not in the table of contents. It looks like the complete version of Seafood Casserole (Cy's). Consider merging the two. Needs an oven temperature and time.
-
 @ Veal Marsala
 > A classic Italian dish, rich, savory, and elegant. Thin veal cutlets are coated in Parmesan, seared until golden, and simmered in a Marsala wine sauce with mushrooms and garlic.
 - 1 lb thin veal cutlets
@@ -803,7 +773,6 @@
 * Add butter to the pan, stir in cayenne, bouillon cube, and hot water, mixing until the bouillon dissolves.
 * Return the veal and mushrooms to the pan and cook for about 1 minute over high heat.
 * Add Marsala wine, stir, and serve immediately.
-! Not in the table of contents and has no section heading in the manuscript.
 
 @ Pasta Sauce with Pork Hocks
 > An inexpensive yet delicious pasta sauce. Slow simmering the pork hocks gives it deep flavor, perfect for a cozy family dinner.
@@ -823,7 +792,6 @@
 * Remove pork hocks from the pot, remove meat from bones, and chop finely.
 * Return chopped pork to the sauce, simmering for an additional 15 minutes.
 * Serve over your favorite noodles and enjoy!
-! Not in the table of contents and has no section heading in the manuscript.
 
 @ Broccoli Casserole
 > A delicious, creamy side dish for any meal. Easy to prepare, and it can be made ahead of time!
@@ -909,17 +877,23 @@
 * Bake at 400°F (200°C) for 12 minutes, until heated through and slightly golden on top.
 
 @ Seafood Casserole (Cy's)
-> A creamy and comforting seafood casserole with a rich Velveeta cheese sauce and sautéed vegetables.
+> A rich and creamy seafood casserole filled with lobster, crab, shrimp and scallops in a smooth Velveeta cheese sauce. Perfect for special occasions or cozy dinners.
 -: For the Sautéed Vegetables
 - 3 cups chopped celery
 - 2 cups chopped onion
-- Butter (for sautéing)
+- 3 tbsp butter (for sautéing)
 -: For the Cheese Sauce
 - ¾ cup flour
 - ½ cup butter
 - 5 cups milk
 - 1 lb Velveeta cheese
-- Salt & pepper (to taste)
+- 1 tsp salt
+- ¼ tsp pepper
+-: For the Seafood
+- 10 oz lobster meat
+- ½ lb crab meat
+- ¾ lb cooked shrimp
+- 1 lb cooked scallops
 = Sauté the Vegetables
 * In a large pan, melt butter over medium heat.
 * Add chopped celery and onion, sautéing until soft and translucent.
@@ -928,14 +902,14 @@
 * Whisk in flour and cook for 1–2 minutes until slightly golden.
 * Gradually add milk, whisking constantly to create a smooth sauce.
 * Stir in Velveeta cheese and continue stirring until melted.
-* Season with salt and pepper to taste.
+* Season with the salt and pepper.
 = Assemble the Casserole
 * Preheat oven to 375°F (190°C).
-* Combine the sautéed vegetables with the cheese sauce and pour into a greased casserole dish.
+* Combine the sautéed vegetables with the cheese sauce, then gently fold in the lobster, crab, shrimp and scallops.
+* Pour into a greased casserole dish, or divide among individual serving dishes.
 = Bake & Serve
-* Bake uncovered for about 30 minutes until bubbly and golden on top.
+* Bake uncovered for 30–35 minutes (about 20 minutes for individual dishes) until bubbly and lightly browned on top.
 * Let cool slightly before serving.
-! This version has no seafood in it at all. The uncatalogued Seafood Casserole has the lobster, crab, shrimp and scallops.
 
 @ Pakistani Chicken with Potato and Spinach
 -: For the Chicken
@@ -980,7 +954,6 @@
 * Roll out each ball into thin rounds.
 * Cook on a dry, hot pan for about 1-2 minutes per side until slightly charred and puffed.
 . Serve the chicken with the sautéed potatoes and spinach on the side, with fresh homemade chapatis.
-! The manuscript ends this recipe with "Let me know if you'd like any modifications!", leftover assistant text that should be removed. No introduction yet.
 
 @ Mushroom Braised Chicken (with Cream & Noodles)
 > Rich, flavorful, and tender, cooked in a creamy white wine sauce and served over buttered noodles. A comforting and elegant dish for any occasion.
@@ -1009,7 +982,6 @@
 = Serve
 * Return the chicken to the sauce, letting it heat through.
 * Serve over buttered noodles and garnish with parsley if desired.
-! Second recipe titled "Mushroom Braised Chicken" in the manuscript. Renamed here so the two can be told apart.
 
 @ Crêpes with Spinach, Bacon & Mushroom Filling
 ^ 4
@@ -1040,7 +1012,6 @@
 * Fill each crêpe with the spinach-bacon-mushroom mixture and roll up.
 = Warm & Serve
 * Top with a warm egg-based sauce if desired and heat in the oven before serving.
-! The egg sauce is mentioned but there is no recipe for it.
 
 @ Scallop, Lobster & Mushroom Crêpes
 ^ 30 crêpes
@@ -1118,7 +1089,6 @@
 * Place in greased loaf pans and let rise again until doubled.
 * Bake at 375°F (190°C) until golden brown.
 . Enjoy warm, with butter or jam!
-! No bake time given. The egg is added to boiling water in step 3. Check whether the original adds it after cooling.
 
 @ Christmas Shortbread
 > Rich, buttery, and slightly sweet, the perfect holiday treat. Simple to prepare, great for gifting or enjoying with a cup of tea.
@@ -1138,7 +1108,6 @@
 * Place the cookies on a parchment-lined baking sheet and bake for 30 minutes until firm but not browned.
 = Cool & Enjoy
 * Let the cookies cool completely before storing in an airtight container.
-! Appears twice in the manuscript, word for word, under both Bread & Baking and Desserts. Keep one.
 
 @ Nannie's Bread
 > A cherished classic, passed down through generations. It produces a soft, hearty loaf with a beautifully golden crust, perfect for sandwiches, toast, or simply enjoyed warm with butter.
@@ -1239,14 +1208,13 @@
 * Add the milk mixed with baking soda, vanilla, and cocoa. Mix until smooth.
 * Slowly stir in the boiling water, blending well.
 = Bake
-* Pour the batter into a greased cake pan.
+* Pour the batter into a greased 9×13-inch pan.
 * Bake for 55 minutes or until a toothpick inserted in the center comes out clean.
 * Let the cake cool before icing.
 = Prepare the Icing
 * Melt the unsweetened chocolate.
 * Mix with icing sugar, coffee, salt, and vanilla.
 * Beat until smooth and spread over the cooled cake.
-! Pan size isn't given. 55 minutes suggests a 9×13 or tube pan.
 
 @ Vanilla Wafers
 > A simple, buttery delight with a crisp texture and a rich vanilla flavor. Perfect for snacking, layering in banana pudding, or serving alongside tea or coffee.
@@ -1326,7 +1294,6 @@
 = Cool and Assemble
 * Transfer the filling to a bowl, cover with wax paper, and refrigerate until cool.
 * Once the cake and filling are cool, slice the cake in half and spread the filling between the layers.
-! The cake is identical to Nannie's 1-Egg Cake. The book could point from one to the other.
 
 @ Jam Tarts
 > A flaky, buttery crust filled with sweet raspberry jam. A perfect treat for tea time or dessert, especially with a dollop of whipped cream.
@@ -1364,12 +1331,11 @@
 - 1 cup raisins
 - 30 nuts
 - Tart shells
-* Soak raisins in Allegra (or another liquid, possibly rum or water).
+* Soak the raisins in rum or water.
 * Blend eggs, brown sugar, butter, cornstarch (or maple syrup), water, and vanilla together.
 * Stir in the soaked raisins and nuts.
 * Pour mixture into tart shells.
 * Bake at 350°F until done.
-! Found in the middle of Main Courses with leftover transcription text around it. Not in the contents. "Allegra" and "30 nuts" need checking against Wanda's original card, along with a bake time.
 
 @ Christmas Pineapple Cake
 > A rich, fruit-filled holiday treat with coconut, raisins, and cherries. It bakes low and slow for a moist and flavorful finish.
@@ -1389,7 +1355,7 @@
 - 1 cup coconut
 = Prepare the Batter
 * Cream the butter and sugar together until light and fluffy.
-* Add the egg yolks one at a time, mixing well after each addition.
+* Add the egg yolks one at a time, mixing well after each addition, then mix in the vanilla.
 = Add Dry Ingredients
 * In a separate bowl, whisk together the flour, baking powder, salt, and nutmeg.
 * Gradually add the dry ingredients to the butter mixture, mixing until combined.
@@ -1404,7 +1370,6 @@
 = Cool & Serve
 * Let the cake cool completely before removing it from the pan.
 * Slice and enjoy as a festive Christmas treat!
-! Vanilla is listed but never used in the steps.
 
 @ Nannie's 1-Egg Cake
 > Simple, classic, light and fluffy. A no-fuss recipe that needs just one egg, great for a quick homemade treat.
@@ -1485,4 +1450,3 @@
 * Let it sit at room temperature in a non-reactive container for 3 days.
 * After 3 days, put it in jars.
 . Easy to make and perfect for storage in small jars!
-! The first step says "the mixture" without saying which ingredients go in the pot. Presumably everything except the seeds and powder. The name mentions fleur de sel but the list just says salt. No introduction yet.

@@ -16,13 +16,13 @@ const ICON = {
   pot: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M4 10h16v6a4 4 0 0 1-4 4H8a4 4 0 0 1-4-4v-6Z"/><path d="M2 10h20M9 6c0-1 1-1 1-2M14 6c0-1 1-1 1-2"/></svg>',
   spark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M12 3l1.8 5.2L19 10l-5.2 1.8L12 17l-1.8-5.2L5 10l5.2-1.8Z"/><path d="M19 16l.8 2.2L22 19l-2.2.8L19 22l-.8-2.2L16 19l2.2-.8Z"/></svg>',
   chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 5h16v11H9l-5 4Z"/></svg>',
-  note: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 8v5M12 16.5v.5"/><path d="M10.3 3.9 2.6 17.2A2 2 0 0 0 4.3 20h15.4a2 2 0 0 0 1.7-2.8L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
   plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 5v14M5 12h14"/></svg>',
   dice: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="4" y="4" width="16" height="16" rx="3"/><circle cx="9" cy="9" r="1" fill="currentColor"/><circle cx="15" cy="15" r="1" fill="currentColor"/><circle cx="15" cy="9" r="1" fill="currentColor"/><circle cx="9" cy="15" r="1" fill="currentColor"/></svg>',
   down: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M12 4v11M7 10l5 5 5-5M5 20h14"/></svg>',
   copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="8" y="8" width="12" height="12" rx="2"/><path d="M16 8V5a1 1 0 0 0-1-1H5a1 1 0 0 0-1 1v10a1 1 0 0 0 1 1h3"/></svg>',
   left: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M15 5l-7 7 7 7"/></svg>',
   right: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M9 5l7 7-7 7"/></svg>',
+  phone: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><rect x="6" y="2.5" width="12" height="19" rx="2.5"/><path d="M11 18.5h2"/></svg>',
   camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linejoin="round"><path d="M4 8h3l2-3h6l2 3h3v11H4Z"/><circle cx="12" cy="13" r="3.5"/></svg>',
   ext: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><path d="M14 4h6v6M20 4l-9 9M18 14v6H4V6h6"/></svg>'
 };
@@ -36,7 +36,7 @@ function parseBook(txt) {
     const l = raw.trim(); if (!l) continue;
     const body = l.replace(/^(-:|[#@^>\-=*.!])\s?/, "");
     if (l.startsWith("# ")) { cat = body; continue; }
-    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "", notes: [] }; out.push(r); grp = null; continue; }
+    if (l.startsWith("@ ")) { r = { id: slug(body), name: body, cat, serves: "", intro: "", ing: [], steps: [], outro: "" }; out.push(r); grp = null; continue; }
     if (!r) continue;
     if (l.startsWith("^ ")) r.serves = body;
     else if (l.startsWith("> ")) r.intro = body;
@@ -45,7 +45,6 @@ function parseBook(txt) {
     else if (l.startsWith("= ")) { grp = { h: body, items: [] }; r.steps.push(grp); }
     else if (l.startsWith("* ")) { if (!grp) { grp = { h: "", items: [] }; r.steps.push(grp); } grp.items.push(body); }
     else if (l.startsWith(". ")) r.outro = body;
-    else if (l.startsWith("! ")) r.notes.push(body);
   }
   out.forEach(r => { r.search = (r.name + " " + r.cat + " " + r.ing.map(i => i.t || "").join(" ")).toLowerCase(); r.nIng = r.ing.filter(i => i.t).length; r.nSteps = r.steps.reduce((a, g) => a + g.items.length, 0); });
   return out;
@@ -115,7 +114,7 @@ const scaledText = (t, f) => { const s = scaleLine(t, f); return s.scaled ? s.te
 const S = {
   q: "", cat: store.get("cat", "All"), filter: "all", factor: 1,
   fav: new Set(store.get("fav", [])), checks: store.get("checks", {}), list: store.get("list", []),
-  sugg: [], stories: [], desk: {}, dbState: "loading",
+  sugg: [], stories: [], dbState: "loading",
   me: { id: null, canEdit: false, canWrite: null, readOnly: false }, names: {},
   sFilter: { status: "open", recipe: "" }
 };
@@ -126,7 +125,7 @@ const saveLocal = () => { store.set("fav", [...S.fav]); store.set("checks", S.ch
 function route() {
   const h = decodeURIComponent(location.hash.slice(1));
   if (h.startsWith("r-") && BY[h.slice(2)]) return { v: "recipe", id: h.slice(2) };
-  if (["suggestions", "list", "desk"].includes(h)) return { v: h };
+  if (["suggestions", "list"].includes(h)) return { v: h };
   return { v: "home" };
 }
 let lastRoute = "";
@@ -138,7 +137,6 @@ function render() {
   if (r.v === "recipe") view.innerHTML = vRecipe(BY[r.id]);
   else if (r.v === "suggestions") view.innerHTML = vSuggestions();
   else if (r.v === "list") view.innerHTML = vList();
-  else if (r.v === "desk") view.innerHTML = vDesk();
   else view.innerHTML = vHome();
   const navKey = r.v === "recipe" ? "home" : r.v;
   $$(".nav a").forEach(a => a.dataset.nav === navKey ? a.setAttribute("aria-current", "page") : a.removeAttribute("aria-current"));
@@ -180,13 +178,13 @@ function card(r) {
     ${im ? `<span class="rc-img" data-img><img src="${esc(im.src)}" alt="${esc(imgAlt(r, im))}" loading="lazy" decoding="async" ${imgGone}><span class="img-tag ${im.kind === "ai" ? "" : "real"}">${IMG_TAG[im.kind]}</span></span>` : ""}
     <span class="badges">${fav ? `<span class="dot fav" title="Favourite">${ICON.heart}</span>` : ""}${n ? `<span class="dot" title="${n} open suggestion${n > 1 ? "s" : ""}">${ICON.pencil}${n}</span>` : ""}${m ? `<span class="dot" title="${m} family memor${m > 1 ? "ies" : "y"}">${ICON.chat}${m}</span>` : ""}</span>
     <span class="cat">${esc(r.cat)}</span><h3>${esc(r.name)}</h3>
-    <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}${r.notes.length ? `<span style="color:var(--amber)">needs a look</span>` : ""}</span></a>`;
+    <span class="meta"><span>${r.nIng} ingredients</span>${r.serves ? `<span>serves ${esc(r.serves)}</span>` : ""}</span></a>`;
 }
 function filtered() {
   const q = S.q.trim().toLowerCase();
   return RECIPES.filter(r => (S.cat === "All" || r.cat === S.cat) &&
     (!q || q.split(/\s+/).every(w => r.search.includes(w))) &&
-    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && (r.notes.length || suggFor(r.id).some(s => s.status === "open"))) || (S.filter === "story" && storiesFor(r.id).length)));
+    (S.filter === "all" || (S.filter === "fav" && S.fav.has(r.id)) || (S.filter === "crock" && /crockpot|slow cooker/i.test(r.name + r.steps.map(g => g.items.join(" ")).join(" "))) || (S.filter === "review" && suggFor(r.id).some(s => s.status === "open")) || (S.filter === "story" && storiesFor(r.id).length)));
 }
 function vHome() {
   const open = S.sugg.filter(s => s.status === "open").length;
@@ -209,6 +207,7 @@ function vHome() {
         <button class="btn primary" data-act="suggest">${ICON.pencil} Suggest a change</button>
         <button class="btn" data-act="new-recipe">${ICON.plus} Add a missing recipe</button>
         <button class="btn ghost" data-act="random">${ICON.dice} What should I cook?</button>
+        ${canInstall() ? `<button class="btn ghost" data-act="install">${ICON.phone} Get the app</button>` : ""}
       </div>
     </div>
   </section>
@@ -269,7 +268,6 @@ function vRecipe(r) {
         </div>
       </header>
       <div class="card-body">
-        ${r.notes.map((nt, i) => { const done = S.desk[r.id + ":" + i]; return `<div class="ednote ${done ? "done" : ""}">${ICON.note}<div><p><b>Editor's note.</b> ${esc(nt)}</p>${done ? ` <span class="pill accepted">Resolved</span>` : `<button class="btn sm ghost" data-act="suggest-kind" data-kind="fix" data-text="${esc(nt)}">I know the answer</button>`}</div></div>`; }).join("")}
         <div class="scaler">
           <span class="eyebrow">Batch size</span>
           <div class="seg" role="group" aria-label="Scale quantities">${[[.5, "½×"], [1, "1×"], [2, "2×"], [3, "3×"]].map(([v, l]) => `<button data-scale="${v}" aria-pressed="${f === v}">${l}</button>`).join("")}</div>
@@ -358,17 +356,6 @@ function vList() {
   ${groups.length ? `<div class="shop">${groups.map((g, gi) => `<div class="panel" style="${catStyle(BY[g.id]?.cat)}"><div class="panel-head"><h3><a href="#r-${esc(g.id)}" style="text-decoration:none">${esc(g.name)}</a></h3><button class="btn sm ghost" data-rm-group="${gi}">Remove</button></div>${g.factor !== 1 ? `<div class="muted" style="font-size:.8rem;margin:-6px 0 6px">${g.factor}× batch</div>` : ""}<ul class="ing">${g.items.map((it, ii) => `<li class="line ${it.done ? "done" : ""}"><button class="tick" data-shop="${gi}:${ii}" aria-pressed="${!!it.done}" aria-label="Got ${esc(it.t)}">${ICON.check}</button><span class="txt">${esc(it.t)}</span></li>`).join("")}</ul></div>`).join("")}</div>`
     : `<div class="panel empty"><h3>Your list is empty</h3><p>Open a recipe and choose “Add to shopping list”.</p><a class="btn" href="#">Browse recipes</a></div>`}`;
 }
-function vDesk() {
-  const items = RECIPES.flatMap(r => r.notes.map((n, i) => ({ r, n, k: r.id + ":" + i })));
-  const done = items.filter(x => S.desk[x.k]).length;
-  const accepted = S.sugg.filter(s => s.status === "accepted");
-  return `<div class="ph"><div><div class="eyebrow">Getting ready for print</div><h1>Editor's desk</h1><p>Things in the manuscript that need a decision or a family member's knowledge before the book is printed: missing amounts, duplicate recipes, leftover transcription text. Anyone can help answer them.</p></div>
-    <div class="stats" style="min-width:min(100%,360px)"><div class="stat"><b>${items.length - done}</b><span>to resolve</span></div><div class="stat"><b>${done}</b><span>resolved</span></div><div class="stat"><b>${accepted.length}</b><span>accepted edits</span></div></div></div>
-  <div class="stack">${items.map(x => { const d = S.desk[x.k]; return `<div class="panel" style="display:flex;gap:14px;justify-content:space-between;align-items:flex-start;flex-wrap:wrap;${d ? "opacity:.65" : ""}">
-    <div style="min-width:0;flex:1 1 320px"><a href="#r-${x.r.id}" style="font-family:var(--f-display);font-size:1.1rem;text-decoration:none">${esc(x.r.name)}</a> <span class="muted" style="font-size:.82rem">· ${esc(x.r.cat)}</span><p style="margin:6px 0 0;${d ? "text-decoration:line-through" : ""}">${esc(x.n)}</p></div>
-    <div style="display:flex;gap:6px;flex-wrap:wrap">${d ? `<span class="pill accepted">Resolved</span>` : `<button class="btn sm" data-act="suggest-for" data-id="${x.r.id}" data-text="${esc(x.n)}">${ICON.pencil} I know the answer</button>`}
-    ${S.me.canEdit && S.dbState === "on" ? `<button class="btn sm ghost" data-desk="${esc(x.k)}">${d ? "Reopen" : "Mark resolved"}</button>` : ""}</div></div>`; }).join("")}</div>`;
-}
 
 /* ---------------- events ---------------- */
 $("#q").addEventListener("input", e => { S.q = e.target.value; if (route().v !== "home") location.hash = ""; render(); });
@@ -387,13 +374,11 @@ document.addEventListener("click", async e => {
   if (d.resolve) { resolveSugg(d.id, d.resolve); return; }
   if (d.delSugg) { if (t.dataset.armed) { delDoc("suggestions", d.delSugg); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
   if (d.delStory) { if (t.dataset.armed) { delDoc("stories", d.delStory); } else { t.dataset.armed = 1; t.textContent = "Confirm delete"; setTimeout(() => { if (t.isConnected) { delete t.dataset.armed; t.textContent = "Delete"; } }, 3000); } return; }
-  if (d.desk) { toggleDesk(d.desk); return; }
   if (d.close !== undefined) { t.closest("dialog").close(); return; }
   switch (d.act) {
     case "suggest": openSuggest({ recipeId: r?.id || "", kind: "fix" }); break;
     case "new-recipe": openSuggest({ kind: "new" }); break;
     case "suggest-kind": openSuggest({ recipeId: r?.id || "", kind: d.kind, current: d.kind === "fix" && d.text ? "" : "", why: d.text ? "Re: editor's note: " + d.text : "" }); break;
-    case "suggest-for": openSuggest({ recipeId: d.id, kind: "fix", why: "Re: editor's note: " + d.text }); break;
     case "random": { const pool = filtered().length ? filtered() : RECIPES; location.hash = "r-" + pool[Math.floor(Math.random() * pool.length)].id; break; }
     case "clear": S.q = ""; $("#q").value = ""; S.cat = "All"; S.filter = "all"; saveLocal(); render(); break;
     case "fav": S.fav.has(r.id) ? S.fav.delete(r.id) : S.fav.add(r.id); saveLocal(); render(); toast(S.fav.has(r.id) ? "Added to favourites" : "Removed from favourites"); break;
@@ -410,6 +395,7 @@ document.addEventListener("click", async e => {
     case "cook": openCook(r); break;
     case "ask": openAsk(r); break;
     case "photo": openPhoto(r); break;
+    case "install": install(); break;
     case "export": exportCsv(); break;
   }
 });
@@ -520,10 +506,6 @@ $("#rs-form").addEventListener("submit", async e => {
   catch { toast("Couldn't update. You may not have editor access."); }
 });
 async function delDoc(col, id) { try { await db.doc(col + "/" + id).delete(); toast("Deleted"); } catch { toast("Couldn't delete that."); } }
-async function toggleDesk(k) {
-  const next = { ...S.desk }; if (next[k]) delete next[k]; else next[k] = true;
-  try { await db.doc("desk/status").set(next); } catch { toast("Couldn't save. You may not have editor access."); }
-}
 async function exportCsv() {
   const cols = ["status", "recipe", "kind", "book_says", "suggested", "why", "from", "date", "editor_note"];
   const q = v => `"${String(v ?? "").replace(/"/g, '""')}"`;
@@ -616,6 +598,24 @@ $("#dlg-photo").addEventListener("click", async e => {
   if (b.dataset.ph === "remove") { try { await idb.del(phR.id); } catch {} setLocal(phR.id, null); render(); drawPhoto(); toast("Removed from this device"); }
 });
 
+/* ---------------- install as an app ---------------- */
+// Chrome/Edge/Samsung offer a real install prompt; iPhone and others get step-by-step instructions.
+let installEvt = null, installed = matchMedia("(display-mode: standalone)").matches || navigator.standalone === true;
+const framed = (() => { try { return window.self !== window.top; } catch { return true; } })();
+const canInstall = () => !installed && !framed && /^https?:$/.test(location.protocol);
+addEventListener("beforeinstallprompt", e => { e.preventDefault(); installEvt = e; });
+addEventListener("appinstalled", () => { installed = true; installEvt = null; render(); toast("The cookbook is on your home screen"); });
+if ("serviceWorker" in navigator && !framed && (location.protocol === "https:" || location.hostname === "localhost")) navigator.serviceWorker.register("sw.js").catch(() => {});
+async function install() {
+  if (installEvt) { const e = installEvt; installEvt = null; e.prompt(); try { await e.userChoice; } catch {} return; }
+  const ua = navigator.userAgent, ios = /iPhone|iPad|iPod/.test(ua) || (/Macintosh/.test(ua) && navigator.maxTouchPoints > 1), android = /Android/.test(ua);
+  const steps = ios ? ["Tap the <b>Share</b> button (the square with an arrow pointing up). In Safari it's at the bottom of the screen; in Chrome it's at the top right.", "Scroll down and tap <b>Add to Home Screen</b>.", "Tap <b>Add</b>. The cookbook appears on your home screen."]
+    : android ? ["Tap the <b>⋮</b> menu at the top right of your browser.", "Tap <b>Install app</b> or <b>Add to Home screen</b>.", "Tap <b>Install</b> (or <b>Add</b>). The cookbook appears on your home screen."]
+    : ["In Chrome or Edge, click the <b>install icon</b> at the right end of the address bar, or open the <b>⋮</b> menu and choose <b>Install</b> (in Edge: <b>Apps → Install this site as an app</b>).", "On a Mac in Safari, choose <b>File → Add to Dock</b>.", "To get it on your phone, open this page on the phone and tap <b>Get the app</b> there."];
+  $("#in-body").innerHTML = `<ol class="ph-steps">${steps.map(t => `<li>${t}</li>`).join("")}</ol>`;
+  $("#dlg-install").showModal();
+}
+
 /* ---------------- ask claude ---------------- */
 let askR = null, askCtl = null, lastAnswer = "";
 const recipeText = r => `${r.name} (${r.cat})${r.serves ? "\nServes: " + r.serves : ""}\n${r.intro}\nIngredients:\n${r.ing.map(i => i.g ? i.g + ":" : "- " + i.t).join("\n")}\nMethod:\n${r.steps.map(g => (g.h ? g.h + ":\n" : "") + g.items.map(t => "- " + t).join("\n")).join("\n")}`;
@@ -664,7 +664,6 @@ async function boot() {
   const onErr = () => { S.dbState = "off"; render(); };
   db.collection("suggestions").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.sugg = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
   db.collection("stories").orderBy("createdAt", "desc").limit(1000).onSnapshot(s => { S.stories = s.docs.map(d => ({ id: d.id, ...d.data() })); resolveNames(); render(); }, onErr);
-  db.doc("desk/status").onSnapshot(d => { S.desk = d.exists ? { ...d.data() } : {}; render(); }, () => {});
 }
 boot();
 })();

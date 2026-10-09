@@ -24,7 +24,8 @@ jobs:
       - name: Stage site
         run: |
           mkdir -p _site
-          cp index.html _site/
+          cp index.html manifest.webmanifest sw.js _site/
+          cp -r icons _site/
           for d in images photos; do [ -d "$d" ] && cp -r "$d" _site/; done
           touch _site/.nojekyll
       - uses: actions/configure-pages@v5
