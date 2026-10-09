@@ -1,6 +1,6 @@
 name: Generate AI recipe images
 
-# Run from the Actions tab. Needs a repository secret named OPENAI_API_KEY.
+# Run from the Actions tab. Needs a repository secret named GEMINI_API_KEY (Google) or OPENAI_API_KEY.
 # Only recipes without an image get one, unless "force" is set.
 on:
   workflow_dispatch:
@@ -13,10 +13,10 @@ on:
         type: boolean
         default: false
       model:
-        description: "OpenAI image model"
-        default: gpt-image-1
+        description: "Image model (blank = gemini-2.5-flash-image, or gpt-image-1 for OpenAI)"
+        required: false
       quality:
-        description: "low, medium or high"
+        description: "OpenAI only: low, medium or high"
         default: medium
 
 permissions:
@@ -34,14 +34,18 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 22
+      - name: Install image converter
+        run: npm install --no-save --no-package-lock sharp
       - name: Generate images
         env:
+          GEMINI_API_KEY: ${{ secrets.GEMINI_API_KEY }}
           OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
           IMAGE_MODEL: ${{ inputs.model }}
           IMAGE_QUALITY: ${{ inputs.quality }}
           ONLY: ${{ inputs.only }}
           FORCE: ${{ inputs.force }}
         run: |
+          [ -n "$IMAGE_MODEL" ] || unset IMAGE_MODEL
           args=()
           [ -n "$ONLY" ] && args+=("--only=$ONLY")
           [ "$FORCE" = true ] && args+=("--force")

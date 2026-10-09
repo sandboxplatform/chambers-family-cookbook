@@ -21,7 +21,7 @@ An interactive website for the Chambers family recipe collection, dedicated to N
 | `src/app.js` | App logic |
 | `images/ai/` | AI-generated picture per recipe, `<recipe-id>.jpg` |
 | `photos/` | Real family photos, `<recipe-id>.jpg`; these replace the AI picture |
-| `scripts/generate-images.mjs` | Creates the AI pictures with OpenAI's image API |
+| `scripts/generate-images.mjs` | Creates the AI pictures with Google Gemini (or OpenAI) |
 | `build.sh` | Assembles `index.html` from `src/` (and lists the images) |
 | `index.html` | The built, single-file site |
 
@@ -44,7 +44,7 @@ Edit the text file, then run `./build.sh`.
 
 ## Pictures
 
-**AI pictures.** Add your OpenAI API key as a repository secret named `OPENAI_API_KEY` (Settings → Secrets and variables → Actions), then run **Generate AI recipe images** from the Actions tab. It only creates pictures for recipes that don't have one, commits them and redeploys the site. To redo one, run it with the recipe id in "only" and "force" ticked. Locally: `OPENAI_API_KEY=... node scripts/generate-images.mjs` (`--dry-run` prints the prompts without calling the API).
+**AI pictures.** Add a Google Gemini API key as a repository secret named `GEMINI_API_KEY` (Settings → Secrets and variables → Actions), or an OpenAI key as `OPENAI_API_KEY`, then run **Generate AI recipe images** from the Actions tab. It only creates pictures for recipes that don't have one, commits them and redeploys the site. To redo one, run it with the recipe id in "only" and "force" ticked. Locally: `GEMINI_API_KEY=... node scripts/generate-images.mjs` (`--dry-run` prints the prompts without calling the API).
 
 **Real photos.** On any recipe, "Add a real photo" shows the photo on that device straight away and downloads it named `<recipe-id>.jpg`. Put that file in `photos/` (Add file → Upload files on GitHub) and it replaces the AI picture for everyone after the site redeploys.
 
