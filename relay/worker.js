@@ -1,7 +1,7 @@
 // POST { images: [base64 JPEG, ...], sections: [string, ...] } -> transcribed recipe JSON.
 // Only the cookbook site may call it; the prompt and model are fixed here so the relay
 // can't be used as a general-purpose Gemini proxy.
-const MODEL = "gemini-2.5-flash";
+const MODEL = "gemini-3.8-flash";
 const MAX_IMAGES = 4, MAX_IMAGE_B64 = 3_000_000;
 
 const json = (body, status, origin) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json", ...cors(origin) } });
